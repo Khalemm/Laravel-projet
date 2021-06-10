@@ -17,6 +17,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+//routes test
 Route::get('dada', 'App\Http\Controllers\Test_AuthController@dada' );
 Route::get('dodo', 'App\Http\Controllers\Test_AuthController@dodo' );
 
