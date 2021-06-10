@@ -14,5 +14,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('accueil');
+    return view('welcome');
 });
+
+Route::get('dada', 'App\Http\Controllers\Test_AuthController@dada' );
+Route::get('dodo', 'App\Http\Controllers\Test_AuthController@dodo' );
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+require __DIR__.'/auth.php';
