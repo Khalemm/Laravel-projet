@@ -12,7 +12,7 @@ class requeteMapController extends Controller {
     }
 
     public function postGeocoder(Request $requete) {
-        session(['clé' => $requete->only(['longitude', 'latitude', 'adresse', 'cp', 'commune'])]);
+        session(['clé' => $requete->only(['longitude', 'latitude', 'adresse', 'code_postal', 'nom_commune'])]);
         return view('rechercheBienDetail');
     }
 
@@ -41,8 +41,8 @@ class requeteMapController extends Controller {
             'age-bien' =>$data['age-bien'],
             'type' => $data['type'],
             'nb-pieces' => $data['nb-pieces'],
-            'cp' => $data['cp'],
-            'commune' => $data['commune'],
+            'code_postal' => $data['code_postal'],
+            'nom_commune' => $data['nom_commune'],
         ]);
     }
 }
