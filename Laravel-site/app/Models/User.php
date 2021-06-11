@@ -44,6 +44,6 @@ class User extends Authenticatable
 
     public function requetes_biens()
     {
-        return $this->belongsToMany(Bien::class);
+        return $this->belongsToMany(Bien::class); //liaison entre User et Bien
     }
 }

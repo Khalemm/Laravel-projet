@@ -12,6 +12,6 @@ class Bien extends Model
 
     public function requetes_biens()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class); //liaison entre Bien et User
     }
 }

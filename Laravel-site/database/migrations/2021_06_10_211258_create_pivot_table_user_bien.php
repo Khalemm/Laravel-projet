@@ -13,9 +13,9 @@ class CreatePivotTableUserBien extends Migration
      */
     public function up()
     {
-        Schema::create('requetes', function (Blueprint $table) {
+        Schema::create('bien_user', function (Blueprint $table) { //table qui lie Bien et User
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade'); //clés étrangères
             $table->foreignId('bien_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
@@ -28,6 +28,6 @@ class CreatePivotTableUserBien extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pivot_table_user_bien');
+        Schema::dropIfExists('bien_user');
     }
 }
