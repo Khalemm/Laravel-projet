@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +18,7 @@ Route::get('/', function () {
     return view('accueil');
 });
 
+//routes test
 Route::get('dada', 'App\Http\Controllers\Test_AuthController@dada' );
 Route::get('dodo', 'App\Http\Controllers\Test_AuthController@dodo' );
 
@@ -26,8 +28,18 @@ Route::post('recherche/partie1', 'requeteMapController@postGeocoder')->name('pos
 Route::get('recherche/partie2', 'requeteMapController@informationsComplementaires')->name('requeteInfo');
 Route::post('recherche/partie2', 'requeteMapController@postInformationsComplementaires')->name('postInfo');
 
+//route users
+Route::get('users', [UserController::class, @index])->name('users');
+Route::get('user/{id}', [UserController::class, @show])->name('user.show');
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';
+
+/*Route::get('/test', function() {
+    return response()->json([
+     'stuff' => phpinfo()
+    ]);
+ });*/
