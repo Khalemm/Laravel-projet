@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePivotTableUserBien extends Migration
+class CreateRequetesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreatePivotTableUserBien extends Migration
      */
     public function up()
     {
-        Schema::create('bien_user', function (Blueprint $table) { //table qui lie Bien et User
+        Schema::create('requetes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade'); //clés étrangères
-            $table->foreignId('bien_id')->constrained()->onDelete('cascade');
+            $table->string('type_bien');
+            $table->int('prixmin')
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreatePivotTableUserBien extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('bien_user');
+        Schema::dropIfExists('requetes');
     }
 }
