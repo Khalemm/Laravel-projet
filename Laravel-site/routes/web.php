@@ -23,10 +23,10 @@ Route::get('dada', 'App\Http\Controllers\Test_AuthController@dada' );
 Route::get('dodo', 'App\Http\Controllers\Test_AuthController@dodo' );
 
 Route::get('recherche/partie1','requeteMapController@geocoder')->name('requeteGeocoder');
-Route::post('recherche/partie1', 'requeteMapController@postGeocoder')->name('postGeocoder');
+Route::post('recherche/partie1', 'requeteMapController@postGeocoder')->name('postGeocoder'); //on recup param
 
 Route::get('recherche/partie2', 'requeteMapController@informationsComplementaires')->name('requeteInfo');
-Route::post('recherche/partie2', 'requeteMapController@postInformationsComplementaires')->name('postInfo');
+Route::post('recherche/partie2', 'requeteMapController@postInformationsComplementaires')->name('postInfo'); //on recup param
 
 //route users
 Route::get('users', [UserController::class, @index])->name('users');

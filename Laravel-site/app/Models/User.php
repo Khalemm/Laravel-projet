@@ -6,7 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use App\Models\Bien;
+use App\Models\Requete;
 
 class User extends Authenticatable
 {
@@ -19,6 +19,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'last_name',
         'email',
         'password',
     ];
@@ -42,8 +43,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function requetes_biens()
+    public function requetes()
     {
-        return $this->belongsToMany(Bien::class); //liaison entre User et Bien
+        return $this->hasMany(Requete::class); //liaison entre User et Requete
     }
 }

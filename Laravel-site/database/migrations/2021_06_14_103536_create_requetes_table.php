@@ -15,9 +15,13 @@ class CreateRequetesTable extends Migration
     {
         Schema::create('requetes', function (Blueprint $table) {
             $table->id();
-            $table->string('type_bien');
-            $table->int('prixmin')
+            $table->string('age_bien')->nullable();
+            $table->string('type_bien')->nullable();
+            $table->integer('nombre_pieces')->nullable();
+            $table->integer('prix_min')->nullable();
+            $table->integer('prix_max')->nullable();
             $table->timestamps();
+            $table->foreignId('user_id')->constrained(); //clé étrangère id user
         });
     }
 

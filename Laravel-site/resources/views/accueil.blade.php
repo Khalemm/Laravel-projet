@@ -1,7 +1,7 @@
 @extends('layouts.entete-pied')
 @section('titre')
 Rechercher une adresse
-@endsection
+@endsection 
 @section('contenu')
 
 <div class="container">

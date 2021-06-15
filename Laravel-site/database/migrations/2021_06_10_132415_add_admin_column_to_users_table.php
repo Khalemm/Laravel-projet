@@ -14,6 +14,14 @@ class AddAdminColumnToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
+            $table->string('last_name');
+            $table->integer('tel_fixe')->nullable();
+            $table->integer('tel_mobile')->nullable();
+            $table->string('nom_entreprise')->nullable();
+            $table->string('adresse_entreprise')->nullable();
+            $table->integer('code_postal')->nullable();
+            $table->string('ville_entreprise')->nullable();
+            //abonnement
             $table->boolean('admin')->default(0); //colonne admin
         });
     }

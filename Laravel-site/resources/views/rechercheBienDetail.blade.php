@@ -31,6 +31,18 @@ Rechercher une adresse
     </div>
 
     <div class="form-group">
+        <label>Prix min</label>
+        <input type="number" name="prix_min" id="prix_min" value="100000" class="form-control form_data" />
+        <span id="prix_min_error" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label>Prix max</label>
+        <input type="number" name="prix_max" id="prix_max" value="500000" class="form-control form_data" />
+        <span id="prix_max_error" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
         <label>Nombre de pièces <span class="text-danger">*</span></label>
         <select name="nombre_pieces_principales" id="nombre_pieces_principales" class="form-control form_data">
             <option value="">Choix du nombre de pièces</option>
