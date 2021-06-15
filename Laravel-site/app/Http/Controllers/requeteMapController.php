@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Requete;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Contracts\Support\Jsonable;
+use Illuminate\Support\Collection;
 
 class requeteMapController extends Controller {
     // Controller pour la recherche d'une maison
@@ -46,8 +48,8 @@ class requeteMapController extends Controller {
             'user_id' => $id_user, 'longitude' => $requete['longitude'], 'latitude' => $requete['latitude'],
             'adresse' => $requete['adresse'], 'code_postal' => $requete['code_postal'], 'nom_commune' => $requete['nom_commune'] ]); 
 
-        //LA REQUETE (corriger les IN et renvoyer le résultat en json) distance??
-        $resultat = DB::select("SELECT id_mutation , date_mutation, annee_mutation, nature_mutation, valeur_fonciere,
+        //LA REQUETE (corriger les IN et renvoyer le résultat en geojson) distance??
+        $resultats = DB::select("SELECT id_mutation , date_mutation, annee_mutation, nature_mutation, valeur_fonciere,
             CONCAT(adresse_numero, adresse_suffixe, ' ', adresse_nom_voie) as adresse,
             code_postal, code_commune, nom_commune, id_parcelle,  type_local, 
             surface_reelle_bati, nombre_pieces_principales, surface_terrain, 
@@ -69,11 +71,15 @@ class requeteMapController extends Controller {
             'type_local' => $requete['type_local'],
             'nombre_pieces_principales' => $requete['nombre_pieces_principales'] ]
         );
+        
+        $json = json_encode($resultats);
+        $datageojson = $this->geoJson($json);
+        //dd($datageojson);
 
-        dd($resultat);
-
-        return view('rechercheBienDetail');
-    }
+        return $datageojson;
+        //return json_encode($resultats);
+        //return view('rechercheBienDetail');
+    }   
 
     /**
      * Créées la requete du bien immobillier
@@ -104,4 +110,30 @@ class requeteMapController extends Controller {
     {
         $lien = Requete::findOrFail($id) ;
     }
+
+    ////////fonctions
+    public function geoJson($locales) 
+    {
+        $original_data = json_decode($locales, true);
+        $features = array();
+
+        foreach($original_data as $key => $value) { 
+            $features[] = array(
+                    'type' => 'Feature',
+                    'geometry' => array('type' => 'Point', 'coordinates' => array((float)$value['latitude'],(float)$value['longitude'])),
+                    //'properties' => array('name' => $value['name'], 'id' => $value['id']),
+                    'properties' => array($value),
+                    );
+            };   
+
+        $allfeatures = array('type' => 'FeatureCollection', 'features' => $features);
+        return json_encode($allfeatures, JSON_PRETTY_PRINT);
+    }
+
+    function change_format($value)
+    {
+        return preg_replace('/(?<=\d)(?=(\d{3})+$)/', ' ', $value);
+    }
 }
+
+//queda por hacer: arreglar requete (IN, between prix y cuando es empty), geojson, affichage liste requetes
