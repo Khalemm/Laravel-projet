@@ -98,4 +98,9 @@ class requeteMapController extends Controller {
     {
         $lien = Requete::findOrFail($id) ;
     }
+
+    function change_format($value)
+    {
+        return preg_replace('/(?<=\d)(?=(\d{3})+$)/', ' ', $value);
+    }
 }
