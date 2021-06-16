@@ -60,7 +60,7 @@ class requeteMapController extends Controller {
         ]); 
 
         //LA REQUETE (corriger les IN et renvoyer le résultat en geojson) distance??
-        $resultats = DB::select("SELECT id_mutation , date_mutation, annee_mutation, nature_mutation, valeur_fonciere,
+        $resultat = DB::select("SELECT id_mutation , date_mutation, annee_mutation, nature_mutation, valeur_fonciere,
             CONCAT(adresse_numero, adresse_suffixe, ' ', adresse_nom_voie) as adresse,
             code_postal, code_commune, nom_commune, id_parcelle,  type_local, 
             surface_reelle_bati, nombre_pieces_principales, surface_terrain, 
@@ -82,6 +82,7 @@ class requeteMapController extends Controller {
             'type_local' => $requete['type_local'],
             'nombre_pieces_principales' => $requete['nombre_pieces_principales'] ]
         );
+
         session(['res' => $resultat]); 
         session(['req' => [
             'longitude' => $requete['longitude'], 
@@ -107,6 +108,6 @@ class requeteMapController extends Controller {
     }
 }
 
-//arreglar requete (IN, between prix y cuando es empty) !, affichage liste requetes !, arreglar form, requete pour les invités
+//arreglar requete (IN, between prix y cuando es empty) !, affichage liste requetes !, arreglar form, requete pour guest
 //faire les IN avec un array
-//quand y a rien changer en not null
+//quand y a rien cambiar en not null
