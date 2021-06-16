@@ -26,13 +26,17 @@ class requeteMapController extends Controller {
         $code_postal = $requete->input(['code_postal']);
         $nom_commune = $requete->input(['nom_commune']);
 
-        session(['clé' => ['longitude' => $longitude, 'latitude' => $latitude, 'adresse' => $adresse, 'code_postal' => $code_postal, 
-            'nom_commune' => $nom_commune]]); //on recup les parametres /recherche/partie1 pour créer la requete
+        //on recupere les parametres de résultat de la première partie du formulaire pour créer la requete
+        session([
+            'clé' => [
+                'longitude' => $longitude, 
+                'latitude' => $latitude, 
+                'adresse' => $adresse, 
+                'code_postal' => $code_postal, 
+                'nom_commune' => $nom_commune
+            ]
+        ]); 
 
-        return view('rechercheBienDetail');
-    }
-
-    public function informationsComplementaires() {
         return view('rechercheBienDetail');
     }
 
@@ -40,13 +44,20 @@ class requeteMapController extends Controller {
         $requete->merge( session('clé' ) );
         $id_user = Auth::id(); //id de l'utilisateur
 
-        //dd($requete);
-
-        //on recup les parametres /recherche/partie2
-        $requete_user = Requete::create(['age_bien' => $requete['nature_mutation'], 'type_bien' => $requete['type_local'], 
-            'nombre_pieces' => $requete['nombre_pieces_principales'], 'prix_min' => $requete['prix_min'], 'prix_max' => $requete['prix_max'],
-            'user_id' => $id_user, 'longitude' => $requete['longitude'], 'latitude' => $requete['latitude'],
-            'adresse' => $requete['adresse'], 'code_postal' => $requete['code_postal'], 'nom_commune' => $requete['nom_commune'] ]); 
+        //on recupere les parametres du second formulaire pour effectuer la requete a la BDD
+        $requete_user = Requete::create([
+            'age_bien' => $requete['nature_mutation'], 
+            'type_bien' => $requete['type_local'], 
+            'nombre_pieces' => $requete['nombre_pieces_principales'], 
+            'prix_min' => $requete['prix_min'], 
+            'prix_max' => $requete['prix_max'],
+            'user_id' => $id_user, 
+            'longitude' => $requete['longitude'], 
+            'latitude' => $requete['latitude'],
+            'adresse' => $requete['adresse'], 
+            'code_postal' => $requete['code_postal'], 
+            'nom_commune' => $requete['nom_commune'] 
+        ]); 
 
         //LA REQUETE (corriger les IN et renvoyer le résultat en geojson) distance??
         $resultats = DB::select("SELECT id_mutation , date_mutation, annee_mutation, nature_mutation, valeur_fonciere,
@@ -71,34 +82,13 @@ class requeteMapController extends Controller {
             'type_local' => $requete['type_local'],
             'nombre_pieces_principales' => $requete['nombre_pieces_principales'] ]
         );
-        
-        $json = json_encode($resultats);
-        $datageojson = $this->geoJson($json);
-        //dd($datageojson);
-
-        return $datageojson;
-        //return json_encode($resultats);
-        //return view('rechercheBienDetail');
-    }   
-
-    /**
-     * Créées la requete du bien immobillier
-     *
-     * @param  array  $data
-     * @return User
-     */
-    protected function creationRequete(array $data)
-    {
-        return $donnees = ([
-            'longitude' => $data['longitude'],
-            'latitude' => $data['latitude'],
-            'adresse' => $data['adresse'],
-            'age-bien' =>$data['age-bien'],
-            'type' => $data['type'],
-            'nb-pieces' => $data['nb-pieces'],
-            'code_postal' => $data['code_postal'],
-            'nom_commune' => $data['nom_commune'],
-        ]);
+        session(['res' => $resultat]); 
+        session(['req' => [
+            'longitude' => $requete['longitude'], 
+            'latitude' => $requete['latitude'], 
+            'adresse' => $requete['adresse']
+        ]]);
+        return view('map');
     }
 
     public function modifierRequete($id)
@@ -111,29 +101,12 @@ class requeteMapController extends Controller {
         $lien = Requete::findOrFail($id) ;
     }
 
-    ////////fonctions
-    public function geoJson($locales) 
-    {
-        $original_data = json_decode($locales, true);
-        $features = array();
-
-        foreach($original_data as $key => $value) { 
-            $features[] = array(
-                    'type' => 'Feature',
-                    'geometry' => array('type' => 'Point', 'coordinates' => array((float)$value['latitude'],(float)$value['longitude'])),
-                    //'properties' => array('name' => $value['name'], 'id' => $value['id']),
-                    'properties' => array($value),
-                    );
-            };   
-
-        $allfeatures = array('type' => 'FeatureCollection', 'features' => $features);
-        return json_encode($allfeatures, JSON_PRETTY_PRINT);
-    }
-
     function change_format($value)
     {
         return preg_replace('/(?<=\d)(?=(\d{3})+$)/', ' ', $value);
     }
 }
 
-//queda por hacer: arreglar requete (IN, between prix y cuando es empty), geojson, affichage liste requetes
+//arreglar requete (IN, between prix y cuando es empty) !, affichage liste requetes !, arreglar form, requete pour les invités
+//faire les IN avec un array
+//quand y a rien changer en not null
