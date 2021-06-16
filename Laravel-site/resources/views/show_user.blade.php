@@ -1,10 +1,10 @@
 @extends('layouts.entete-pied')
 @section('titre')
-User
+profil
 @endsection
 @section('contenu')
 
-<h1>User :</h1>
+<h1>Profil :</h1>
 <h2>{{ $user->name }}</h2>
 
 <h3>Vos requetes :</h3> <!-- affiche les requetes de l'utilisateur -->
@@ -29,5 +29,5 @@ User
 @empty
     <span>Vous n'avez pas de requetes</span>
 @endforelse
-
+</div>
 @endsection
