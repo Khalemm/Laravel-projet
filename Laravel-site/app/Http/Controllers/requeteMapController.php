@@ -106,7 +106,3 @@ class requeteMapController extends Controller {
         return preg_replace('/(?<=\d)(?=(\d{3})+$)/', ' ', $value);
     }
 }
-
-//arreglar requete (IN, between prix y cuando es empty) !, affichage liste requetes !, arreglar form, requete pour les invités
-//faire les IN avec un array
-//quand y a rien changer en not null
