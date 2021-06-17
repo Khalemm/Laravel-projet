@@ -53,7 +53,7 @@
                             @endif
                         @else
                             <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('user.profil', ['id' => Auth::user()->id]) }}">{{ __('Profil') }}</a>
+                                    <a class="nav-link" href="{{ route('user.profil') }}">{{ __('Profil') }}</a>
                             </li>
                             <li class="nav-item">
                                     <a class="nav-link" href="{{ route('user.requete', ['id' => Auth::user()->id]) }}">{{ __('Requetes') }}</a>

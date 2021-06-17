@@ -23,24 +23,27 @@ class UserController extends Controller
         return view('user_requete', [ 'user' => $user]);
     }
 
-    /*public function formulaire_update() {
-        return view('user_update');
-    }*/
+    public function form_update() {
+        $user =  auth()->user();
+        return view('user_profil', [ 'user' => $user]);
+    }
 
-    public function update($id, Request $requete) //mettre à jour le profil de l'utilisateur
+    public function update(Request $requete) //mettre à jour le profil de l'utilisateur
     {
-        $user = User::findOrFail($id);
+        $user =  auth()->user();
         $user->update([
-            //name
+            'name' => $requete->input(['name']),
             'last_name' => $requete->input(['last_name']),
             'tel_fixe' => $requete->input(['tel_fixe']),
             'tel_mobile' => $requete->input(['tel_mobile']),
-            'nom_entreprise' => $requete->input(['nom_entreprise']),
+            /*'nom_entreprise' => $requete->input(['nom_entreprise']),
             'adresse_entreprise' => $requete->input(['adresse_entreprise']),
             'code_postal' => $requete->input(['code_postal']),
-            'ville_entreprise' => $requete->input(['ville_entreprise'])
+            'ville_entreprise' => $requete->input(['ville_entreprise'])*/
         ]);
 
-        return view('user_profil', [ 'user' => $user]);
+        session()->flash('success','Profil mis à jour');
+
+        return redirect()->back();
     }
 }

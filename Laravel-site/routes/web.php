@@ -19,8 +19,8 @@ Route::get('/', function () {
 });
 
 //routes test
-Route::get('dada', 'App\Http\Controllers\Test_AuthController@dada' );
-Route::get('dodo', 'App\Http\Controllers\Test_AuthController@dodo' );
+Route::get('dada', 'Test_AuthController@dada' );
+Route::get('dodo', 'Test_AuthController@dodo' );
 
 Route::get('recherche','requeteMapController@geocoder')->name('requeteGeocoder');
 Route::post('recherche', 'requeteMapController@postGeocoder')->name('postGeocoder'); //on recup param
@@ -37,8 +37,8 @@ Route::get('user/{id}/requete', [UserController::class, @show])->name('user.requ
 Route::get('user/{id}/requete/{reqid}','requeteMapController@supprimerRequete')->name('requete.delete'); //requete/{id}
 //Route::redirect('user/{id}/requete/{reqid}', '/user/{id}/requete');
 
-Route::get('user/{id}/profil', [UserController::class, @update])->name('user.profil');
-Route::post('user/{id}/profil', [UserController::class, @update])->name('user.profil');
+Route::get('user/profil', 'UserController@form_update')->name('user.profil');
+Route::post('user/profil', [UserController::class, @update])->name('user.update-profil');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
