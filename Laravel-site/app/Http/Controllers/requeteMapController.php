@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Requete;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Contracts\Support\Jsonable;
-use Illuminate\Support\Collection;
+use App\Http\Controllers\UserController;
+use App\Models\User;
 
 class requeteMapController extends Controller {
     // Controller pour la recherche d'une maison
@@ -59,7 +59,7 @@ class requeteMapController extends Controller {
             'nom_commune' => $requete['nom_commune'] 
         ]); 
 
-        //LA REQUETE (corriger les IN et renvoyer le résultat en geojson) distance??
+        //requete avec les paramètres pour avoir la liste des 25 biens 
         $resultat = DB::select("SELECT id_mutation , date_mutation, annee_mutation, nature_mutation, valeur_fonciere,
             CONCAT(adresse_numero, adresse_suffixe, ' ', adresse_nom_voie) as adresse,
             code_postal, code_commune, nom_commune, id_parcelle,  type_local, 
@@ -92,14 +92,19 @@ class requeteMapController extends Controller {
         return view('map');
     }
 
-    public function modifierRequete($id)
+    public function modifierRequete($id) //???
     {
         $lien = Requete::findOrFail($id) ;
     }
 
-    public function supprimerRequete($id)
+    public function supprimerRequete($id, $reqid) //l'utilisateur supprime une requete
     {
-        $lien = Requete::findOrFail($id) ;
+        $requete = Requete::find($reqid) ;
+        $requete->delete();
+
+        $user = User::findOrFail(Auth::id());
+
+        return view('user_requete', [ 'user' => $user]); 
     }
 
     function change_format($value)

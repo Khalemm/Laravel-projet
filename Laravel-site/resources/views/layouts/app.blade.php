@@ -53,7 +53,10 @@
                             @endif
                         @else
                             <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('user.show', ['id' => Auth::user()->id]) }}">{{ __('Profil') }}</a>
+                                    <a class="nav-link" href="{{ route('user.profil', ['id' => Auth::user()->id]) }}">{{ __('Profil') }}</a>
+                            </li>
+                            <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('user.requete', ['id' => Auth::user()->id]) }}">{{ __('Requetes') }}</a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

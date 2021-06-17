@@ -30,9 +30,15 @@ Route::post('recherche2', 'requeteMapController@postInformationsComplementaires'
 
 //Route::get('resultat', 'requeteMapController@resultat')->name('resultat');
 
-//route users
+//routes users
 Route::get('users', [UserController::class, @index])->name('users');
-Route::get('user/{id}', [UserController::class, @show])->name('user.show');
+
+Route::get('user/{id}/requete', [UserController::class, @show])->name('user.requete');
+Route::get('user/{id}/requete/{reqid}','requeteMapController@supprimerRequete')->name('requete.delete'); //requete/{id}
+//Route::redirect('user/{id}/requete/{reqid}', '/user/{id}/requete');
+
+Route::get('user/{id}/profil', [UserController::class, @update])->name('user.profil');
+Route::post('user/{id}/profil', [UserController::class, @update])->name('user.profil');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
