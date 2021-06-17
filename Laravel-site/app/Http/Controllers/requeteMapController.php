@@ -82,7 +82,6 @@ class requeteMapController extends Controller {
             'type_local' => $requete['type_local'],
             'nombre_pieces_principales' => $requete['nombre_pieces_principales'] ]
         );
-
         session(['res' => $resultat]); 
         session(['req' => [
             'longitude' => $requete['longitude'], 

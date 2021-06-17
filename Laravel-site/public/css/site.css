@@ -1,4 +1,4 @@
-/* code css du site */
+/* ------------------------- code css du site ------------------------------ */
 body {
     width: 100%;
     margin: 0;
@@ -10,7 +10,7 @@ body {
     height: 500px;
 }
   
-/* formulaire de recherche */
+/* ----------------------- formulaire de recherche ------------------------- */
   
 .form-size {
     margin: 2rem auto 0 auto;
@@ -42,4 +42,85 @@ body {
   
 .validation-form {
     padding-bottom: 5px;
+}
+
+/* ------------------------- cartes et popups ------------------------------ */
+
+/*contenu du popup*/
+
+.leaflet-popup-content-wrapper {
+    padding: 0!important;
+}
+
+.leaflet-popup-content {
+    margin: 0!important;
+    width: auto!important;
+}
+
+.popup {
+	min-width: 350px;
+	max-width: 375px;
+	margin-top: 10px;
+	margin-left: 5px;
+}
+
+.popup.card.carte {
+	width: 375px;
+	margin-top: 0px;
+	margin-left: 0px;
+}
+
+/*haut de la carte*/
+.haut-de-carte {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.texte-header {
+	font-size: 0.95rem;
+	line-height: 10px;
+	font-weight: 700;
+}
+
+.adresse {
+	font-size: 0.9rem;
+}
+.code-postal {
+	font-size: 0.9rem;
+	margin-bottom: 0px;
+}
+
+.prix {
+	text-align: right;
+}
+
+.total {
+	font-size: 1.2rem;
+	height: 1.25rem;
+	font-weight: 700;
+	color: #0d6efd;
+}
+
+/*millieu de la carte*/
+.millieu-de-carte {
+	font-size: 1rem;
+	padding: 0 0 6px;
+	display: flex;
+	justify-content: space-between;
+}
+
+.millieu-de-carte p {
+	margin: 10px;
+}
+
+.info-droite {
+	text-align: right;
+}
+
+/*bas de la carte*/
+.bas-de-carte {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
 }
