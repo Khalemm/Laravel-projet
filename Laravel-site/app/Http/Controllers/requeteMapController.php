@@ -103,7 +103,9 @@ class requeteMapController extends Controller {
 
         $user = User::findOrFail(Auth::id());
 
-        return view('user_requete', [ 'user' => $user]); 
+        //$request->session()->flash('success','Requete supprimée');
+
+        return redirect()->back();
     }
 
     function change_format($value)

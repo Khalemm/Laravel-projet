@@ -28,21 +28,29 @@ class UserController extends Controller
         return view('user_profil', [ 'user' => $user]);
     }
 
-    public function update(Request $requete) //mettre à jour le profil de l'utilisateur
+    public function updateProfil(Request $requete) //mettre à jour le profil de l'utilisateur
     {
         $user =  auth()->user();
         $user->update([
             'name' => $requete->input(['name']),
             'last_name' => $requete->input(['last_name']),
             'tel_fixe' => $requete->input(['tel_fixe']),
-            'tel_mobile' => $requete->input(['tel_mobile']),
-            /*'nom_entreprise' => $requete->input(['nom_entreprise']),
-            'adresse_entreprise' => $requete->input(['adresse_entreprise']),
-            'code_postal' => $requete->input(['code_postal']),
-            'ville_entreprise' => $requete->input(['ville_entreprise'])*/
+            'tel_mobile' => $requete->input(['tel_mobile'])
         ]);
 
-        session()->flash('success','Profil mis à jour');
+        //session()->flash('success','Profil mis à jour');
+        return redirect()->back();
+    }
+
+    public function updateEntreprise(Request $requete) //mettre à jour les infos de son entreprise
+    {
+        $user =  auth()->user();
+        $user->update([
+            'nom_entreprise' => $requete->input(['nom_entreprise']),
+            'adresse_entreprise' => $requete->input(['adresse_entreprise']),
+            'code_postal' => $requete->input(['code_postal']),
+            'ville_entreprise' => $requete->input(['ville_entreprise'])
+        ]);
 
         return redirect()->back();
     }

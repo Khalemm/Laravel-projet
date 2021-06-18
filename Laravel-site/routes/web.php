@@ -38,7 +38,8 @@ Route::get('user/{id}/requete/{reqid}','requeteMapController@supprimerRequete')-
 //Route::redirect('user/{id}/requete/{reqid}', '/user/{id}/requete');
 
 Route::get('user/profil', 'UserController@form_update')->name('user.profil');
-Route::post('user/profil', [UserController::class, @update])->name('user.update-profil');
+Route::post('user/profil', [UserController::class, @updateProfil])->name('user.update-profil');
+Route::post('user/profil/entreprise', [UserController::class, @updateEntreprise])->name('user.update-entreprise');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
