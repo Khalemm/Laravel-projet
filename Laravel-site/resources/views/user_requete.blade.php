@@ -17,7 +17,8 @@ profil
           {{ $requete-> type_bien }}<br>
           {{ $requete-> age_bien }}<br>
           {{ $requete-> nombre_pieces }} pièce(s)<br>
-          Avec un prix allant de {{ $requete-> prix_min }} à {{ $requete-> prix_max }}€
+          Avec un prix allant de {{ preg_replace('/(?<=\d)(?=(\d{3})+$)/', ' ', $requete->prix_min) }} 
+          à {{ preg_replace('/(?<=\d)(?=(\d{3})+$)/', ' ', $requete->prix_max) }}€
         </p>
       </div>
       <div class="card-footer" style="text-align: center;">

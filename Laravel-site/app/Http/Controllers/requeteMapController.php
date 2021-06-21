@@ -8,9 +8,14 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\UserController;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
 
-class requeteMapController extends Controller {
-    // Controller pour la recherche d'une maison
+class requeteMapController extends Controller { // Controller pour la recherche d'une maison
+
+    public function __construct()
+    {
+        $this->middleware('auth'); //faut se connecter pour avoir accès
+    }
 
     public function geocoder() {
         return view('rechercheBienGeocoder');
@@ -101,22 +106,21 @@ class requeteMapController extends Controller {
         return view('map');
     }
 
-    //////////////////////////////////////////////////////////////////////////
-    public function voirRequete($req_id) //dans l'url mettre les paramètres ???
+    //quand l'utilisateur veut voir sa requete à partir de sa liste de requetes
+    public function voirRequete($req_id)
     {
-        $user_id = Auth::id();
-        $requete = Requete::where('user_id', $user_id)
-            ->where('id', $req_id);
-        $type_bien = $requete->get('type_bien');
-        $nature_mutation = $requete->get('age_bien');
-        $nb_pieces = $requete->get('nombre_pieces');
-        $prix_min = $requete->get('prix_min');
-        $prix_max = $requete->get('prix_max');
+        $req = DB::table('requetes')->find($req_id); //on cherche dans la bdd sa requete
+
+        $type_bien = $requete->type_bien; //on recupère les parametres 
+        $nature_mutation = $requete->age_bien;
+        $nb_pieces = $requete->nombre_pieces;
+        $prix_min = $requete->prix_min;
+        $prix_max = $requete->prix_max;
         
-        $longitude = $requete->get('longitude');
-        $latitude = $requete->get('latitude');
-        $code_postal = $requete->get('code_postal');
-        $adresse = $requete->get('adresse');
+        $code_postal = $requete->code_postal;
+        $adresse = $requete->adresse;
+        $longitude = $requete->longitude;
+        $latitude = $requete->latitude;
 
         //requete avec les paramètres pour avoir la liste de biens 
         $resultat = DB::select("SELECT id_mutation , date_mutation, annee_mutation, nature_mutation, valeur_fonciere,
@@ -146,9 +150,9 @@ class requeteMapController extends Controller {
 
         session(['res' => $resultat]); 
         session(['req' => [
-            'longitude' => $requete['longitude'], 
-            'latitude' => $requete['latitude'], 
-            'adresse' => $requete['adresse']
+            'longitude' => $requete->longitude, 
+            'latitude' => $requete->latitude, 
+            'adresse' => $requete->adresse
         ]]);
         return view('map');
     }
