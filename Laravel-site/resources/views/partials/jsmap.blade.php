@@ -27,7 +27,7 @@ var cptcarte = 0;
 		description +=			'<p class="code-postal">{{ $bien['code_postal'] }} {{ $bien['nom_commune'] }}</p>';
 		description +=		'</div>';
 		description +=		'<div class="prix">';
-		description +=			'<p class="total">{{ $bien['valeur_fonciere'] }} €</p>';
+		description +=			'<p class="total">{{ preg_replace('/(?<=\d)(?=(\d{3})+$)/', ' ', $bien['valeur_fonciere']) }} €</p>'; // format du prix changé
 		description +=		'</div>';
 		description +=	'</div>';
 		description +=	'<div class="millieu-de-carte card-body">';
@@ -38,7 +38,7 @@ var cptcarte = 0;
 		description +=			'<p>Surface : {{ $bien['surface_reelle_bati'] }} m²  </p>';
 		description +=		'</div>';
 		description +=		'<div class="info-droite">';
-		description +=			'<p>{{ $bien['z_prixm2'] }} €/m²  </p>';
+		description +=			'<p>{{ preg_replace('/(?<=\d)(?=(\d{3})+$)/', ' ', $bien['z_prixm2']) }} €/m²  </p>'; // format changé
 		if("{{ $bien['type_local'] }}" == "Maison") {
 			description +=		'<p>Terrain : {{ $bien['surface_terrain'] }} m²  </p>';
 		}

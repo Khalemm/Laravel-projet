@@ -3,6 +3,7 @@
     $cptcarte = 0;
 @endphp
 
+
 @foreach ((array)$biens as $bien)
     <div class="element-liste">
         <div class="popup card">
@@ -13,7 +14,7 @@
                     <p class="code-postal">{{ $bien['code_postal'] }} {{ $bien['nom_commune'] }}</p>
                 </div>
                 <div class="prix">
-                    <p class="total">{{ $bien['valeur_fonciere'] }} €</p>
+                    <p class="total">{{ preg_replace('/(?<=\d)(?=(\d{3})+$)/', ' ', $bien['valeur_fonciere']) }} €</p> <!-- format du prix changé -->
                 </div>
             </div>
             <div class="millieu-de-carte card-body">
@@ -24,7 +25,7 @@
                     <p>Surface : {{ $bien['surface_reelle_bati'] }} m²  </p>
                 </div>
                 <div class="info-droite">
-                    <p>{{ $bien['z_prixm2'] }} €/m²  </p>
+                    <p>{{ preg_replace('/(?<=\d)(?=(\d{3})+$)/', ' ', $bien['z_prixm2']) }} €/m²  </p><!-- format changé -->
                 @if($bien['type_local'] == "Maison")
                     <p>Terrain : {{ $bien['surface_terrain'] }} m²  </p>
                 @endif

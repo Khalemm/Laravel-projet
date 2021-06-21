@@ -18,6 +18,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/site.css') }}" rel="stylesheet">
 </head>
 <body>
     <div id="app">
@@ -53,10 +54,13 @@
                             @endif
                         @else
                             <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('user.profil') }}">{{ __('Profil') }}</a>
+                                    <a class="nav-link" href="{{ url('/') }}">{{ __('Nouvelle évaluation') }}</a>
                             </li>
                             <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('user.requete', ['id' => Auth::user()->id]) }}">{{ __('Requetes') }}</a>
+                                    <a class="nav-link" href="{{ route('user.requete', ['id' => Auth::user()->id]) }}">{{ __('Mes requetes sauvegardées') }}</a>
+                            </li>
+                            <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('user.profil') }}">{{ __('Mon profil') }}</a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
+
 class UserController extends Controller
 {
     public function index()
@@ -37,6 +40,25 @@ class UserController extends Controller
             'tel_fixe' => $requete->input(['tel_fixe']),
             'tel_mobile' => $requete->input(['tel_mobile'])
         ]);
+        
+        /*$validatedData = $request->validate([
+            'title' => 'required|unique:posts|max:255',
+            'body' => 'required',
+            'publish_at' => 'nullable|date',
+        ]);
+
+        Validator::make($data, [
+            'email' => [
+                'required',
+                Rule::exists('staff')->where(function ($query) {
+                    return $query->where('account_id', 1);
+                }),
+            'user_id' => 'exists:App\Models\User,id',
+            'mail' => Rule::unique('users')->where(function ($query) {
+                return $query->where('account_id', 1);
+            })
+            ],
+        ]);*/
 
         //session()->flash('success','Profil mis à jour');
         return redirect()->back();
@@ -50,6 +72,16 @@ class UserController extends Controller
             'adresse_entreprise' => $requete->input(['adresse_entreprise']),
             'code_postal' => $requete->input(['code_postal']),
             'ville_entreprise' => $requete->input(['ville_entreprise'])
+        ]);
+
+        return redirect()->back();
+    }
+
+    public function updateAbonnement(Request $requete) //mettre à jour son abonnement
+    {
+        $user =  auth()->user();
+        $user->update([
+            'nom_entreprise' => $requete->input(['nom_entreprise']),
         ]);
 
         return redirect()->back();

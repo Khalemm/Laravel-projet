@@ -16,7 +16,7 @@ class AddColumnsToRequetesTable extends Migration
         Schema::table('requetes', function (Blueprint $table) {
             $table->float('longitude', 7, 1)->nullable();
             $table->float('latitude', 7, 1)->nullable();
-            //$table->point('latitude','longitude');
+            //$table->decimal('longitude', 8, 2)
             $table->string('adresse')->nullable();
             $table->integer('code_postal')->nullable();
             $table->string('nom_commune')->nullable();

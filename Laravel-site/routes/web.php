@@ -35,7 +35,9 @@ Route::get('users', [UserController::class, @index])->name('users');
 
 Route::get('user/{id}/requete', [UserController::class, @show])->name('user.requete');
 Route::get('user/{id}/requete/{reqid}','requeteMapController@supprimerRequete')->name('requete.delete'); //requete/{id}
-//Route::redirect('user/{id}/requete/{reqid}', '/user/{id}/requete');
+
+Route::get('requete/{reqid}','requeteMapController@voirRequete')->name('requete.show');
+
 
 Route::get('user/profil', 'UserController@form_update')->name('user.profil');
 Route::post('user/profil', [UserController::class, @updateProfil])->name('user.update-profil');
