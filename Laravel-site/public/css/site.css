@@ -1,4 +1,4 @@
-/* ------------------------- code css du site ------------------------------ */
+/* ---------------------------- code css du site --------------------------- */
 body {
     width: 100%;
     margin: 0;
@@ -8,6 +8,22 @@ body {
 #mapid { 
     width: 1000px;
     height: 500px;
+}
+
+.py-4 {
+	padding-top: 0rem !important;
+	padding-bottom: 0rem !important;
+}
+
+/* ---------------------------- Page d'accueil ----------------------------- */
+
+.accueil-bloc {
+	width: 100%;
+	height: 100vh;
+	min-height: 100%;
+	background-image: url("http://cdn.home-designing.com/wp-content/uploads/2021/03/modular-sofa.jpg");
+	background-size: cover;
+	margin-top: -1.5rem;
 }
   
 /* ----------------------- formulaire de recherche ------------------------- */

@@ -15,7 +15,7 @@ use App\Http\Controllers\UserController;
 */
 
 Route::get('/', function () {
-    return view('rechercheBienGeocoder');
+    return view('accueil');
 });
 
 //routes test

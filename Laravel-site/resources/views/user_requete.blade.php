@@ -1,4 +1,4 @@
-@extends('layouts.entete-pied')
+@extends('layouts.app')
 @section('titre')
 profil
 @endsection
