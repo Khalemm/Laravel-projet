@@ -1,3 +1,18 @@
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}" defer></script>
+
+    <!-- Styles -->
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/site.css') }}" rel="stylesheet">
+</head>
+
 <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
     <div class="container">
         <a class="navbar-brand" href="{{ url('/') }}">
@@ -30,7 +45,7 @@
                     @endif
                 @else
                     <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/') }}">{{ __('Nouvelle évaluation') }}</a>
+                            <a class="nav-link" href="{{ route('requeteGeocoder') }}">{{ __('Nouvelle évaluation') }}</a>
                     </li>
                     <li class="nav-item">
                             <a class="nav-link" href="{{ route('user.requete') }}">{{ __('Mes requetes sauvegardées') }}</a>
