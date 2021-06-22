@@ -64,9 +64,10 @@ class UserController extends Controller
             ],
         ]);*/
 
-        $requete->session()->flash('success','Profil mis à jour');
+        //$requete->session()->flash('success','Profil mis à jour');
 
-        return redirect()->back();
+        //return redirect()->back();
+        return redirect()->back()->withSuccess('Votre profil a été mis à jour');
     }
 
     public function updateEntreprise(Request $requete) //mettre à jour les infos de son entreprise
@@ -79,7 +80,7 @@ class UserController extends Controller
             'ville_entreprise' => $requete->input(['ville_entreprise'])
         ]);
 
-        return redirect()->back();
+        return redirect()->back()->withSuccess('Votre entreprise a été mise à jour');
     }
 
     public function updateAbonnement(Request $requete) //mettre à jour son abonnement

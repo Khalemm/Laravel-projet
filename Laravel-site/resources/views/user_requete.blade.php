@@ -4,6 +4,12 @@ profil
 @endsection
 @section('contenu')
 
+@if(Session::has('info'))
+    <div class="alert alert-danger">
+       {{Session::get('info')}}
+    </div>
+@endif
+
 <h1>Vos requetes :</h1> <!-- affiche les requetes de l'utilisateur -->
 <hr>
 <div class="row"  style="margin-left: 0.5rem; text-align: center;">

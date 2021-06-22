@@ -161,7 +161,7 @@ class requeteMapController extends Controller { // Controller pour la recherche 
 
         //$request->session()->flash('success','Requete supprimée');
 
-        return redirect()->back();
+        return redirect()->back()->with('info',"Votre requete a été supprimée");
     }
 
     function change_format($value)
