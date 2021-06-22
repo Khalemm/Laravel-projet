@@ -57,7 +57,7 @@
                                     <a class="nav-link" href="{{ url('/') }}">{{ __('Nouvelle évaluation') }}</a>
                             </li>
                             <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('user.requete', ['id' => Auth::user()->id]) }}">{{ __('Mes requetes sauvegardées') }}</a>
+                                    <a class="nav-link" href="{{ route('user.requete') }}">{{ __('Mes requetes sauvegardées') }}</a>
                             </li>
                             <li class="nav-item">
                                     <a class="nav-link" href="{{ route('user.profil') }}">{{ __('Mon profil') }}</a>

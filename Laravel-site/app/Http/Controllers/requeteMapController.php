@@ -23,8 +23,6 @@ class requeteMapController extends Controller { // Controller pour la recherche 
 
     public function postGeocoder(Request $requete) {
         
-        //session(['clé' => $requete->only(['longitude', 'latitude', 'adresse', 'code_postal', 'nom_commune'])]);
-        
         $longitude = $requete->input(['longitude']);
         $latitude = $requete->input(['latitude']);
         $adresse = $requete->input(['adresse']);
@@ -41,7 +39,6 @@ class requeteMapController extends Controller { // Controller pour la recherche 
                 'nom_commune' => $nom_commune
             ]
         ]); 
-
         return view('rechercheBienDetail');
     }
 
@@ -109,7 +106,7 @@ class requeteMapController extends Controller { // Controller pour la recherche 
     //quand l'utilisateur veut voir sa requete à partir de sa liste de requetes
     public function voirRequete($req_id)
     {
-        $req = DB::table('requetes')->find($req_id); //on cherche dans la bdd sa requete
+        $requete = DB::table('requetes')->find($req_id); //on cherche dans la BDD sa requete
 
         $type_bien = $requete->type_bien; //on recupère les parametres 
         $nature_mutation = $requete->age_bien;
@@ -157,12 +154,10 @@ class requeteMapController extends Controller { // Controller pour la recherche 
         return view('map');
     }
 
-    public function supprimerRequete($id, $reqid) //l'utilisateur supprime une requete
+    public function supprimerRequete($reqid) //l'utilisateur supprime une requete
     {
         $requete = Requete::find($reqid) ;
         $requete->delete();
-
-        $user = User::findOrFail(Auth::id());
 
         //$request->session()->flash('success','Requete supprimée');
 

@@ -16,7 +16,7 @@
                         <a class="nav-link" role="tab" aria-current="page" href="#abonnement" data-toggle="tab">Abonnement</a>
                     </li>
                     <!--<li class="nav-item">
-                        <a class="nav-link" role="tab" aria-current="page" href="#abonnement" data-toggle="tab">Changer mot de passe ?</a>
+                        <a class="nav-link" role="tab" aria-current="page" href="#securite" data-toggle="tab">Changer mot de passe ?</a>
                     </li>-->
                 </ul>
                 <div class="tab-content" id="myTabContent">
@@ -30,7 +30,7 @@
 
                                     <div class="col-md-6">
                                         <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" 
-                                        pattern="[a-zA-Z]+" value="{{ $user->name }}" autocomplete="name" placeholder="" >
+                                        pattern="[a-zA-Z]+" value="{{ $user->name }}" autocomplete="name" >
 
                                         @error('name')
                                             <span class="invalid-feedback" role="alert">
@@ -60,7 +60,7 @@
 
                                     <div class="col-md-6">
                                         <input id="tel_fixe" type="tel" class="form-control" name="tel_fixe" pattern="[0-9]+" maxlength="10" 
-                                        value="{{ $user->tel_fixe }}" autocomplete="tel_fixe" autofocus>
+                                        value="{{ $user->tel_fixe }}" autocomplete="tel_fixe" placeholder="XX XX XX XX XX" autofocus>
 
                                     </div>
                                 </div>
@@ -70,7 +70,7 @@
 
                                     <div class="col-md-6">
                                         <input id="tel_mobile" type="number" class="form-control" name="tel_mobile" pattern="[0-9]+" maxlength="10" 
-                                        value="{{ $user->tel_mobile }}" autocomplete="tel_mobile" autofocus>
+                                        value="{{ $user->tel_mobile }}" autocomplete="tel_mobile" placeholder="XX XX XX XX XX" autofocus>
                                     </div>
                                 </div>
 
@@ -125,7 +125,7 @@
                                     <label for="code_postal" class="col-md-4 col-form-label text-md-right">{{ __('Code Postal') }}</label>
 
                                     <div class="col-md-6">
-                                        <input id="code_postal" type="tel" class="form-control" maxlength="5" pattern="[0-9]+" placeholder="75001"
+                                        <input id="code_postal" type="tel" class="form-control" maxlength="5" pattern="[0-9]+" placeholder="Exemple: 75001"
                                         name="code_postal" value="{{ $user->code_postal }}" autocomplete="code_postal" autofocus>
                                     </div>
                                 </div>
@@ -157,7 +157,7 @@
                                 @csrf
 
                                 <div class="form-group row">
-                                    <label for="prenom" class="col-md-4 col-form-label text-md-right">{{ __('') }}</label>
+                                    <label for="prenom" class="col-md-4 col-form-label text-md-right">{{ __('Type') }}</label>
 
                                     <div class="col-md-6">
                                         <input id="name" type="name" class="form-control @error('name') is-invalid @enderror" name="name" 

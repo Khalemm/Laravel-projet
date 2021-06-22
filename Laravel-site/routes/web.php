@@ -33,8 +33,8 @@ Route::post('recherche2', 'requeteMapController@postInformationsComplementaires'
 //routes users
 Route::get('users', [UserController::class, @index])->name('users');
 
-Route::get('user/{id}/requete', [UserController::class, @show])->name('user.requete');
-Route::get('user/{id}/requete/{reqid}','requeteMapController@supprimerRequete')->name('requete.delete'); //requete/{id}
+Route::get('user/requete', [UserController::class, @show])->name('user.requete');
+Route::get('user/requete/{reqid}','requeteMapController@supprimerRequete')->name('requete.delete'); //requete/{id}
 
 Route::get('requete/{reqid}','requeteMapController@voirRequete')->name('requete.show');
 
