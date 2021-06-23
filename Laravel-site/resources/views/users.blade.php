@@ -4,6 +4,8 @@ Users
 @endsection
 @section('contenu')
 
+<br>
+
 <h1>Liste de users :</h1>
     @if ($users->count() > 0)
         @foreach($users as $user)

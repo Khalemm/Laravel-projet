@@ -14,10 +14,10 @@ profil
 
 <h1>Vos requetes :</h1> <!-- affiche les requetes de l'utilisateur -->
 <hr>
-<div class="row"  style="margin-left: 0.5rem; text-align: center;">
+<div class="row row-cols-1 row-cols-md-3 g-4"  style="margin-left: 0.5rem; text-align: center;">
 @forelse($user->requetes as $requete)
-  <div class="col-sm-4">
-    <div class="card h-75" style="margin-bottom: 50px;" > <!-- h-100 -->
+  <div class="col">
+    <div class="card h-75" style="margin-bottom: 50px;" >
       <div class="card-header">{{ $requete->adresse }}</div>
       <div class="card-body" style="text-align: center;">
         <!--<h5 class="card-title" ></h5>-->
@@ -31,7 +31,7 @@ profil
       </div>
       <div class="card-footer" style="text-align: center;">
         <a href="{{ route('requete.show', [ 'reqid' => $requete->id]) }}" class="btn btn-outline-primary" style="margin-right:15px;">Voir sur la carte</a>
-        <a href="{{ route('requete.delete', [ 'id' => $user->id ,'reqid' => $requete->id]) }}" class="btn btn-outline-danger">Supprimer</a>
+        <a href="{{ route('requete.delete', [ 'reqid' => $requete->id]) }}" class="btn btn-outline-danger">Supprimer</a>
       </div>
     </div>
     <br>

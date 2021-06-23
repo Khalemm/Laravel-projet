@@ -42,6 +42,11 @@ Route::get('requete/{reqid}','requeteMapController@voirRequete')->name('requete.
 Route::get('user/profil', 'UserController@form_update')->name('user.profil');
 Route::post('user/profil', [UserController::class, @updateProfil])->name('user.update-profil');
 Route::post('user/profil/entreprise', [UserController::class, @updateEntreprise])->name('user.update-entreprise');
+//Route::get('user/profil/abonnement')->name('user.abonnement');
+
+//route abonnements
+Route::get('abonnements', 'AbonnementController@showAbonnement')->name('abonnements');
+Route::get('user/profil/abonnement/{id}', [UserController::class, @updateAbonnement])->name('user.update-abonnement');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

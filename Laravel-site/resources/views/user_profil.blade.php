@@ -2,15 +2,15 @@
 
 @section('contenu')
 
-<main class="py-4">
-    @yield('content')
-</main>
-
 @if(Session::has('success'))
     <div class="alert alert-success">
         {{Session::get('success')}}
     </div>
 @endif
+
+<main class="py-4">
+    @yield('content')
+</main>
 
 <div class="container">
     <div class="row justify-content-center">
@@ -31,7 +31,7 @@
                     </li>
                 </ul>
                 <div class="tab-content" id="myTabContent">
-                <!---------------------- formulaire profil----------------------->
+                <!---------------------------------------- formulaire profil-------------------------------------->
                     <div class="tab-pane fade show active" id="profil" role="tabpanel" aria-labelledby="profil-tab">
                         <div class="card-body">
                             <form method="POST" action="{{ route('user.update-profil') }}">
@@ -112,7 +112,7 @@
 
                     </div>
                     <div class="tab-pane fade" id="ent" role="tabpanel" aria-labelledby="ent-tab">
-                    <!---------------- formulaire infos entreprise ------------------>
+                    <!------------------------------- formulaire infos entreprise ---------------------------------->
                         <div class="card-body">
                             <form method="POST" action="{{ route('user.update-entreprise') }}">
                                 @csrf
@@ -169,10 +169,16 @@
                         </div>
                     
                     </div>
-                    <!------------------ abonnement ------------------->
+                    <!---------------------------------------- abonnement --------------------------------------->
                     <div class="tab-pane fade" id="abonnement" role="tabpanel" aria-labelledby="abonnement-tab">
                         <div class="card-body">
-                            <form method="POST" action="{{ route('user.update-profil') }}">
+                            <p class="card-text" >
+                                Abonnement : {{ $abonnement->nom }} {{ $abonnement->type }} <br>
+                                Description : {{ $abonnement->description }} <br>
+                            </p>
+                            <a href="{{ route('abonnements') }}" class="btn btn-primary" role="button" data-bs-toggle="button">
+                                Changer votre abonnement </a>
+                            <!--<form method="POST" action="">
                                 @csrf
 
                                 <div class="form-group row">
@@ -202,11 +208,12 @@
                                         </button>
                                     </div>
                                 </div>
-                            </form>
+                            </form>-->
+                            
                         </div>
                     
                     </div>
-                    <!-- sécurité / changer mdp -->
+                    <!---------------------------- sécurité / changer mdp ------------------------------>
                     <div class="tab-pane fade" id="param" role="tabpanel" aria-labelledby="param-tab">
                         <div class="card-body">
                             <form method="POST" action="{{ route('user.profil', ['id' => Auth::user()->id]) }}">

@@ -83,13 +83,13 @@ class UserController extends Controller
         return redirect()->back()->withSuccess('Votre entreprise a été mise à jour');
     }
 
-    public function updateAbonnement(Request $requete) //mettre à jour son abonnement
+    public function updateAbonnement($id) //mettre à jour son abonnement
     {
         $user =  auth()->user();
-        $user->update([
-            'abonnement' => $requete->input(['abonnement']),
-        ]);
 
-        return redirect()->back();
+        $user->abonnement = $id;
+        $user->save();
+
+        return redirect()->action([UserController::class, 'form_update'])->withSuccess('Votre abonnement a été mis à jour');
     }
 }
