@@ -6,7 +6,7 @@
 
 @foreach ((array)$biens as $bien)
     <div class="element-liste">
-        <div class="popup card">
+        <div class="popup card liste">
             <div class="haut-de-carte card-header">
                 <div class="texte-header">
                     <p>{{ $cptcarte+=1 }}. {{ $bien['distance'] }} mètres</p>

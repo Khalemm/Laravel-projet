@@ -1,13 +1,3 @@
-<!-- CSRF Token -->
-<meta name="csrf-token" content="{{ csrf_token() }}">
-
-<!-- Scripts -->
-<script src="{{ asset('js/app.js') }}" defer></script>
-
-<!-- Styles -->
-<link href="{{ asset('css/app.css') }}" rel="stylesheet">
-<link href="{{ asset('css/site.css') }}" rel="stylesheet">
-
 <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
     <div class="container">
         <a class="navbar-brand" href="{{ url('/') }}">

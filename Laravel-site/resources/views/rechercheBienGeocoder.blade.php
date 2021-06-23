@@ -30,7 +30,12 @@ Rechercher une adresse
                     <label>Chercher une adresse</label>
                     <div id="geocoder" class="geocoder"></div>
                 </div>
-                
+                @if ($erreur != null) 
+                    <p>Une erreur est survenue lors de la recherche : {{ $erreur }}</p>
+                @endif
+                @php
+                    $erreur == null;
+                @endphp
                 <input type="hidden" name="latitude" readonly="readonly" id="latitude" class="form-control form_data" />
                 <input type="hidden" name="longitude" readonly="readonly" id="longitude" class="form-control form_data" />
                 <input type="hidden" name="adresse" readonly="readonly" id="adresse" class="form-control form_data" />

@@ -13,8 +13,25 @@ geocoder.on('result', function (e) {
 	resultatJSON = JSON.parse(resultatJSON);
 	var latitude = resultatJSON["center"][1];
 	var longitude = resultatJSON["center"][0];
-	var code_postal = resultatJSON["context"][1]["text"];
-	var nom_commune = resultatJSON["context"][2]["text"];
+    var code_postal = 0;
+    var nom_commune = 0;
+    //pour les propriétés dans la requete...
+    for (const property in resultatJSON["context"]) {
+        var propriété = resultatJSON["context"][property]["id"];
+        const found = propriété.match(/[a-z]*/);
+        //si c'est un code postal :
+        if(found[0] == "postcode") {
+            code_postal = resultatJSON["context"][property]["text"];
+        }
+        //si c'est un arrondissement/lieu-dit :
+        if(found[0] == "locality") {
+            nom_commune = resultatJSON["context"][property]["text"];
+        }
+        //si lieu-dit/arrondissement pas trouvé et que c'est un lieu :
+        if(found[0] == "place" && nom_commune == 0) {
+            nom_commune = resultatJSON["context"][property]["text"];
+        }
+    }
     var adresse = resultatJSON["place_name"];
 
     document.getElementById('latitude').setAttribute('value', latitude);
