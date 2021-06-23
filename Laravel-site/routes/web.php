@@ -25,10 +25,10 @@ Route::get('dodo', 'Test_AuthController@dodo' );
 Route::get('recherche','requeteMapController@geocoder')->name('requeteGeocoder');
 Route::post('recherche', 'requeteMapController@postGeocoder')->name('postGeocoder'); //on recup param
 
-//Route::get('recherche2', 'requeteMapController@informationsComplementaires')->name('requeteInfo');
+Route::get('recherche2', 'requeteMapController@geocoder')->name('requeteInfo');
 Route::post('recherche2', 'requeteMapController@postInformationsComplementaires')->name('postInfo'); //on recup param
 
-//Route::get('resultat', 'requeteMapController@resultat')->name('resultat');
+//Route::get('resultat', 'requeteMapController@geocoder')->name('resultat');
 
 //routes users
 Route::get('users', [UserController::class, @index])->name('users');
