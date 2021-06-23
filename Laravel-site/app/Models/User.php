@@ -53,4 +53,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Requete::class); //liaison entre User et Requete
     }
+
+    public function abonnement()
+    {
+        return $this->belongsTo(Abonnement::class); //un user possède un abonnement
+    }
 }

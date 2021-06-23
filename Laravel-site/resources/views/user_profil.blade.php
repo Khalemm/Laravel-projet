@@ -77,9 +77,9 @@
                                     <label for="tel_fixe" class="col-md-4 col-form-label text-md-right">{{ __('Téléphone fixe') }}</label>
 
                                     <div class="col-md-6">
-                                        <input id="tel_fixe" type="tel" class="form-control" name="tel_fixe" pattern="[0-9]{10}+" 
+                                        <input id="tel_fixe" type="tel" class="form-control" name="tel_fixe" pattern="[0-9]{10}" 
                                         title="Veuillez entrer 10 valeurs" maxlength="10" 
-                                        value="{{ $user->tel_fixe }}" autocomplete="tel_fixe" placeholder="XX XX XX XX XX" >
+                                        value="{{ $user->tel_fixe }}" autocomplete="tel_fixe" >
                                         
                                     </div>
                                 </div>
@@ -88,9 +88,9 @@
                                     <label for="tel_mobile" class="col-md-4 col-form-label text-md-right">{{ __('Téléphone portable') }}</label>
 
                                     <div class="col-md-6">
-                                        <input id="tel_mobile" type="tel" class="form-control" name="tel_mobile" pattern="[0-9]{10}*" 
+                                        <input id="tel_mobile" type="tel" class="form-control" name="tel_mobile" pattern="[0-9]{10}" 
                                         title="Veuillez entrer 10 valeurs" maxlength="10" 
-                                        value="{{ $user->tel_mobile }}" autocomplete="tel_mobile" placeholder="XX XX XX XX XX" >
+                                        value="{{ $user->tel_mobile }}" autocomplete="tel_mobile" >
                                         
                                     </div>
                                 </div>
@@ -167,25 +167,25 @@
                     <!------------------ abonnement ------------------->
                     <div class="tab-pane fade" id="abonnement" role="tabpanel" aria-labelledby="abonnement-tab">
                         <div class="card-body">
-                            <form method="POST" action="{{ route('user.profil', ['id' => Auth::user()->id]) }}">
+                            <form method="POST" action="{{ route('user.update-profil') }}">
                                 @csrf
 
                                 <div class="form-group row">
-                                    <label for="prenom" class="col-md-4 col-form-label text-md-right">{{ __('Type') }}</label>
+                                    <label for="abonnement" class="col-md-4 col-form-label text-md-right">{{ __('Abonnement') }}</label>
 
                                     <div class="col-md-6">
-                                        <input id="name" type="name" class="form-control" name="name" 
-                                        value="{{ old('name') }}" required autocomplete="name" >
+                                        <input id="abonnement" type="abonnement" class="form-control" name="abonnement" 
+                                        value="{{ $abonnement->nom }}" autocomplete="abonnement" readonly>
                                         
                                     </div>
                                 </div>
 
                                 <div class="form-group row">
-                                    <label for="tel_mobile" class="col-md-4 col-form-label text-md-right">{{ __('Prix') }}</label>
+                                    <label for="prenom" class="col-md-4 col-form-label text-md-right">{{ __('Description') }}</label>
 
                                     <div class="col-md-6">
-                                        <input id="last_name" type="text" class="form-control" name="last_name" 
-                                        value="{{ old('last_name') }}" required autocomplete="last_name" >
+                                        <input id="abonnement" type="abonnement" class="form-control" name="abonnement" 
+                                        value="{{ $abonnement->description }}" autocomplete="abonnement" readonly>
                                         
                                     </div>
                                 </div>
@@ -193,7 +193,7 @@
                                 <div class="form-group row mb-0">
                                     <div class="col-md-8 offset-md-4">
                                         <button type="submit" class="btn btn-primary">
-                                            {{ __('Sauvegarder') }}
+                                            {{ __('Changer votre abonnement') }}
                                         </button>
                                     </div>
                                 </div>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -32,7 +33,9 @@ class UserController extends Controller
 
     public function form_update() {
         $user =  auth()->user();
-        return view('user_profil', [ 'user' => $user]);
+        $abonnement = DB::table('abonnements')->find($user->abonnement); //on cherche dans la BDD
+        //dd($abonnement->nom);
+        return view('user_profil', [ 'user' => $user, 'abonnement' => $abonnement]);
     }
 
     public function updateProfil(Request $requete) //mettre à jour le profil de l'utilisateur
@@ -64,9 +67,6 @@ class UserController extends Controller
             ],
         ]);*/
 
-        //$requete->session()->flash('success','Profil mis à jour');
-
-        //return redirect()->back();
         return redirect()->back()->withSuccess('Votre profil a été mis à jour');
     }
 
@@ -87,7 +87,7 @@ class UserController extends Controller
     {
         $user =  auth()->user();
         $user->update([
-            'nom_entreprise' => $requete->input(['nom_entreprise']),
+            'abonnement' => $requete->input(['abonnement']),
         ]);
 
         return redirect()->back();
