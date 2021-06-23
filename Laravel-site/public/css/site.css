@@ -6,7 +6,7 @@ body {
 }
 
 #mapid { 
-    width: 1000px;
+    width: 100%;
     height: 500px;
 }
 
@@ -109,6 +109,11 @@ body {
 
 /* ------------------------- cartes et popups ------------------------------ */
 
+.row.margin-fix {
+	margin-left: 0;
+	margin-right: 0;
+}
+
 /*contenu du popup*/
 
 .leaflet-popup-content-wrapper {
@@ -133,6 +138,16 @@ body {
 	margin-left: 0px;
 }
 
+.element-liste {
+	width: 47.5%;
+	margin-top: 15px;
+	margin-left: 1.25%;
+}
+.popup.card.liste {
+	max-width: 100%;
+	margin:0;
+}
+
 /*haut de la carte*/
 .haut-de-carte {
 	display: flex;
@@ -148,6 +163,7 @@ body {
 
 .adresse {
 	font-size: 0.9rem;
+	line-height: 1rem;
 }
 .code-postal {
 	font-size: 0.9rem;
@@ -156,6 +172,7 @@ body {
 
 .prix {
 	text-align: right;
+	width: 110px;
 }
 
 .total {
@@ -163,6 +180,34 @@ body {
 	height: 1.25rem;
 	font-weight: 700;
 	color: #0d6efd;
+}
+
+@media (max-width: 1300px) { 
+	.texte-header {
+		width: 60%;
+	}
+}
+
+@media (max-width: 1000px) { 
+	.texte-header {
+		width: 70%;
+	}
+
+	.element-liste {
+		width: 90%;
+		margin-left: 5%;
+	}
+}
+
+@media (max-width: 700px) { 
+	.texte-header {
+		width: 70%;
+	}
+
+	.element-liste {
+		width: 100%;
+		margin-left: 0;
+	}
 }
 
 /*millieu de la carte*/

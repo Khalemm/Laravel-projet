@@ -20,14 +20,14 @@ crossorigin=""/>
 @endphp
 
 <div class="page">
-    <div class="row">
+    <div class="row margin-fix">
       <!-- map et cards -->
       <div class="col-8">
-        <div class="row mapbox-carte">
+        <div class="row margin-fix">
           <div id="mapid"></div>
         </div>
         
-        <div class="row defilement-cartes" id="test">
+        <div class="row margin-fix defilement-cartes" id="test">
           @include('partials.cartes',['listebiens' => $listebiens])
         </div>
       </div>
