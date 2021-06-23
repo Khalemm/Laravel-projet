@@ -1,12 +1,17 @@
 @extends('layouts.app')
 
-@section('content')
+@section('contenu')
+
+<main class="py-4">
+    @yield('content')
+</main>
 
 @if(Session::has('success'))
     <div class="alert alert-success">
         {{Session::get('success')}}
     </div>
 @endif
+
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">

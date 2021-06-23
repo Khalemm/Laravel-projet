@@ -1,8 +1,10 @@
-@extends('layouts.entete-pied')
+@extends('layouts.app')
 @section('titre')
 profil
 @endsection
 @section('contenu')
+
+<br>
 
 @if(Session::has('info'))
     <div class="alert alert-danger">
@@ -16,7 +18,7 @@ profil
 @forelse($user->requetes as $requete)
   <div class="col-sm-4">
     <div class="card h-75" style="margin-bottom: 50px;" > <!-- h-100 -->
-      <div class="card-header" style="font-weight:bold;">{{ $requete->adresse }}</div>
+      <div class="card-header">{{ $requete->adresse }}</div>
       <div class="card-body" style="text-align: center;">
         <!--<h5 class="card-title" ></h5>-->
         <p class="card-text">

@@ -1,4 +1,4 @@
-/* ------------------------- code css du site ------------------------------ */
+/* ---------------------------- code css du site --------------------------- */
 body {
     width: 100%;
     margin: 0;
@@ -8,6 +8,69 @@ body {
 #mapid { 
     width: 1000px;
     height: 500px;
+}
+
+/* ----------------------------------footer -------------------------------- */
+.footer {
+	width: 100%;
+	min-height: 50px;
+	text-align: center;
+	background-color: #f5f5f5;
+}
+
+.copyright {
+	margin-top: 10px;
+}
+
+/* ----------------------------- Page d'accueil ---------------------------- */
+
+.accueil-bloc {
+	width: 100%;
+	height: 100vh;
+	min-height: 100%;
+	background-image: -moz-linear-gradient(rgba(0, 0, 0, 0.2),rgba(0,0,0,.2)), url("http://cdn.home-designing.com/wp-content/uploads/2021/03/modular-sofa.jpg");
+	background-image: -webkit-linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.2)), url("http://cdn.home-designing.com/wp-content/uploads/2021/03/modular-sofa.jpg");
+	background-image: linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.2)), url("http://cdn.home-designing.com/wp-content/uploads/2021/03/modular-sofa.jpg");
+	background-size: cover;
+	background-position: bottom;
+	margin-top: -1.5rem;
+	z-index: -1;
+}
+
+.presentation-bloc {
+	background-color: #fafafa;
+	margin-top: 15%;
+	margin-left: 15%;
+	border-radius: 10px;
+	max-width: 35%;
+	position: absolute;
+	box-shadow: 12px 12px 12px rgba(0,0,0,.7),
+				-12px 12px 12px rgba(0,0,0,.7), 
+				12px -12px 12px rgba(0,0,0,.7),
+				-12px -12px 12px rgba(0,0,0,.7);
+}
+
+.interieur-presentation-bloc {
+	margin : 15px;
+}
+
+.titre-presentation {
+	text-align: center;
+	border-bottom: solid 2px #d9d9d9 ;
+}
+
+@media (max-width: 1300px) { 
+	.presentation-bloc {
+		margin-left: 15%;
+		max-width: 70%;
+	}
+}
+
+@media (max-width: 600px) { 
+	.presentation-bloc {
+		margin-left: 5%;
+		max-width: 90%;
+	}
 }
   
 /* ----------------------- formulaire de recherche ------------------------- */
