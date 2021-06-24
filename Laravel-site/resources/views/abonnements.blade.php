@@ -23,8 +23,8 @@ Abonnements
                     <h5 class="card-title">{{ $abonnement->nom }}</h5>
                     <p class="card-text">
                     {{ $abonnement->type }}<br>
-                    {{ $abonnement->prix }}<br>
-                    {{ $abonnement->description }}
+                    {{ $abonnement->prix }}€<br>
+                    -{{ $abonnement->description }}
                     </p>
                 </div>
                 <div class="card-footer">
