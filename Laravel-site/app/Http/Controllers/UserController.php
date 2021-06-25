@@ -96,4 +96,8 @@ class UserController extends Controller
 
         return redirect()->back()->withSuccess('Votre mot de passe a été mis à jour');
     }
+
+    public function administration() {
+        return view("adminGestionUser");
+    }
 }

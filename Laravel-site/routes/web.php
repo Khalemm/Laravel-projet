@@ -35,6 +35,8 @@ Route::middleware(['active'])->group( function() {
     Route::get('user/admin', 'AdminController@updateAdminUser')->name('user.admin');
     Route::get('users', 'AdminController@voirUser')->name('user.voir'); //user.profil ?
 
+    Route::get('user/administration', 'AdminController@administration')->name('user.administration');
+
     //recherche
     Route::get('recherche','requeteMapController@geocoder')->name('requeteGeocoder');
     Route::post('recherche', 'requeteMapController@postGeocoder')->name('postGeocoder'); //on recup param
