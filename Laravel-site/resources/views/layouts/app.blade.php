@@ -10,7 +10,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name') }}@yield('titre')</title>
+    <title>{{ config('app.name') }} - @yield('titre')</title>
 
     <!-- Scripts -->
     @yield('scripts')

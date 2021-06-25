@@ -91,4 +91,8 @@ class UserController extends Controller
 
         return redirect()->back();
     }
+
+    public function administration() {
+        return view("adminGestionUser");
+    }
 }

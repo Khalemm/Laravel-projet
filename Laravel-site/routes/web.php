@@ -38,7 +38,7 @@ Route::get('user/requete/{reqid}','requeteMapController@supprimerRequete')->name
 
 Route::get('requete/{reqid}','requeteMapController@voirRequete')->name('requete.show');
 
-
+Route::get('user/administration', 'UserController@administration')->name('user.administration');
 Route::get('user/profil', 'UserController@form_update')->name('user.profil');
 Route::post('user/profil', [UserController::class, @updateProfil])->name('user.update-profil');
 Route::post('user/profil/entreprise', [UserController::class, @updateEntreprise])->name('user.update-entreprise');
