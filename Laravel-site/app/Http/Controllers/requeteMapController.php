@@ -53,25 +53,16 @@ class requeteMapController extends Controller { // Controller pour la recherche 
         $requete->merge( session('clé' ) );
         $id_user = Auth::id(); //id de l'utilisateur
 
-        if ($requete['prix_min'] == null && $requete['prix_max'] == null) //prix min et prix max facultatifs
+        if ($requete['prix_min'] == null) //prix min facultatif
         {
             $requete['prix_min'] = 0;
+        }
+
+        if ($requete['prix_max'] == null) //prix max facultatif
+        {
             $requete['prix_max'] = 600000000;
         }
-        //on recupere les parametres du second formulaire pour effectuer la requete a la BDD
-        $requete_user = Requete::firstOrCreate([
-            'age_bien' => $requete['nature_mutation'], 
-            'type_bien' => $requete['type_local'], 
-            'nombre_pieces' => $requete['nombre_pieces_principales'], 
-            'prix_min' => $requete['prix_min'], 
-            'prix_max' => $requete['prix_max'],
-            'user_id' => $id_user, 
-            'longitude' => $requete['longitude'], 
-            'latitude' => $requete['latitude'],
-            'adresse' => $requete['adresse'], 
-            'code_postal' => $requete['code_postal'], 
-            'nom_commune' => $requete['nom_commune'] 
-        ]);
+        
         //si jamais une erreur insoupconné arrive, on fait ici un try/catch
         try{
             //requete avec les paramètres pour avoir la liste des 25 biens 
@@ -106,6 +97,20 @@ class requeteMapController extends Controller { // Controller pour la recherche 
                 $erreur = "Il se pourrait qu'aucun bien n'ait été vendu aux alentours de l'adresse fournie.";
                 return view('rechercheBienGeocoder', ['erreur' => $erreur]);
             }
+
+            //on recupere les parametres du second formulaire pour enregistrer la requete
+            $requete_user = Requete::firstOrCreate([
+            'age_bien' => $requete['nature_mutation'], 
+            'type_bien' => $requete['type_local'], 
+            'prix_min' => $requete['prix_min'], 
+            'prix_max' => $requete['prix_max'],
+            'user_id' => $id_user, 
+            'longitude' => $requete['longitude'], 
+            'latitude' => $requete['latitude'],
+            'adresse' => $requete['adresse'], 
+            'code_postal' => $requete['code_postal'], 
+            'nom_commune' => $requete['nom_commune'] 
+            ]);
             
             session(['res' => $resultat]); 
             session(['req' => [
@@ -175,8 +180,6 @@ class requeteMapController extends Controller { // Controller pour la recherche 
     {
         $requete = Requete::find($reqid) ;
         $requete->delete();
-
-        //$request->session()->flash('success','Requete supprimée');
 
         return redirect()->back()->with('info',"Votre requete a été supprimée");
     }

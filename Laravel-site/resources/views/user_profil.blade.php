@@ -152,7 +152,7 @@
                                     <label for="ville_entreprise" class="col-md-4 col-form-label text-md-right">{{ __('Ville') }}</label>
 
                                     <div class="col-md-6">
-                                        <input id="ville_entreprise" type="text" class="form-control" pattern="[A-Z][A-Za-z' -]+"
+                                        <input id="ville_entreprise" type="text" class="form-control" pattern="[A-Za-z' -]+"
                                         name="ville_entreprise" value="{{ $user->ville_entreprise }}" autocomplete="ville_entreprise">
                                         
                                     </div>

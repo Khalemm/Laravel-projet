@@ -16,43 +16,55 @@ use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     return view('accueil');
-});
+})->name('accueil');
 
 //routes test
 Route::get('dada', 'Test_AuthController@dada' );
 Route::get('dodo', 'Test_AuthController@dodo' );
 
-Route::get('recherche','requeteMapController@geocoder')->name('requeteGeocoder');
-Route::post('recherche', 'requeteMapController@postGeocoder')->name('postGeocoder'); //on recup param
+//inscription
+Route::get('registered', 'HomeController@registered')->name('registered');
 
-Route::get('recherche2', 'requeteMapController@geocoder')->name('requeteInfo');
-Route::post('recherche2', 'requeteMapController@postInformationsComplementaires')->name('postInfo'); //on recup param
+//quand le compte est activé on a accès aux routes
+Route::middleware(['active'])->group( function() {
 
-//Route::get('resultat', 'requeteMapController@geocoder')->name('resultat');
+    //admin
+    Route::get('users', 'AdminController@index')->name('users');
+    Route::get('user/active/{id}', 'AdminController@activerUser')->name('user.active');
+    Route::get('user/delete', 'AdminController@supprimerUser')->name('user.delete');
+    Route::get('user/admin', 'AdminController@updateAdminUser')->name('user.admin');
+    Route::get('users', 'AdminController@voirUser')->name('user.voir'); //user.profil ?
 
-//routes users
-Route::get('users', [UserController::class, @index])->name('users');
+    //recherche
+    Route::get('recherche','requeteMapController@geocoder')->name('requeteGeocoder');
+    Route::post('recherche', 'requeteMapController@postGeocoder')->name('postGeocoder'); //on recup param
 
-Route::get('user/requete', [UserController::class, @show])->name('user.requete');
-Route::get('user/requete/{reqid}','requeteMapController@supprimerRequete')->name('requete.delete'); //requete/{id}
+    Route::get('recherche2', 'requeteMapController@geocoder')->name('requeteInfo');
+    Route::post('recherche2', 'requeteMapController@postInformationsComplementaires')->name('postInfo'); //on recup param
+    //Route::get('resultat', 'requeteMapController@geocoder')->name('resultat');
 
-Route::get('requete/{reqid}','requeteMapController@voirRequete')->name('requete.show');
+    //requetes de l'utilisateur
+    Route::get('user/requete', 'UserController@show')->name('user.requete');
+    Route::get('user/requete/{reqid}','requeteMapController@supprimerRequete')->name('requete.delete'); //
+    Route::get('requete/{reqid}','requeteMapController@voirRequete')->name('requete.show');
 
+    //profil de l'utilisateur
+    Route::get('user/profil', 'UserController@form_update')->name('user.profil');
+    Route::post('user/profil', 'UserController@updateProfil')->name('user.update-profil');
+    Route::post('user/profil/entreprise', 'UserController@updateEntreprise')->name('user.update-entreprise');
+    //Route::get('user/profil/abonnement')->name('user.abonnement');
 
-Route::get('user/profil', 'UserController@form_update')->name('user.profil');
-Route::post('user/profil', [UserController::class, @updateProfil])->name('user.update-profil');
-Route::post('user/profil/entreprise', [UserController::class, @updateEntreprise])->name('user.update-entreprise');
-//Route::get('user/profil/abonnement')->name('user.abonnement');
+    //route abonnements
+    Route::get('abonnements', 'AbonnementController@showAbonnement')->name('abonnements');
+    Route::get('user/profil/abonnement/{id}', 'UserController@updateAbonnement')->name('user.update-abonnement');
 
-//route abonnements
-Route::get('abonnements', 'AbonnementController@showAbonnement')->name('abonnements');
-Route::get('user/profil/abonnement/{id}', [UserController::class, @updateAbonnement])->name('user.update-abonnement');
+});
 
-Route::get('/dashboard', function () {
+/*Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-require __DIR__.'/auth.php';
+require __DIR__.'/auth.php';*/
 
 /*Route::get('/test', function() {
     return response()->json([
@@ -61,4 +73,4 @@ require __DIR__.'/auth.php';
  });*/
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

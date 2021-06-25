@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -16,12 +17,6 @@ class UserController extends Controller
     public function __construct()
     {
         $this->middleware('auth'); //faut se connecter pour avoir accès
-    }
-
-    public function index()
-    {
-        $users = User::all(); //cherche tous les users
-        return view('users', compact('users'));
     }
 
     public function show()
@@ -86,10 +81,19 @@ class UserController extends Controller
     public function updateAbonnement($id) //mettre à jour son abonnement
     {
         $user =  auth()->user();
-
         $user->abonnement = $id;
         $user->save();
 
         return redirect()->action([UserController::class, 'form_update'])->withSuccess('Votre abonnement a été mis à jour');
+    }
+
+    public function updateMdp(Request $requete) //changer son mdp
+    {
+        $user =  auth()->user();
+        $user->update([
+            'nom_entreprise' => $requete->input(['nom_entreprise'])
+        ]);
+
+        return redirect()->back()->withSuccess('Votre mot de passe a été mis à jour');
     }
 }

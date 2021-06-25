@@ -6,6 +6,10 @@ Accueil
 @section('scripts')
 @endsection
 
+@if (!Auth::guest() && !Auth::user()->active)
+    @include('registered')
+@endif
+
 @section('contenu')
 <div class="accueil-bloc">
     <div class="presentation-bloc">

@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use App\Mail\testMail;
+use App\Mail\markdownMail;
+use Illuminate\Support\Facades\Mail;
+use App\Notifications\UserRegisteredNotification;
 
 class Test_AuthController extends Controller
 {
@@ -23,6 +27,15 @@ class Test_AuthController extends Controller
 
     public function dodo()
     {
-        return view('test.dodo');
+        $user =  auth()->user();
+        //$mail = $user->email;
+
+        //Mail::to($mail)->send(new testMail($user));
+        //Mail::to($mail)->send(new markdownMail($user));
+
+        $user->notify(new UserRegisteredNotification());
+
+        //return redirect('/');
+        return view('registered');
     }
 }

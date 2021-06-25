@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 
+use App\Notifications\UserRegisteredNotification;
+
 class RegisteredUserController extends Controller
 {
     /**
@@ -46,11 +48,12 @@ class RegisteredUserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
-
         event(new Registered($user));
+        
+        //$user->notify(new UserRegisteredNotification());
 
         Auth::login($user);
 
-        return redirect(RouteServiceProvider::HOME);
+        return redirect('/registered'); //RouteServiceProvider::HOME
     }
 }
