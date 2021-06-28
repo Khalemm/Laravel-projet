@@ -34,10 +34,10 @@ Administration
                     @if ($user->active)
                         <a href="{{ route('user.desactive', [ 'id' => $user->id] ) }}" class="btn btn-secondary">Désactiver</a>
                     @else
-                        <a href="{{ route('user.active', [ 'id' => $user->id] ) }}" class="btn btn-primary">Activer</a>
+                        <a href="{{ route('user.active', [ 'id' => $user->id] ) }}" class="btn btn-success">Activer</a>
                     @endif
                     
-                    <a href="{{ route('user.admin', [ 'id' => $user->id] ) }}" class="btn btn-primary">Rendre Admin</a>
+                    <a href="{{ route('user.admin', [ 'id' => $user->id] ) }}" class="btn btn-warning">Rendre Admin</a>
                     <a href="{{ route('user.delete', [ 'id' => $user->id] ) }}" class="btn btn-danger">Supprimer</a>
                     
                 </div>
