@@ -13,17 +13,16 @@ class AdminController extends Controller
         $this->middleware('auth'); //faut se connecter pour avoir accès
     }
 
-    public function index()
-    {
+    public function administration() {
+
         if(!Gate::allows('access-admin')) //si on est pas admin, on a pas accès à la page
         {
             abort('403');
         }
-
         $users = User::all(); //cherche tous les users
-        return view('users', compact('users'));
+        return view("adminGestionUser", compact('users'));
     }
-
+    
     public function activerUser($id)
     {
         if(!Gate::allows('access-admin')) //si on est pas admin, on a pas accès à la page
@@ -31,10 +30,23 @@ class AdminController extends Controller
             abort('403');
         }
         $user = User::find($id);
-        $user->update([
-            'active' => $requete->input(['active'])
-        ]);
+        $user->active = 1;
+        $user->save();
+
         return redirect()->back()->withSuccess('Le compte de l`utilisateur est activé');
+    }
+
+    public function desactiverUser($id)
+    {
+        if(!Gate::allows('access-admin')) //si on est pas admin, on a pas accès à la page
+        {
+            abort('403');
+        }
+        $user = User::find($id);
+        $user->active = 0;
+        $user->save();
+
+        return redirect()->back()->with('info',"Le compte de l`utilisateur est desactivé");
     }
 
     public function supprimerUser($id)
@@ -56,13 +68,14 @@ class AdminController extends Controller
             abort('403');
         }
         $user = User::find($id);
-        $user->update([
-            'admin' => $requete->input(['active'])
-        ]);
+        $user->active = 1;
+        $user->admin = 1;
+        $user->save();
+
         return redirect()->back()->withSuccess('L`utilisateur possède maintenant le role d`administrateur');
     }
 
-    public function voirUser($id)
+    public function voirUser($id) //A FAIRE
     {
         if(!Gate::allows('access-admin')) //si on est pas admin, on a pas accès à la page
         {

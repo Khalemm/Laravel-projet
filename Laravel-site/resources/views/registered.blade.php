@@ -1,4 +1,5 @@
-
+@section('scripts')
+@endsection
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,6 +10,5 @@
 </head>
 <body>
     <h1>Votre compte a bien été créé, il sera activé prochainement</h1>
-    <!--<a href="{{ url('/') }}">{{ __('Accueil') }}</a>-->
 </body>
 </html>

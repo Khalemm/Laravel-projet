@@ -33,6 +33,7 @@ class HomeController extends Controller
         $user->notify(new UserRegisteredNotification()); //envoie un mail indiquant que son compte a bien été créé
 
         //return view('registered');
-        return redirect()->route('accueil');
+        //return redirect()->route('accueil');
+        return view('accueil');
     }
 }

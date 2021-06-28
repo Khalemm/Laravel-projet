@@ -32,6 +32,11 @@
                         </li>
                     @endif
                 @endguest
+                    @admin
+                        <li class="nav-item">
+                                <a class="nav-link" href="{{ route('user.administration') }}">{{ __('Administration') }}</a>
+                        </li>
+                    @endadmin
                     @active
                         <li class="nav-item">
                                 <a class="nav-link" href="{{ route('requeteGeocoder') }}">{{ __('Nouvelle évaluation') }}</a>
@@ -42,8 +47,8 @@
                         <li class="nav-item">
                                 <a class="nav-link" href="{{ route('user.profil') }}">{{ __('Mon profil') }}</a>
                         </li>
-                        @endactive
-                        @auth
+                    @endactive
+                    @auth
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 {{ Auth::user()->name }}
@@ -61,7 +66,7 @@
                                 </form>
                             </div>
                         </li>
-                        @endauth
+                    @endauth
                 </ul>
             </div>
         </div>

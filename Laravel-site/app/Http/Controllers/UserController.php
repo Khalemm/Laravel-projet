@@ -42,25 +42,6 @@ class UserController extends Controller
             'tel_fixe' => $requete->input(['tel_fixe']),
             'tel_mobile' => $requete->input(['tel_mobile'])
         ]);
-        
-        /*$validatedData = $request->validate([
-            'title' => 'required|unique:posts|max:255',
-            'body' => 'required',
-            'publish_at' => 'nullable|date',
-        ]);
-
-        Validator::make($data, [
-            'email' => [
-                'required',
-                Rule::exists('staff')->where(function ($query) {
-                    return $query->where('account_id', 1);
-                }),
-            'user_id' => 'exists:App\Models\User,id',
-            'mail' => Rule::unique('users')->where(function ($query) {
-                return $query->where('account_id', 1);
-            })
-            ],
-        ]);*/
 
         return redirect()->back()->withSuccess('Votre profil a été mis à jour');
     }
@@ -87,7 +68,7 @@ class UserController extends Controller
         return redirect()->action([UserController::class, 'form_update'])->withSuccess('Votre abonnement a été mis à jour');
     }
 
-    public function updateMdp(Request $requete) //changer son mdp
+    public function updateMdp(Request $requete) //changer son mdp // A FAIRE
     {
         $user =  auth()->user();
         $user->update([
@@ -97,7 +78,4 @@ class UserController extends Controller
         return redirect()->back()->withSuccess('Votre mot de passe a été mis à jour');
     }
 
-    public function administration() {
-        return view("adminGestionUser");
-    }
 }

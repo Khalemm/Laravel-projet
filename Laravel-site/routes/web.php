@@ -31,8 +31,9 @@ Route::middleware(['active'])->group( function() {
     //admin
     Route::get('users', 'AdminController@index')->name('users');
     Route::get('user/active/{id}', 'AdminController@activerUser')->name('user.active');
-    Route::get('user/delete', 'AdminController@supprimerUser')->name('user.delete');
-    Route::get('user/admin', 'AdminController@updateAdminUser')->name('user.admin');
+    Route::get('user/desactive/{id}', 'AdminController@desactiverUser')->name('user.desactive');
+    Route::get('user/delete/{id}', 'AdminController@supprimerUser')->name('user.delete');
+    Route::get('user/admin/{id}', 'AdminController@updateAdminUser')->name('user.admin');
     Route::get('users', 'AdminController@voirUser')->name('user.voir'); //user.profil ?
 
     Route::get('user/administration', 'AdminController@administration')->name('user.administration');
