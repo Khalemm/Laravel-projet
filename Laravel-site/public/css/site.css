@@ -232,3 +232,24 @@ body {
 	flex-direction: row;
 	justify-content: space-between;
 }
+
+/* ---------------------------- administration ----------------------------- */
+
+
+.liste-users {
+	margin: 15px;
+	width: 31%;
+}
+
+@media (max-width: 1300px) { 
+	.liste-users {
+		width: 46%;
+	}
+}
+
+@media (max-width: 800px) { 
+	.liste-users {
+		margin: 15px 5%;
+		width: 90%;
+	}
+}

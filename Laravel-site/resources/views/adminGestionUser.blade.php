@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('titre')
+Administration    
+@endsection
+
 @section('contenu')
 
 @if(Session::has('success'))
@@ -13,29 +17,34 @@
        {{Session::get('info')}}
     </div>
 @endif
-
-@foreach ($users as $user)
-    @if ($user->admin == false)
-    <div class="liste-users">
-        <div class="popup card liste">
-            <div class="haut-de-carte card-header">
-                <div class="texte-header">
-                    <p>{{$user->name}} {{$user->last_name}}</p></p>
-                    <p>{{$user->active}}</p> 
+<div class="row margin-fix">
+    @foreach ($users as $user)
+        @if ($user->admin == false)
+        <div class="liste-users">
+            <div class="popup card liste">
+                <div class="haut-de-carte card-header">
+                    <div class="texte-header">
+                        <p>{{$user->name}} {{$user->last_name}}</p>
+                        <p>E-mail : {{$user->email}}</p>
+                        <p>Entreprise : {{$user->nom_entreprise}}</p>
+                        <p>Telephone : {{$user->tel_mobile}}</p>
+                    </div>
+                </div>
+                <div class="millieu-de-carte card-body">
+                    @if ($user->active)
+                        <a href="{{ route('user.desactive', [ 'id' => $user->id] ) }}" class="btn btn-secondary">Désactiver</a>
+                    @else
+                        <a href="{{ route('user.active', [ 'id' => $user->id] ) }}" class="btn btn-primary">Activer</a>
+                    @endif
+                    
+                    <a href="{{ route('user.admin', [ 'id' => $user->id] ) }}" class="btn btn-primary">Rendre Admin</a>
+                    <a href="{{ route('user.delete', [ 'id' => $user->id] ) }}" class="btn btn-danger">Supprimer</a>
+                    
                 </div>
             </div>
-            <div class="millieu-de-carte card-body">
-                <a href="{{ route('user.active', [ 'id' => $user->id] ) }}" class="btn btn-primary">Activer</a>
-                <a href="{{ route('user.desactive', [ 'id' => $user->id] ) }}" class="btn btn-secondary">Désactiver</a>
-                <a href="{{ route('user.admin', [ 'id' => $user->id] ) }}" class="btn btn-primary">Rendre Admin</a>
-                <a href="{{ route('user.delete', [ 'id' => $user->id] ) }}" class="btn btn-danger">Supprimer</a>
-                
-            </div>
         </div>
-    </div>
-    @endif
-    
-    
-@endforeach
+        @endif
+    @endforeach
+</div>
 
 @endsection
