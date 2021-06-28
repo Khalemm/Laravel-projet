@@ -37,7 +37,7 @@ Administration
                         <a href="{{ route('user.active', [ 'id' => $user->id] ) }}" class="btn btn-success">Activer</a>
                     @endif
                     
-                    <a href="{{ route('user.admin', [ 'id' => $user->id] ) }}" class="btn btn-warning">Rendre Admin</a>
+                    <a href="{{ route('user.admin', [ 'id' => $user->id] ) }}" class="btn btn-primary">Rendre Admin</a>
                     <a href="{{ route('user.delete', [ 'id' => $user->id] ) }}" class="btn btn-danger">Supprimer</a>
                     
                 </div>
