@@ -28,15 +28,13 @@ Route::get('registered', 'HomeController@registered')->name('registered');
 //quand le compte est activé on a accès aux routes
 Route::middleware(['active'])->group( function() {
 
-    //admin
-    Route::get('users', 'AdminController@index')->name('users');
+    //admin 
+    Route::get('administration', 'AdminController@administration')->name('user.administration');
     Route::get('user/active/{id}', 'AdminController@activerUser')->name('user.active');
     Route::get('user/desactive/{id}', 'AdminController@desactiverUser')->name('user.desactive');
     Route::get('user/delete/{id}', 'AdminController@supprimerUser')->name('user.delete');
     Route::get('user/admin/{id}', 'AdminController@updateAdminUser')->name('user.admin');
-    Route::get('users', 'AdminController@voirUser')->name('user.voir'); //user.profil ?
-
-    Route::get('user/administration', 'AdminController@administration')->name('user.administration');
+    Route::get('users-no-confirmed', 'AdminController@supprimerUsersNonConfirmes')->name('user.non-confirme');
 
     //recherche
     Route::get('recherche','requeteMapController@geocoder')->name('requeteGeocoder');
@@ -55,7 +53,6 @@ Route::middleware(['active'])->group( function() {
     Route::get('user/profil', 'UserController@form_update')->name('user.profil');
     Route::post('user/profil', 'UserController@updateProfil')->name('user.update-profil');
     Route::post('user/profil/entreprise', 'UserController@updateEntreprise')->name('user.update-entreprise');
-    //Route::get('user/profil/abonnement')->name('user.abonnement');
 
     //route abonnements
     Route::get('abonnements', 'AbonnementController@showAbonnement')->name('abonnements');

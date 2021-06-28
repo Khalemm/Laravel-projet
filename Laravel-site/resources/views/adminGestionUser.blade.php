@@ -17,14 +17,23 @@ Administration
        {{Session::get('info')}}
     </div>
 @endif
+<br>
+<ul><li><a href="{{ route('user.non-confirme' ) }}" class="btn btn-danger">Supprimer les utilisateurs non confirmés</a></li></ul>
+
 <div class="row margin-fix">
     @foreach ($users as $user)
         @if ($user->admin == false)
         <div class="liste-users">
+            @if ($user->email_verified_at != null)
+            <div class="popup card liste noemail">
+            @else
             <div class="popup card liste">
+            @endif
                 <div class="haut-de-carte card-header">
                     <div class="texte-header">
-                        <p>{{$user->name}} {{$user->last_name}}</p>
+                        <p>Créé le {{date_format($user->created_at, 'd/m/y à H:i')}}</p>
+                        <p>Nom : {{$user->name}}</p>
+                        <p>Prenom : {{$user->last_name}}</p>
                         <p>E-mail : {{$user->email}}</p>
                         <p>Entreprise : {{$user->nom_entreprise}}</p>
                         <p>Telephone : {{$user->tel_mobile}}</p>

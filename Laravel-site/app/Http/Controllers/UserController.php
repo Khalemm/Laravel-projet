@@ -68,12 +68,16 @@ class UserController extends Controller
         return redirect()->action([UserController::class, 'form_update'])->withSuccess('Votre abonnement a été mis à jour');
     }
 
-    public function updateMdp(Request $requete) //changer son mdp // A FAIRE
+    public function updateMdp(Request $requete) //changer son mdp
     {
         $user =  auth()->user();
-        $user->update([
-            'nom_entreprise' => $requete->input(['nom_entreprise'])
-        ]);
+        //if mdp bon, mettre nveau mdp
+        if($requete->input(['password']))
+        {
+            $user->update([
+            'new_password' => $requete->input(['password'])
+            ]);
+        }
 
         return redirect()->back()->withSuccess('Votre mot de passe a été mis à jour');
     }

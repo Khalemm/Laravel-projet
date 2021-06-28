@@ -19,7 +19,8 @@ class AdminController extends Controller
         {
             abort('403');
         }
-        $users = User::all(); //cherche tous les users
+        $users = User::all()->sortByDesc('created_at'); //cherche tous les users
+        //DB::table('users')->orderBy('id')
         return view("adminGestionUser", compact('users'));
     }
     
@@ -30,7 +31,7 @@ class AdminController extends Controller
             abort('403');
         }
         $user = User::find($id);
-        $user->active = 1;
+        $user->active = 1; //activation du compte
         $user->save();
 
         return redirect()->back()->withSuccess('Le compte de l`utilisateur est activé');
@@ -43,7 +44,7 @@ class AdminController extends Controller
             abort('403');
         }
         $user = User::find($id);
-        $user->active = 0;
+        $user->active = 0; //desactive le compte
         $user->save();
 
         return redirect()->back()->with('info',"Le compte de l`utilisateur est desactivé");
@@ -69,19 +70,21 @@ class AdminController extends Controller
         }
         $user = User::find($id);
         $user->active = 1;
-        $user->admin = 1;
+        $user->admin = 1; //rend un utilisateur administrateur et active son compte
         $user->save();
 
         return redirect()->back()->withSuccess('L`utilisateur possède maintenant le role d`administrateur');
     }
 
-    public function voirUser($id) //A FAIRE
+    public function supprimerUsersNonConfirmes()
     {
         if(!Gate::allows('access-admin')) //si on est pas admin, on a pas accès à la page
         {
             abort('403');
         }
-        $user = User::find($id);
-        return view('user', [ 'user' => $user]);
+        $users = User::where('email_verified_at', null)->get(); //cherche les users avec email non confirmé
+        $user->delete();
+
+        return redirect()->back()->with('info',"Les utilisateurs ont bien été supprimée");
     }
 }

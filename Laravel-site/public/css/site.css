@@ -148,6 +148,12 @@ body {
 	margin:0;
 }
 
+.popup.card.liste.noemail {
+	max-width: 100%;
+	margin:0;
+	background-color: #f3aeb2 ;
+}
+
 /*haut de la carte*/
 .haut-de-carte {
 	display: flex;

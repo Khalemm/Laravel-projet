@@ -41,7 +41,9 @@ class UserRegisteredNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('Vous venez de créer un compte chez nous, il sera activé d`ici quelques jours')
+                    ->subject('Bienvenue chez Laravel-site')
+                    ->greeting('Bonjour,')
+                    ->line('Vous venez de créer un compte chez nous, il sera activé d`ici quelques jours.')
                     //->action('Notification Action', url('/'))
                     ->line('Merci !');
     }
