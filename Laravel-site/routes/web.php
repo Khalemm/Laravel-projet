@@ -24,6 +24,7 @@ Route::get('dada', 'Test_AuthController@dada' );
 Route::get('dodo', 'Test_AuthController@dodo' );
 
 //vérification du mail après l'inscription
+
 /*Route::get('/email/verify', function () {
     return view('auth.verify-email');
 })->middleware('auth')->name('verification.notice');*/
@@ -34,13 +35,11 @@ Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $requ
     return redirect('/home');
 })->middleware(['auth', 'signed'])->name('verification.verify');
 
-/*Route::post('/email/verification-notification', function (Request $request) {
+Route::post('/email/verification-notification', function (Request $request) { //??????????
     $request->user()->sendEmailVerificationNotification();
 
     return back()->with('message', 'Verification link sent!');
-})->middleware(['auth', 'throttle:6,1'])->name('verification.send');*/
-
-
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
 //quand le compte est activé on a accès aux routes
 Route::middleware(['active'])->group( function() {
@@ -70,6 +69,7 @@ Route::middleware(['active'])->group( function() {
     Route::get('user/profil', 'UserController@form_update')->name('user.profil');
     Route::post('user/profil', 'UserController@updateProfil')->name('user.update-profil');
     Route::post('user/profil/entreprise', 'UserController@updateEntreprise')->name('user.update-entreprise');
+    Route::post('user/parametres', 'UserController@updateMdp')->name('user.update-mdp');
 
     //route abonnements
     Route::get('abonnements', 'AbonnementController@showAbonnement')->name('abonnements');

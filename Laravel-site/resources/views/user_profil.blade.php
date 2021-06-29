@@ -9,6 +9,13 @@
     </div>
 @endif
 
+@if(Session::has('error'))
+    <div class="alert alert-error">
+        <button type="button" class="close" data-dismiss="alert">×</button>   
+        {{Session::get('error')}}
+    </div>
+@endif
+
 <main class="py-4">
     @yield('content')
 </main>
@@ -179,45 +186,13 @@
                             </p>
                             <a href="{{ route('abonnements') }}" class="btn btn-primary" role="button" data-bs-toggle="button">
                                 Changer votre abonnement </a>
-                            <!--<form method="POST" action="">
-                                @csrf
-
-                                <div class="form-group row">
-                                    <label for="abonnement" class="col-md-4 col-form-label text-md-right">{{ __('Abonnement') }}</label>
-
-                                    <div class="col-md-6">
-                                        <input id="abonnement" type="abonnement" class="form-control" name="abonnement" 
-                                        value="{{ $abonnement->nom }}" autocomplete="abonnement" readonly>
-                                        
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <label for="prenom" class="col-md-4 col-form-label text-md-right">{{ __('Description') }}</label>
-
-                                    <div class="col-md-6">
-                                        <input id="abonnement" type="abonnement" class="form-control" name="abonnement" 
-                                        value="{{ $abonnement->description }}" autocomplete="abonnement" readonly>
-                                        
-                                    </div>
-                                </div>
-
-                                <div class="form-group row mb-0">
-                                    <div class="col-md-8 offset-md-4">
-                                        <button type="submit" class="btn btn-primary">
-                                            {{ __('Changer votre abonnement') }}
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>-->
-                            
                         </div>
                     
                     </div>
                     <!---------------------------- sécurité / changer mdp ------------------------------>
                     <div class="tab-pane fade" id="param" role="tabpanel" aria-labelledby="param-tab">
                         <div class="card-body">
-                            <form method="POST" action="{{ route('user.profil', ['id' => Auth::user()->id]) }}">
+                            <form method="POST" action="{{ route('user.update-mdp') }}">
                                 @csrf
                                 <div class="form-group row">
                                     <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('Mail') }}</label>
@@ -229,12 +204,12 @@
                                 </div>
 
                                 <div class="form-group row">
-                                    <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Mot de passe actuel') }}</label>
+                                    <label for="oldpassword" class="col-md-4 col-form-label text-md-right">{{ __('Mot de passe actuel') }}</label>
 
                                     <div class="col-md-6">
-                                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+                                        <input id="oldpassword" type="password" class="form-control @error('oldpassword') is-invalid @enderror" name="oldpassword" required autocomplete="oldpassword">
 
-                                        @error('password')
+                                        @error('oldpassword')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
@@ -243,16 +218,24 @@
                                 </div>
 
                                 <div class="form-group row">
-                                    <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Nouveau mot de passe') }}</label>
+                                    <label for="newpassword" class="col-md-4 col-form-label text-md-right">{{ __('Nouveau mot de passe') }}</label>
 
                                     <div class="col-md-6">
-                                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+                                        <input id="newpassword" type="password" class="form-control @error('newpassword') is-invalid @enderror" name="newpassword" required autocomplete="newpassword">
 
-                                        @error('password')
+                                        @error('newpassword') 
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirmer votre mot de passe') }}</label>
+
+                                    <div class="col-md-6">
+                                        <input id="password-confirm" type="password" class="form-control" name="password-confirm" required autocomplete="password-confirm">
                                     </div>
                                 </div>
 
