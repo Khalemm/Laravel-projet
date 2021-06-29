@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Notifications\UserRegisteredNotification;
 
 class HomeController extends Controller
 {
@@ -24,16 +23,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
-    }
-
-    public function registered()
-    {
-        $user =  auth()->user();
-        $user->notify(new UserRegisteredNotification()); //envoie un mail indiquant que son compte a bien été créé
-
-        //return view('registered');
-        //return redirect()->route('accueil');
-        return view('accueil');
+        return view('/');
     }
 }

@@ -8,15 +8,18 @@ Administration
 
 @if(Session::has('success'))
     <div class="alert alert-success">
+        <button type="button" class="close" data-dismiss="alert">×</button>    
         {{Session::get('success')}}
     </div>
 @endif
 
 @if(Session::has('info'))
     <div class="alert alert-danger">
-       {{Session::get('info')}}
+        <button type="button" class="close" data-dismiss="alert">×</button>   
+        {{Session::get('info')}}
     </div>
 @endif
+
 <br>
 <ul><li><a href="{{ route('user.non-confirme' ) }}" class="btn btn-danger">Supprimer les utilisateurs non confirmés</a></li></ul>
 

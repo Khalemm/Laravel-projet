@@ -2,6 +2,9 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
 
+    <!-- code js nécessaire à l'utilisation de captcha -->
+    {!! NoCaptcha::renderJs() !!}
+
     <!-- meta -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">

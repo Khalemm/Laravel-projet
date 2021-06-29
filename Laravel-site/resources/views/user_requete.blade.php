@@ -8,7 +8,8 @@ profil
 
 @if(Session::has('info'))
     <div class="alert alert-danger">
-       {{Session::get('info')}}
+      <button type="button" class="close" data-dismiss="alert">×</button>   
+      {{Session::get('info')}}
     </div>
 @endif
 
