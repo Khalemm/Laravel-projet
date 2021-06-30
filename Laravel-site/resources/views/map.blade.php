@@ -33,7 +33,37 @@ crossorigin=""/>
       </div>
       <!-- analyse des biens -->
       <div class="analyse-biens col-4">
-          <h2>analyse des biens</h2>
+      <br>
+      @foreach ($communes as $commune)
+        <h2>Analyse des biens</h2>
+        <p>Population dans la commune {{$commune->nom_commune}} : {{$commune->population}}</p>
+      @endforeach
+        <table class="table caption-top">
+          <thead>
+            <tr>
+              <th scope="col">Annee</th>
+              <th scope="col">Cat</th>
+              <th scope="col">Code Postal</th>
+              <th scope="col">Code Commune</th>
+              <th scope="col">Moyenne prix m2</th>
+              <th scope="col">Moyenne surface m2</th>
+              <th scope="col">Nombre de transactions</th>
+            </tr>
+          </thead>
+          <tbody>
+          @foreach ($analyses as $analyse)
+            <tr>
+              <th scope="row">{{$analyse->annee_mutation}}</th>
+              <td>{{$analyse->categorie}}</td>
+              <td>{{$analyse->code_postal}}</td>
+              <td>{{$analyse->code_commune}}</td>
+              <td>{{$analyse->avg_prix_m2}}€</td>
+              <td>{{$analyse->avg_surface_m2}}</td>
+              <td>{{$analyse->nb_transactions}}</td>
+            </tr>
+          @endforeach
+          </tbody>
+        </table>
       </div>
       
     </div>

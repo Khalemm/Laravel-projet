@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@extends('user_update_pwd')
+
 @section('contenu')
 
 @if(Session::has('success'))
@@ -190,9 +192,10 @@
                     
                     </div>
                     <!---------------------------- sécurité / changer mdp ------------------------------>
+                    
                     <div class="tab-pane fade" id="param" role="tabpanel" aria-labelledby="param-tab">
                         <div class="card-body">
-                            <form method="POST" action="{{ route('user.update-mdp') }}">
+                            <form method="POST" action="{{ route('user.update-mdp') }}" id="changePassword">
                                 @csrf
                                 <div class="form-group row">
                                     <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('Mail') }}</label>
@@ -208,12 +211,8 @@
 
                                     <div class="col-md-6">
                                         <input id="oldpassword" type="password" class="form-control @error('oldpassword') is-invalid @enderror" name="oldpassword" required autocomplete="oldpassword">
-
-                                        @error('oldpassword')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
+                                        <span class="text-danger error-text oldpassword_error"></span>
+                                        
                                     </div>
                                 </div>
 
@@ -221,13 +220,11 @@
                                     <label for="newpassword" class="col-md-4 col-form-label text-md-right">{{ __('Nouveau mot de passe') }}</label>
 
                                     <div class="col-md-6">
-                                        <input id="newpassword" type="password" class="form-control @error('password') is-invalid @enderror" name="newpassword" required autocomplete="newpassword">
+                                        <input id="newpassword" type="password" class="form-control @error('password') is-invalid @enderror" 
+                                        pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" title="Le mot de passe doit contenir au moins 8 caractères dont une valeur numérique" 
+                                        name="newpassword" required autocomplete="newpassword">
+                                        <span class="text-danger error-text newpassword_error"></span>
 
-                                        @error('password') 
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
                                     </div>
                                 </div>
 
@@ -236,6 +233,7 @@
 
                                     <div class="col-md-6">
                                         <input id="password-confirm" type="password" class="form-control" name="password-confirm" required autocomplete="newpassword">
+                                        <span class="text-danger error-text password-confirm_error"></span>
                                     </div>
                                 </div>
 

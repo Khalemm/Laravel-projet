@@ -111,6 +111,22 @@ class requeteMapController extends Controller { // Controller pour la recherche 
             'code_postal' => $requete['code_postal'], 
             'nom_commune' => $requete['nom_commune'] 
             ]);
+
+            //requete avec les paramètres pour l'analyse des biens
+            $analyse = DB::select("SELECT annee_mutation, nature_mutation, categorie, nb_transactions,
+                avg_prix_m2, avg_surface_m2, code_departement, code_postal, code_commune, type_local
+                FROM prixneocy
+                WHERE 
+                    code_postal = :code_postal
+                    AND nature_mutation = :nature_mutation
+                    AND type_local = :type_local
+                ORDER BY annee_mutation LIMIT 25",
+
+                ['code_postal' => $requete['code_postal'],
+                'nature_mutation' => $requete['nature_mutation'],
+                'type_local' => $requete['type_local'] ]
+            );
+
             
             session(['res' => $resultat]); 
             session(['req' => [
@@ -120,7 +136,7 @@ class requeteMapController extends Controller { // Controller pour la recherche 
             ]]);
             return view('map');
         } catch(\Exception $e) {
-            $erreur = "essayez de rentrer une autre adresse.";
+            $erreur = "Essayez de rentrer une autre adresse.";
             return view('rechercheBienGeocoder', ['erreur' => $erreur]);
         }
     }
@@ -167,13 +183,51 @@ class requeteMapController extends Controller { // Controller pour la recherche 
             'prix_max' => $prix_max ]
         );
 
+        //dd($resultat[1]->code_postal);
+        //dd($resultat[1]->code_commune);
+        //dd($resultat[1]->nom_commune);
+
+        //requete avec les paramètres pour la population
+        $communes = DB::select("SELECT code_commune, code_postal, nom_commune, population
+        FROM communes
+        WHERE 
+            code_commune = :code_commune
+            AND code_postal = :code_postal
+            AND nom_commune = :nom_commune",
+
+        [ 'code_commune' => $resultat[1]->code_commune, //on recupère le code commune de la requete précédente
+        'code_postal' => $resultat[1]->code_postal,
+        'nom_commune' => $resultat[1]->nom_commune ]
+        );
+
+        //requete avec les paramètres pour l'analyse des biens
+        $analyses = DB::select("SELECT code_departement, code_postal, code_commune, type_local, annee_mutation, nature_mutation, 
+        categorie, nb_transactions, avg_prix_m2, avg_surface_m2
+        FROM prixneocy
+        WHERE 
+            code_postal = :code_postal
+            AND code_commune LIKE :code_commune
+            AND nature_mutation = :nature_mutation
+            AND type_local = :type_local
+            AND categorie = :categorie
+        ORDER BY annee_mutation",
+
+        ['code_postal' => $code_postal,
+        'code_commune' => $resultat[1]->code_commune,
+        'nature_mutation' => $nature_mutation,
+        'type_local' => $type_bien,
+        'categorie' => 'T'.+$nb_pieces ] //categorie = nb pièces dans la requete
+        );
+
+        //dd($analyses);
+
         session(['res' => $resultat]); 
         session(['req' => [
             'longitude' => $requete->longitude, 
             'latitude' => $requete->latitude, 
             'adresse' => $requete->adresse
         ]]);
-        return view('map');
+        return view('map', [ 'analyses' => $analyses, 'communes' => $communes]);
     }
 
     public function supprimerRequete($reqid) //l'utilisateur supprime une requete

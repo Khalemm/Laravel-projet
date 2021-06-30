@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class IsActivated
+class IsAdmin
 {
     /**
      * Handle an incoming request.
@@ -16,7 +16,8 @@ class IsActivated
      */
     public function handle(Request $request, Closure $next)
     {
-        if(auth()->user()->active == 1) //si compte activé on a accès à tout, sinon forbidden
+        
+        if(auth()->user()->admin == 1) //si on est admin on a accès à l'administration, sinon forbidden
         {
             return $next($request);
         } else{

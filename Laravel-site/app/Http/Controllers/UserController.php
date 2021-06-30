@@ -78,32 +78,26 @@ class UserController extends Controller
                         return $fail(__('Mot de passe incorrect'));
                     }
                 },
-                'min:8'
             ],
-             'newpassword'=>'required|min:8',
-             'password-confirm'=>'required|same:newpassword'
+            'newpassword'=>'required|min:8',
+            'password-confirm'=>'required|same:newpassword'
          ],[
-             'oldpassword.required'=>'Enter your current password', //controles de validité
-             'oldpassword.min'=>'Old password must have atleast 8 characters',
-             'oldpassword.max'=>'Old password must not be greater than 30 characters',
-             'newpassword.required'=>'Enter new password',
-             'newpassword.min'=>'New password must have atleast 8 characters',
-             'newpassword.max'=>'New password must not be greater than 30 characters',
-             'password-confirm.required'=>'ReEnter your new password',
-             'password-confirm.same'=>'New password and Confirm new password must match'
+            //controles de validité
+            'newpassword.min'=>'Le mot de passe doit contenir au moins 8 caractères',
+            'password-confirm.same'=>'Le champ de confirmation du mot de passe ne correspond pas'
          ]);
 
-        if( !$validator->passes() ){ //si c'est validé alors on met à jour le mdp
-            return response()->json(['status'=>0,'error'=>$validator->errors()->toArray()]);
+        if( !$validator->passes() ){
+            return response()->json(['status'=>0,'error'=>$validator->errors()->toArray()]); //messages d'erreur
         }else{
-             
-         $update = User::find(Auth::user()->id)->update(['password'=>Hash::make($requete->newpassword)]);
+        //changement du mdp
+        $update = User::find(Auth::user()->id)->update(['password'=>Hash::make($requete->newpassword)]);
 
-         if( !$update ){ //sinon, msg d'erreur
-             return response()->json(['status'=>0,'msg'=>'Something went wrong, Failed to update password in db']);
-         }else{
-             return response()->json(['status'=>1,'msg'=>'Your password has been changed successfully']);
-         }
+        if( !$update ){ //msg d'erreur si changement échoué
+            return redirect()->back()->with('error','Changement du mot de passe échoué');
+        }else{
+            return redirect()->back()->withSuccess('Votre mot de passe a bien été mis à jour');
+        }
         }
     }
 

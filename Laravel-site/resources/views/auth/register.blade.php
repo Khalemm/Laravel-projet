@@ -17,8 +17,8 @@
 
                                 <div class="col-md-6">
                                     <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" 
-                                    pattern="[a-zA-Z]+" value="{{ old('name') }}" required autocomplete="name" autofocus>
-
+                                    pattern="[a-zA-Z]+" title="Pas de valeurs numériques" value="{{ old('name') }}" required autocomplete="name" autofocus>
+ 
                                     @error('name')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -32,7 +32,7 @@
 
                                 <div class="col-md-6">
                                     <input id="last_name" type="text" class="form-control @error('name') is-invalid @enderror" 
-                                    pattern="[a-zA-Z]+" name="last_name" value="{{ old('last_name') }}" required autocomplete="last_name" autofocus>
+                                    pattern="[a-zA-Z]+" title="Pas de valeurs numériques" name="last_name" value="{{ old('last_name') }}" required autocomplete="last_name" autofocus>
 
                                     @error('last_name')
                                         <span class="invalid-feedback" role="alert">
@@ -60,7 +60,9 @@
                                 <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Mot de passe') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" 
+                                    pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" title="Le mot de passe doit avoir au moins un valeur numérique" 
+                                    name="password" required autocomplete="new-password">
 
                                     @error('password')
                                         <span class="invalid-feedback" role="alert">
