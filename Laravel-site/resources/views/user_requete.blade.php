@@ -32,7 +32,7 @@ profil
       </div>
       <div class="card-footer" style="text-align: center;">
         <a href="{{ route('requete.show', [ 'reqid' => $requete->id]) }}" class="btn btn-outline-primary" style="margin-right:15px;">Voir sur la carte</a>
-        <a href="{{ route('requete.delete', [ 'reqid' => $requete->id]) }}" class="btn btn-outline-danger">Supprimer</a>
+        <a href="{{ route('requete.delete', [ 'reqid' => $requete->id]) }}" onclick="return confirm('Confirmer la suppression de la requete')" class="btn btn-outline-danger">Supprimer</a>
       </div>
     </div>
     <br>

@@ -26,20 +26,20 @@ Route::get('dodo', 'Test_AuthController@dodo' );
 //vérification du mail après l'inscription
 
 /*Route::get('/email/verify', function () {
-    return view('auth.verify-email');
-})->middleware('auth')->name('verification.notice');*/
+    return view('verify-email');
+})->middleware('auth')->name('verification.notice'); */
 
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
 
-    return redirect('/home');
-})->middleware(['auth', 'signed'])->name('verification.verify');
+    return redirect('/');
+})->middleware(['auth', 'signed'])->name('verification.verify'); //on renvoie l'utilisateur à l'accueil après avoir validé son mail
 
-Route::post('/email/verification-notification', function (Request $request) { //??????????
+Route::get('/email/verification-notification', function (Request $request) { //on renvoie un lien à l'utilisateur
     $request->user()->sendEmailVerificationNotification();
-
-    return back()->with('message', 'Verification link sent!');
+    return back()->with('info','Un nouveau lien de vérification vous a été envoyé par mail.');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+
 
 //quand le compte est activé on a accès aux routes
 Route::middleware(['active'])->group( function() {
@@ -62,7 +62,7 @@ Route::middleware(['active'])->group( function() {
 
     //requetes de l'utilisateur
     Route::get('user/requete', 'UserController@show')->name('user.requete');
-    Route::get('user/requete/{reqid}','requeteMapController@supprimerRequete')->name('requete.delete'); //
+    Route::get('user/requete/{reqid}','requeteMapController@supprimerRequete')->name('requete.delete');
     Route::get('requete/{reqid}','requeteMapController@voirRequete')->name('requete.show');
 
     //profil de l'utilisateur

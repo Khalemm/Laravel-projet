@@ -82,9 +82,8 @@ class AdminController extends Controller
         {
             abort('403');
         }
-        $users = User::where('email_verified_at', null)->get(); //cherche les users avec email non confirmé
-        $user->delete();
+        $users = User::where('email_verified_at', null)->delete(); //cherche et supprime les users sans mail verifié
 
-        return redirect()->back()->with('info',"Les utilisateurs ont bien été supprimée");
+        return redirect()->back()->with('info',"Les utilisateurs ont bien été supprimés");
     }
 }

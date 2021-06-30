@@ -21,13 +21,13 @@ Administration
 @endif
 
 <br>
-<ul><li><a href="{{ route('user.non-confirme' ) }}" class="btn btn-danger">Supprimer les utilisateurs non confirmés</a></li></ul>
-
+<ul><li><a href="{{ route('user.non-confirme' ) }}" onclick="return confirm('Confirmer la suppression des utilisateurs')" class="btn btn-danger">Supprimer les utilisateurs non confirmés</a></li></ul>
+<hr>
 <div class="row margin-fix">
     @foreach ($users as $user)
         @if ($user->admin == false)
         <div class="liste-users">
-            @if ($user->email_verified_at != null)
+            @if ($user->email_verified_at == null)
             <div class="popup card liste noemail">
             @else
             <div class="popup card liste">
@@ -50,7 +50,7 @@ Administration
                     @endif
                     
                     <a href="{{ route('user.admin', [ 'id' => $user->id] ) }}" class="btn btn-primary">Rendre Admin</a>
-                    <a href="{{ route('user.delete', [ 'id' => $user->id] ) }}" class="btn btn-danger">Supprimer</a>
+                    <a href="{{ route('user.delete', [ 'id' => $user->id] ) }}" onclick="return confirm('Confirmer la suppression de l`utilisateur')" class="btn btn-danger">Supprimer</a>
                     
                 </div>
             </div>

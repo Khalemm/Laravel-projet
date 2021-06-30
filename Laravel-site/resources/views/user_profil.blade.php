@@ -10,7 +10,7 @@
 @endif
 
 @if(Session::has('error'))
-    <div class="alert alert-error">
+    <div class="alert alert-warning">
         <button type="button" class="close" data-dismiss="alert">×</button>   
         {{Session::get('error')}}
     </div>
@@ -221,9 +221,9 @@
                                     <label for="newpassword" class="col-md-4 col-form-label text-md-right">{{ __('Nouveau mot de passe') }}</label>
 
                                     <div class="col-md-6">
-                                        <input id="newpassword" type="password" class="form-control @error('newpassword') is-invalid @enderror" name="newpassword" required autocomplete="newpassword">
+                                        <input id="newpassword" type="password" class="form-control @error('password') is-invalid @enderror" name="newpassword" required autocomplete="newpassword">
 
-                                        @error('newpassword') 
+                                        @error('password') 
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
@@ -235,7 +235,7 @@
                                     <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirmer votre mot de passe') }}</label>
 
                                     <div class="col-md-6">
-                                        <input id="password-confirm" type="password" class="form-control" name="password-confirm" required autocomplete="password-confirm">
+                                        <input id="password-confirm" type="password" class="form-control" name="password-confirm" required autocomplete="newpassword">
                                     </div>
                                 </div>
 
