@@ -61,7 +61,6 @@
 
                                 <div class="col-md-6">
                                     <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" 
-                                    pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" title="Le mot de passe doit avoir au moins un valeur numérique" 
                                     name="password" required autocomplete="new-password">
 
                                     @error('password')

@@ -221,7 +221,6 @@
 
                                     <div class="col-md-6">
                                         <input id="newpassword" type="password" class="form-control @error('password') is-invalid @enderror" 
-                                        pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" title="Le mot de passe doit contenir au moins 8 caractères dont une valeur numérique" 
                                         name="newpassword" required autocomplete="newpassword">
                                         <span class="text-danger error-text newpassword_error"></span>
 
