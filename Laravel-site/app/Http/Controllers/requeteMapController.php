@@ -101,7 +101,8 @@ class requeteMapController extends Controller { // Controller pour la recherche 
             //on recupere les parametres du second formulaire pour enregistrer la requete
             $requete_user = Requete::firstOrCreate([
             'age_bien' => $requete['nature_mutation'], 
-            'type_bien' => $requete['type_local'], 
+            'type_bien' => $requete['type_local'],
+            'nombre_pieces' => $requete['nombre_pieces_principales'], 
             'prix_min' => $requete['prix_min'], 
             'prix_max' => $requete['prix_max'],
             'user_id' => $id_user, 
@@ -112,21 +113,37 @@ class requeteMapController extends Controller { // Controller pour la recherche 
             'nom_commune' => $requete['nom_commune'] 
             ]);
 
-            //requete avec les paramètres pour l'analyse des biens
-            $analyse = DB::select("SELECT annee_mutation, nature_mutation, categorie, nb_transactions,
-                avg_prix_m2, avg_surface_m2, code_departement, code_postal, code_commune, type_local
-                FROM prixneocy
-                WHERE 
-                    code_postal = :code_postal
-                    AND nature_mutation = :nature_mutation
-                    AND type_local = :type_local
-                ORDER BY annee_mutation LIMIT 25",
+            //requete avec les paramètres pour la population
+            $communes = DB::select("SELECT code_commune, code_postal, nom_commune, population
+            FROM communes
+            WHERE 
+                code_commune = :code_commune
+                AND code_postal = :code_postal",
 
-                ['code_postal' => $requete['code_postal'],
-                'nature_mutation' => $requete['nature_mutation'],
-                'type_local' => $requete['type_local'] ]
+            [ 'code_commune' => $resultat[0]->code_commune, //on recupère le code commune de la requete précédente
+            'code_postal' => $requete['code_postal'] ]
             );
 
+            //dd($communes);
+
+            //requete avec les paramètres pour l'analyse des biens
+            $analyses = DB::select("SELECT code_departement, code_postal, code_commune, type_local, annee_mutation, nature_mutation, 
+            categorie, nb_transactions, avg_prix_m2, avg_surface_m2
+            FROM prixneocy
+            WHERE 
+                code_postal = :code_postal
+                AND code_commune = :code_commune
+                AND nature_mutation = :nature_mutation
+                AND type_local = :type_local
+                AND categorie = :categorie
+            ORDER BY annee_mutation",
+
+            ['code_postal' => $requete['code_postal'],
+            'code_commune' => $communes[0]->code_commune, //on recupère le code commune de la requete précédente
+            'nature_mutation' => $requete['nature_mutation'],
+            'type_local' => $requete['type_local'],
+            'categorie' => 'T'.+$requete['nombre_pieces_principales'] ] //categorie = nb pièces dans la requete
+            );
             
             session(['res' => $resultat]); 
             session(['req' => [
@@ -134,14 +151,14 @@ class requeteMapController extends Controller { // Controller pour la recherche 
                 'latitude' => $requete['latitude'], 
                 'adresse' => $requete['adresse']
             ]]);
-            return view('map');
+            return view('map', [ 'analyses' => $analyses, 'communes' => $communes]);
         } catch(\Exception $e) {
             $erreur = "Essayez de rentrer une autre adresse.";
             return view('rechercheBienGeocoder', ['erreur' => $erreur]);
         }
     }
 
-    //quand l'utilisateur veut voir sa requete à partir de sa liste de requetes
+    //quand l'utilisateur veut voir sa requete à partir de sa liste de requetes ///////////////////////////////////////////////////
     public function voirRequete($req_id)
     {
         $requete = DB::table('requetes')->find($req_id); //on cherche dans la BDD sa requete
@@ -183,21 +200,17 @@ class requeteMapController extends Controller { // Controller pour la recherche 
             'prix_max' => $prix_max ]
         );
 
-        //dd($resultat[1]->code_postal);
         //dd($resultat[1]->code_commune);
-        //dd($resultat[1]->nom_commune);
 
         //requete avec les paramètres pour la population
         $communes = DB::select("SELECT code_commune, code_postal, nom_commune, population
         FROM communes
         WHERE 
             code_commune = :code_commune
-            AND code_postal = :code_postal
-            AND nom_commune = :nom_commune",
+            AND code_postal = :code_postal",
 
-        [ 'code_commune' => $resultat[1]->code_commune, //on recupère le code commune de la requete précédente
-        'code_postal' => $resultat[1]->code_postal,
-        'nom_commune' => $resultat[1]->nom_commune ]
+        [ 'code_commune' => $resultat[0]->code_commune, //on recupère le code commune de la requete précédente
+        'code_postal' => $code_postal ]
         );
 
         //requete avec les paramètres pour l'analyse des biens
@@ -213,13 +226,11 @@ class requeteMapController extends Controller { // Controller pour la recherche 
         ORDER BY annee_mutation",
 
         ['code_postal' => $code_postal,
-        'code_commune' => $resultat[1]->code_commune,
+        'code_commune' => $communes[0]->code_commune, //on recupère le code commune de la requete précédente
         'nature_mutation' => $nature_mutation,
         'type_local' => $type_bien,
         'categorie' => 'T'.+$nb_pieces ] //categorie = nb pièces dans la requete
         );
-
-        //dd($analyses);
 
         session(['res' => $resultat]); 
         session(['req' => [
