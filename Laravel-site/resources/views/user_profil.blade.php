@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@extends('user_update_pwd')
+@extends('user_update_ajax')
 
 @section('contenu')
 
