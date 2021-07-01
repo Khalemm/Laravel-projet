@@ -35,28 +35,60 @@ class UserController extends Controller
 
     public function updateProfil(Request $requete) //mettre à jour le profil de l'utilisateur
     {
-        $user =  auth()->user();
-        $user->update([
-            'name' => $requete->input(['name']),
-            'last_name' => $requete->input(['last_name']),
-            'tel_fixe' => $requete->input(['tel_fixe']),
-            'tel_mobile' => $requete->input(['tel_mobile'])
+        $validator = Validator::make($requete->all(),[ //Valider le formulaire
+            'name'=>'required|regex:/^[a-zA-Z]+$/u',
+            'last_name'=>'required|regex:/^[a-zA-Z]+$/u',
+            'tel_fixe'=>'digits:10|nullable',
+            'tel_mobile' =>'digits:10|nullable'
+            ],[
+            //controles de validité
+            'name.required'=>'Veuillez renseigner ce champ.',
+            'last_name.required'=>'Veuillez renseigner ce champ.',
+            'name.regex'=>'Champ non valide.',
+            'last_name.regex'=>'Champ non valide.',
+            'tel_fixe.digits'=>'Veuillez entrer 10 valeurs.',
+            'tel_mobile.digits'=>'Veuillez entrer 10 valeurs.',
         ]);
 
-        return redirect()->back()->withSuccess('Votre profil a été mis à jour');
+        if( !$validator->passes() ){ //si le form n'est pas valide on a des messages d'erreur
+            return response()->json(['status'=>0,'error'=>$validator->errors()->toArray()]);
+        }else{
+        //modification
+        $update = auth()->user()->update([
+            'name' => $requete->name,
+            'last_name' => $requete->last_name,
+            'tel_fixe' => $requete->tel_fixe,
+            'tel_mobile' => $requete->tel_mobile
+        ]);
+        return response()->json(['status'=>1,'msg'=>'Votre profil a été mis à jour']);
+        }
     }
 
     public function updateEntreprise(Request $requete) //mettre à jour les infos de son entreprise
     {
-        $user =  auth()->user();
-        $user->update([
-            'nom_entreprise' => $requete->input(['nom_entreprise']),
-            'adresse_entreprise' => $requete->input(['adresse_entreprise']),
-            'code_postal' => $requete->input(['code_postal']),
-            'ville_entreprise' => $requete->input(['ville_entreprise'])
+        $validator = Validator::make($requete->all(),[ //Valider le formulaire
+            'nom_entreprise'=>'string|nullable',
+            'adresse_entreprise'=>'string|nullable',
+            'code_postal'=>'digits:5|nullable',
+            'ville_entreprise' =>"regex:/^[a-zA-Z' -]+$/u|nullable"
+            ],[
+            //controles de validité
+            'code_postal.digits'=>'Veuillez entrer 5 valeurs.',
+            'ville_entreprise.regex'=>'Champ non valide.',
         ]);
 
-        return redirect()->back()->withSuccess('Votre entreprise a été mise à jour');
+        if( !$validator->passes() ){ //si le form n'est pas valide on a des messages d'erreur
+            return response()->json(['status'=>0,'error'=>$validator->errors()->toArray()]);
+        }else{
+        //modification
+        $update = auth()->user()->update([
+            'nom_entreprise' => $requete->nom_entreprise,
+            'adresse_entreprise' => $requete->adresse_entreprise,
+            'code_postal' => $requete->code_postal,
+            'ville_entreprise' => $requete->ville_entreprise
+        ]);
+        return response()->json(['status'=>1,'msg'=>'Votre entreprise a été mise à jour']);
+        }
     }
 
     public function updateAbonnement($id) //mettre à jour son abonnement
@@ -91,12 +123,12 @@ class UserController extends Controller
             return response()->json(['status'=>0,'error'=>$validator->errors()->toArray()]);
         }else{
         //changement du mdp
-        $update = User::find(Auth::user()->id)->update(['password'=>Hash::make($requete->newpassword)]);
+        $update = auth()->user()->update(['password'=>Hash::make($requete->newpassword)]);
 
         if( !$update ){ //message d'erreur si changement échoué
             return redirect()->back()->with('error','Changement du mot de passe échoué');
         }else{
-            return redirect()->back()->withSuccess('Votre mot de passe a bien été mis à jour');
+            return response()->json(['status'=>1,'msg'=>'Votre mot de passe a bien été mis à jour']);
         }
         }
     }

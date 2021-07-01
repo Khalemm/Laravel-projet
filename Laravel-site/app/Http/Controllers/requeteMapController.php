@@ -124,6 +124,16 @@ class requeteMapController extends Controller { // Controller pour la recherche 
             'code_postal' => $requete['code_postal'] ]
             );
 
+            //ça fonctionne pas, il trouve pas la commune
+            /*dd($requete['nom_commune']);
+            $communes = DB::select("SELECT code_commune, code_postal, nom_commune, population
+            FROM communes
+            WHERE 
+                nom_commune LIKE ?
+                AND code_postal = ?",
+
+            [ $requete['nom_commune'], $requete['code_postal'] ] //on recupère le code commune de la requete précédente
+            );*/
             //dd($communes);
 
             //requete avec les paramètres pour l'analyse des biens
@@ -200,8 +210,6 @@ class requeteMapController extends Controller { // Controller pour la recherche 
             'prix_max' => $prix_max ]
         );
 
-        //dd($resultat[1]->code_commune);
-
         //requete avec les paramètres pour la population
         $communes = DB::select("SELECT code_commune, code_postal, nom_commune, population
         FROM communes
@@ -212,6 +220,19 @@ class requeteMapController extends Controller { // Controller pour la recherche 
         [ 'code_commune' => $resultat[0]->code_commune, //on recupère le code commune de la requete précédente
         'code_postal' => $code_postal ]
         );
+        
+        //ça fonctionne pas, il trouve pas la commune
+        /*$nom_commune = $requete->nom_commune;
+        dd($nom_commune);
+        $communes = DB::select("SELECT code_commune, code_postal, nom_commune, population
+        FROM communes
+        WHERE 
+            nom_commune LIKE ?
+            AND code_postal = ?",
+
+        [ $nom_commune, $code_postal ] //on recupère le code commune de la requete précédente
+        );*/
+        //dd($communes);
 
         //requete avec les paramètres pour l'analyse des biens
         $analyses = DB::select("SELECT code_departement, code_postal, code_commune, type_local, annee_mutation, nature_mutation, 
@@ -219,7 +240,7 @@ class requeteMapController extends Controller { // Controller pour la recherche 
         FROM prixneocy
         WHERE 
             code_postal = :code_postal
-            AND code_commune LIKE :code_commune
+            AND code_commune = :code_commune
             AND nature_mutation = :nature_mutation
             AND type_local = :type_local
             AND categorie = :categorie

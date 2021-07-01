@@ -11,7 +11,7 @@ class AdminController extends Controller
     public function __construct()
     {
         $this->middleware('auth'); //faut se connecter pour avoir accès
-        $this->middleware('admin'); //accès aux admin
+        $this->middleware('admin'); //accès seulement aux admin
     }
 
     public function administration() {
@@ -26,7 +26,7 @@ class AdminController extends Controller
         $user->active = 1; //activation du compte
         $user->save();
 
-        return redirect()->back()->withSuccess('Le compte de l`utilisateur est activé');
+        return redirect()->back()->withSuccess("Le compte de l'utilisateur est activé");
     }
 
     public function desactiverUser($id)
@@ -35,7 +35,7 @@ class AdminController extends Controller
         $user->active = 0; //desactive le compte
         $user->save();
 
-        return redirect()->back()->with('info',"Le compte de l`utilisateur est desactivé");
+        return redirect()->back()->with('info',"Le compte de l'utilisateur est desactivé");
     }
 
     public function supprimerUser($id)
@@ -53,7 +53,7 @@ class AdminController extends Controller
         $user->admin = 1; //rend un utilisateur administrateur et active son compte
         $user->save();
 
-        return redirect()->back()->withSuccess('L`utilisateur possède maintenant le role d`administrateur');
+        return redirect()->back()->withSuccess("L'utilisateur possède maintenant le role d'administrateur");
     }
 
     public function supprimerUsersNonConfirmes()

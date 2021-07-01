@@ -40,7 +40,6 @@ Route::get('/email/verification-notification', function (Request $request) { //o
     return back()->with('info','Un nouveau lien de vérification vous a été envoyé par mail.');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
-
 //quand le compte est activé on a accès aux routes
 Route::middleware(['active'])->group( function() {
 

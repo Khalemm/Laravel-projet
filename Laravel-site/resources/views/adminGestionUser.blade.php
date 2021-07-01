@@ -21,7 +21,8 @@ Administration
 @endif
 
 <br>
-<ul><li><a href="{{ route('user.non-confirme' ) }}" onclick="return confirm('Confirmer la suppression des utilisateurs')" class="btn btn-danger">Supprimer les utilisateurs non confirmés</a></li></ul>
+<ul><li><a href="{{ route('user.non-confirme' ) }}" onclick="return confirm('Confirmer la suppression des utilisateurs')" 
+class="btn btn-danger">Supprimer les utilisateurs non vérifiés</a></li></ul>
 <hr>
 <div class="row margin-fix">
     @foreach ($users as $user)

@@ -17,7 +17,7 @@
 
                                 <div class="col-md-6">
                                     <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" 
-                                    pattern="[a-zA-Z]+" title="Pas de valeurs numériques" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                                    value="{{ old('name') }}" required autocomplete="name" autofocus>
  
                                     @error('name')
                                         <span class="invalid-feedback" role="alert">

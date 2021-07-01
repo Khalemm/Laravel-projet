@@ -1,22 +1,24 @@
 @extends('layouts.app')
 
-@extends('user_update_ajax')
+@extends('user_profil_ajax')
 
 @section('contenu')
 
+<div class="alert"></div>
+
 @if(Session::has('success'))
     <div class="alert alert-success">
-        <button type="button" class="close" data-dismiss="alert">×</button>   
+        <button type="button" class="close" data-dismiss="alert">×</button>    
         {{Session::get('success')}}
     </div>
 @endif
 
-@if(Session::has('error'))
+<!--@if(Session::has('error'))
     <div class="alert alert-warning">
         <button type="button" class="close" data-dismiss="alert">×</button>   
         {{Session::get('error')}}
     </div>
-@endif
+@endif-->
 
 <main class="py-4">
     @yield('content')
@@ -44,37 +46,15 @@
                 <!---------------------------------------- formulaire profil-------------------------------------->
                     <div class="tab-pane fade show active" id="profil" role="tabpanel" aria-labelledby="profil-tab">
                         <div class="card-body">
-                            <form method="POST" action="{{ route('user.update-profil') }}">
+                            <form method="POST" action="{{ route('user.update-profil') }}"  id="updateProfil">
                                 @csrf
                                 <div class="form-group row">
                                     <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Prénom') }}</label>
 
                                     <div class="col-md-6">
                                         <input id="name" type="text" class="form-control" name="name" 
-                                        pattern="[a-zA-Z]+" title="Pas de valeurs numériques" value="{{ $user->name }}" autocomplete="name" required >
-                                        <script>
-                                        var input = document.getElementById('name');
-                                        var form  = document.getElementById('form');
-                                        var elem  = document.createElement('div');
-                                        elem.id = 'notify';
-                                        elem.style.display = 'none';
-                                        form.appendChild(elem);
-
-                                        input.addEventListener('invalid', function(event){
-                                            event.preventDefault();
-                                            if ( ! event.target.validity.valid ) {
-                                                elem.textContent   = 'Username should only contain lowercase letters e.g. john';
-                                                elem.className     = 'error';
-                                                elem.style.display = 'block';
-                                        
-                                                input.className    = 'invalid animated shake';
-                                            }
-                                            if ( 'block' === elem.style.display ) {
-                                                input.className = '';
-                                                elem.style.display = 'none';
-                                            }
-                                        });
-                                        </script>
+                                        value="{{ $user->name }}" autocomplete="name" >
+                                        <span class="text-danger error-text name_error"></span>
                                     </div>
                                 </div>
 
@@ -83,8 +63,8 @@
 
                                     <div class="col-md-6">
                                         <input id="last_name" type="text" class="form-control" name="last_name" 
-                                        pattern="[a-zA-Z]+" title="Pas de valeurs numériques" value="{{ $user->last_name }}" autocomplete="last_name" required >
-                                        
+                                        value="{{ $user->last_name }}" autocomplete="last_name" >
+                                        <span class="text-danger error-text last_name_error"></span>
                                     </div>
                                 </div>
 
@@ -92,10 +72,9 @@
                                     <label for="tel_fixe" class="col-md-4 col-form-label text-md-right">{{ __('Téléphone fixe') }}</label>
 
                                     <div class="col-md-6">
-                                        <input id="tel_fixe" type="tel" class="form-control" name="tel_fixe" pattern="[0-9]{10}" 
-                                        title="Veuillez entrer 10 valeurs" maxlength="10" 
+                                        <input id="tel_fixe" type="tel" class="form-control" name="tel_fixe" maxlength="10" 
                                         value="{{ $user->tel_fixe }}" autocomplete="tel_fixe" >
-                                        
+                                        <span class="text-danger error-text tel_fixe_error"></span>
                                     </div>
                                 </div>
 
@@ -103,10 +82,9 @@
                                     <label for="tel_mobile" class="col-md-4 col-form-label text-md-right">{{ __('Téléphone portable') }}</label>
 
                                     <div class="col-md-6">
-                                        <input id="tel_mobile" type="tel" class="form-control" name="tel_mobile" pattern="[0-9]{10}" 
-                                        title="Veuillez entrer 10 valeurs" maxlength="10" 
+                                        <input id="tel_mobile" type="tel" class="form-control" name="tel_mobile" maxlength="10" 
                                         value="{{ $user->tel_mobile }}" autocomplete="tel_mobile" >
-                                        
+                                        <span class="text-danger error-text tel_mobile_error"></span>
                                     </div>
                                 </div>
 
@@ -124,7 +102,7 @@
                     <div class="tab-pane fade" id="ent" role="tabpanel" aria-labelledby="ent-tab">
                     <!------------------------------- formulaire infos entreprise ---------------------------------->
                         <div class="card-body">
-                            <form method="POST" action="{{ route('user.update-entreprise') }}">
+                            <form method="POST" action="{{ route('user.update-entreprise') }}" id="updateEntreprise">
                                 @csrf
 
                                 <div class="form-group row">
@@ -133,7 +111,7 @@
                                     <div class="col-md-6">
                                         <input id="nom_entreprise" type="name" class="form-control" 
                                         name="nom_entreprise" value="{{ $user->nom_entreprise }}" autocomplete="nom_entreprise" >
-                                        
+                                        <span class="text-danger error-text nom_entreprise_error"></span>
                                     </div>
                                 </div>
 
@@ -143,7 +121,7 @@
                                     <div class="col-md-6">
                                         <input id="adresse_entreprise" type="text" class="form-control" name="adresse_entreprise"
                                         value="{{ $user->adresse_entreprise }}" autocomplete="adresse_entreprise" >
-                                        
+                                        <span class="text-danger error-text adresse_entreprise_error"></span>
                                     </div>
                                 </div>
 
@@ -151,10 +129,9 @@
                                     <label for="code_postal" class="col-md-4 col-form-label text-md-right">{{ __('Code Postal') }}</label>
 
                                     <div class="col-md-6">
-                                        <input id="code_postal" type="text" class="form-control" maxlength="5" pattern="[0-9]{5}" 
-                                        title="Veuillez entrer 5 valeurs" placeholder="75001"
+                                        <input id="code_postal" type="text" class="form-control" maxlength="5" placeholder="75001"
                                         name="code_postal" value="{{ $user->code_postal }}" autocomplete="code_postal" >
-                                        
+                                        <span class="text-danger error-text code_postal_error"></span>
                                     </div>
                                 </div>
 
@@ -164,7 +141,7 @@
                                     <div class="col-md-6">
                                         <input id="ville_entreprise" type="text" class="form-control" pattern="[A-Za-z' -]+"
                                         name="ville_entreprise" value="{{ $user->ville_entreprise }}" autocomplete="ville_entreprise">
-                                        
+                                        <span class="text-danger error-text ville_entreprise_error"></span>
                                     </div>
                                 </div>
 
