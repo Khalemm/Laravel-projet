@@ -231,7 +231,6 @@ class requeteMapController extends Controller { // Controller pour la recherche 
         'type_local' => $type_bien,
         'categorie' => 'T'.+$nb_pieces ] //categorie = nb pièces dans la requete
         );
-
         session(['res' => $resultat]); 
         session(['req' => [
             'longitude' => $requete->longitude, 
