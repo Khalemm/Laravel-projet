@@ -210,27 +210,35 @@ class requeteMapController extends Controller { // Controller pour la recherche 
             'prix_max' => $prix_max ]
         );
 
-        //requete avec les paramètres pour la population
-        /*$communes = DB::select("SELECT code_commune, code_postal, nom_commune, population
+        //requete pour trouver les infos de la commune
+        $commune = DB::select("SELECT code_commune, code_postal, nom_commune, population
         FROM communes
         WHERE 
-            code_commune = :code_commune
-            AND code_postal = :code_postal",
+            code_postal = :code_postal",
 
-        [ 'code_commune' => $resultat[0]->code_commune, //on recupère le code commune de la requete précédente
-        'code_postal' => $code_postal ]
-        );*/
-        
-        //ça fonctionne pas, il trouve pas la commune car pas le meme ordre des mots, les accents, manque de données
-        $communes = DB::select("SELECT code_commune, code_postal, UPPER(nom_commune) as nom_commune, population
-        FROM communes
-        WHERE 
-            nom_commune LIKE :nom_commune
-            AND code_postal = :code_postal",
-
-        [ 'nom_commune' => '%'.$nom_commune.'%', 
-        'code_postal' => $code_postal ] //on recupère le code commune de la requete précédente
+        [ 'code_postal' => $code_postal ] //en paramètre le code postal de la requete de l'utilisateur
         );
+        $code_commune = $commune[0]->code_commune;
+        
+        //nombre de lignes de la requete
+        $count_commune = count((array)$commune);
+
+        //dans le cas où un code postal appartient à plusieurs communes
+        if($count_commune > 1)
+        {
+            $commune_exacte = DB::select("SELECT code_commune, code_postal, nom_commune, population
+            FROM communes
+            WHERE 
+                nom_commune LIKE :nom_commune
+                AND code_postal = :code_postal",
+
+            [ 'nom_commune' => '%'.$nom_commune.'%', 
+            'code_postal' => $code_postal ] //en paramètre le code postal et le nom commune de la requete de l'utilisateur
+            );
+
+            $code_commune = $commune_exacte[0]->code_commune;
+            $commune = $commune_exacte;
+        }
 
         //requete avec les paramètres pour l'analyse des biens
         $analyses = DB::select("SELECT code_departement, code_postal, code_commune, type_local, annee_mutation, nature_mutation, 
@@ -245,7 +253,7 @@ class requeteMapController extends Controller { // Controller pour la recherche 
         ORDER BY annee_mutation",
 
         ['code_postal' => $code_postal,
-        'code_commune' => $communes[0]->code_commune, //on recupère le code commune de la requete précédente //communes[0]->code_commune
+        'code_commune' => $code_commune, //on recupère le code commune de la requete précédente
         'nature_mutation' => $nature_mutation,
         'type_local' => $type_bien,
         'categorie' => 'T'.$nb_pieces.'%' ] //categorie = nb pièces dans la requete
@@ -257,7 +265,7 @@ class requeteMapController extends Controller { // Controller pour la recherche 
             'latitude' => $requete->latitude, 
             'adresse' => $requete->adresse
         ]]);
-        return view('map', [ 'analyses' => $analyses, 'communes' => $communes]);
+        return view('map', [ 'analyses' => $analyses, 'commune' => $commune]);
     }
 
     public function supprimerRequete($reqid) //l'utilisateur supprime une requete

@@ -35,8 +35,8 @@ crossorigin=""/>
       <div class="analyse-biens col-4">
       <br>
       <h2>Analyse des biens</h2>
-      @forelse ($communes as $commune)
-        <p>Population dans la commune {{$commune->nom_commune}} : {{preg_replace('/(?<=\d)(?=(\d{3})+$)/', ' ', $commune->population)}}</p>
+      @forelse ($commune as $info_commune)
+        <p>Population dans la commune {{$info_commune->nom_commune}} : {{preg_replace('/(?<=\d)(?=(\d{3})+$)/', ' ', $info_commune->population)}}</p>
       @empty
       <span>Les données sur la population de la commune ne sont pas encore disponibles.</span>
       @endforelse
