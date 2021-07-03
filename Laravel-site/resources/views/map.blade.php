@@ -34,15 +34,17 @@ crossorigin=""/>
       <!-- analyse des biens -->
       <div class="analyse-biens col-4">
       <br>
-      @foreach ($communes as $commune)
-        <h2>Analyse des biens</h2>
-        <p>Population dans la commune {{$commune->nom_commune}} : {{$commune->population}}</p>
-      @endforeach
+      <h2>Analyse des biens</h2>
+      @forelse ($communes as $commune)
+        <p>Population dans la commune {{$commune->nom_commune}} : {{preg_replace('/(?<=\d)(?=(\d{3})+$)/', ' ', $commune->population)}}</p>
+      @empty
+      <span>Les données sur la population de la commune ne sont pas encore disponibles.</span>
+      @endforelse
         <table class="table caption-top">
           <thead>
             <tr>
               <th scope="col">Annee</th>
-              <th scope="col">Cat</th>
+              <th scope="col">Catégorie</th>
               <th scope="col">Code Postal</th>
               <th scope="col">Code Commune</th>
               <th scope="col">Moyenne prix m2</th>
@@ -57,7 +59,7 @@ crossorigin=""/>
               <td>{{$analyse->categorie}}</td>
               <td>{{$analyse->code_postal}}</td>
               <td>{{$analyse->code_commune}}</td>
-              <td>{{$analyse->avg_prix_m2}}€</td>
+              <td>{{preg_replace('/(?<=\d)(?=(\d{3})+$)/', ' ', $analyse->avg_prix_m2)}}€</td>
               <td>{{$analyse->avg_surface_m2}}</td>
               <td>{{$analyse->nb_transactions}}</td>
             </tr>

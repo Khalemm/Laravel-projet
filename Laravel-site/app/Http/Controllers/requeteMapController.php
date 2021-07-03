@@ -114,7 +114,7 @@ class requeteMapController extends Controller { // Controller pour la recherche 
             ]);
 
             //requete avec les paramètres pour la population
-            $communes = DB::select("SELECT code_commune, code_postal, nom_commune, population
+            /*$communes = DB::select("SELECT code_commune, code_postal, nom_commune, population
             FROM communes
             WHERE 
                 code_commune = :code_commune
@@ -122,19 +122,18 @@ class requeteMapController extends Controller { // Controller pour la recherche 
 
             [ 'code_commune' => $resultat[0]->code_commune, //on recupère le code commune de la requete précédente
             'code_postal' => $requete['code_postal'] ]
-            );
+            );*/
 
-            //ça fonctionne pas, il trouve pas la commune
-            /*dd($requete['nom_commune']);
+            //ça fonctionne pas, il trouve pas la commune car pas le meme ordre des mots, manque de données
             $communes = DB::select("SELECT code_commune, code_postal, nom_commune, population
             FROM communes
             WHERE 
-                nom_commune LIKE ?
-                AND code_postal = ?",
+                nom_commune LIKE :nom_commune
+                AND code_postal = :code_postal",
 
-            [ $requete['nom_commune'], $requete['code_postal'] ] //on recupère le code commune de la requete précédente
-            );*/
-            //dd($communes);
+            [ 'nom_commune' => '%'.$requete['nom_commune'].'%', 
+            'code_postal' => $requete['code_postal'] ] //on recupère le code commune de la requete précédente
+            );
 
             //requete avec les paramètres pour l'analyse des biens
             $analyses = DB::select("SELECT code_departement, code_postal, code_commune, type_local, annee_mutation, nature_mutation, 
@@ -145,14 +144,14 @@ class requeteMapController extends Controller { // Controller pour la recherche 
                 AND code_commune = :code_commune
                 AND nature_mutation = :nature_mutation
                 AND type_local = :type_local
-                AND categorie = :categorie
+                AND categorie LIKE :categorie
             ORDER BY annee_mutation",
 
             ['code_postal' => $requete['code_postal'],
-            'code_commune' => $communes[0]->code_commune, //on recupère le code commune de la requete précédente
+            'code_commune' => $communes[0]->code_commune, //on recupère le code commune de la requete précédente $communes[0]->code_commune
             'nature_mutation' => $requete['nature_mutation'],
             'type_local' => $requete['type_local'],
-            'categorie' => 'T'.+$requete['nombre_pieces_principales'] ] //categorie = nb pièces dans la requete
+            'categorie' => 'T'.$requete['nombre_pieces_principales'].'%' ] //categorie = nb pièces dans la requete
             );
             
             session(['res' => $resultat]); 
@@ -179,12 +178,13 @@ class requeteMapController extends Controller { // Controller pour la recherche 
         $prix_min = $requete->prix_min;
         $prix_max = $requete->prix_max;
         
+        $nom_commune = $requete->nom_commune;
         $code_postal = $requete->code_postal;
         $adresse = $requete->adresse;
         $longitude = $requete->longitude;
         $latitude = $requete->latitude;
 
-        //requete avec les paramètres pour avoir la liste de biens 
+        //meme requete avec les paramètres pour avoir la liste de biens 
         $resultat = DB::select("SELECT id_mutation , date_mutation, annee_mutation, nature_mutation, valeur_fonciere,
             CONCAT(adresse_numero, adresse_suffixe, ' ', adresse_nom_voie) as adresse,
             code_postal, code_commune, nom_commune, id_parcelle,  type_local, 
@@ -211,7 +211,7 @@ class requeteMapController extends Controller { // Controller pour la recherche 
         );
 
         //requete avec les paramètres pour la population
-        $communes = DB::select("SELECT code_commune, code_postal, nom_commune, population
+        /*$communes = DB::select("SELECT code_commune, code_postal, nom_commune, population
         FROM communes
         WHERE 
             code_commune = :code_commune
@@ -219,20 +219,18 @@ class requeteMapController extends Controller { // Controller pour la recherche 
 
         [ 'code_commune' => $resultat[0]->code_commune, //on recupère le code commune de la requete précédente
         'code_postal' => $code_postal ]
-        );
+        );*/
         
-        //ça fonctionne pas, il trouve pas la commune
-        /*$nom_commune = $requete->nom_commune;
-        dd($nom_commune);
-        $communes = DB::select("SELECT code_commune, code_postal, nom_commune, population
+        //ça fonctionne pas, il trouve pas la commune car pas le meme ordre des mots, les accents, manque de données
+        $communes = DB::select("SELECT code_commune, code_postal, UPPER(nom_commune) as nom_commune, population
         FROM communes
         WHERE 
-            nom_commune LIKE ?
-            AND code_postal = ?",
+            nom_commune LIKE :nom_commune
+            AND code_postal = :code_postal",
 
-        [ $nom_commune, $code_postal ] //on recupère le code commune de la requete précédente
-        );*/
-        //dd($communes);
+        [ 'nom_commune' => '%'.$nom_commune.'%', 
+        'code_postal' => $code_postal ] //on recupère le code commune de la requete précédente
+        );
 
         //requete avec les paramètres pour l'analyse des biens
         $analyses = DB::select("SELECT code_departement, code_postal, code_commune, type_local, annee_mutation, nature_mutation, 
@@ -243,14 +241,14 @@ class requeteMapController extends Controller { // Controller pour la recherche 
             AND code_commune = :code_commune
             AND nature_mutation = :nature_mutation
             AND type_local = :type_local
-            AND categorie = :categorie
+            AND categorie LIKE :categorie
         ORDER BY annee_mutation",
 
         ['code_postal' => $code_postal,
-        'code_commune' => $communes[0]->code_commune, //on recupère le code commune de la requete précédente
+        'code_commune' => $communes[0]->code_commune, //on recupère le code commune de la requete précédente //communes[0]->code_commune
         'nature_mutation' => $nature_mutation,
         'type_local' => $type_bien,
-        'categorie' => 'T'.+$nb_pieces ] //categorie = nb pièces dans la requete
+        'categorie' => 'T'.$nb_pieces.'%' ] //categorie = nb pièces dans la requete
         );
 
         session(['res' => $resultat]); 

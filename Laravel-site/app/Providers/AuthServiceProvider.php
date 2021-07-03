@@ -37,7 +37,7 @@ class AuthServiceProvider extends ServiceProvider
                 ->subject('Bienvenue chez Laravel-site')
                 ->greeting('Bonjour,')
                 ->line('Veuillez cliquer le bouton ci-dessous pour vérifier votre adresse mail.')
-                ->action('Verify Email Address', $url)
+                ->action('Vérification', $url)
                 ->line('Votre compte sera activé d`ici quelques jours.')
                 ->line('Merci !');
         });
