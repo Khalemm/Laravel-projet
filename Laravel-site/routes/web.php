@@ -71,10 +71,11 @@ Route::middleware(['active'])->group( function() {
     Route::post('user/profil', 'UserController@updateProfil')->name('user.update-profil');
     Route::post('user/profil/entreprise', 'UserController@updateEntreprise')->name('user.update-entreprise');
     Route::post('user/parametres', 'UserController@updateMdp')->name('user.update-mdp');
+    Route::post('user/abonnement', 'UserController@updateAbonnement')->name('user.update-abonnement');
+    Route::get('user/stop/abonnement', 'UserController@supprimerAbonnement')->name('user.stop-abonnement');
 
     //route abonnements
-    Route::get('abonnements', 'AbonnementController@showAbonnement')->name('abonnements');
-    Route::get('user/profil/abonnement/{id}', 'UserController@updateAbonnement')->name('user.update-abonnement');
+    //Route::get('abonnements', 'AbonnementController@showAbonnement')->name('abonnements');
 
 });
 

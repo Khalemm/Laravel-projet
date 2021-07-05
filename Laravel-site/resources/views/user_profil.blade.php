@@ -162,31 +162,46 @@
                             <p class="card-text" >
                                 Abonnement : 
                                 @if ($user->abonnement)
-                                <a href="{{ route('user.desactive', [ 'id' => $user->id] ) }}" class="btn btn-secondary">Arreter</a>
-                                Date début : {{ $user->date_abonnement }} <br>
-                                Date de fin : {{ $user->date_fin_abonnement }} <br>
-                                <a href="{{ route('abonnements') }}" class="btn btn-danger" role="button" data-bs-toggle="button">
-                                    Arreter votre abonnement </a>
-
+                                Oui <br>
+                                Date début : {{ date_format(new DateTime($user->date_abonnement), 'd/m/y')}} <br>
+                                Date de fin : {{ date_format(new DateTime($user->date_fin_abonnement), 'd/m/y')}} <br>
+                                <div class="form-group row mb-0">
+                                    <div class="col-md-8 offset-md-4">
+                                        <a href="{{ route('user.stop-abonnement') }}" class="btn btn-danger" role="button" data-bs-toggle="button">
+                                        Arreter votre abonnement </a>
+                                    </div>
+                                </div>   
                                 @else
-                                <a href="{{ route('user.active', [ 'id' => $user->id] ) }}" class="btn btn-success">Commencer</a>
-                                
+                                <form method="POST" action="{{ route('user.update-abonnement') }}">
+                                    @csrf
+                                    <div class="form-group">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="oui" id="oui" value="option1">
+                                            <label class="form-check-label" for="inlineRadio1">oui</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="non" id="non" value="option2" checked>
+                                            <label class="form-check-label" for="inlineRadio2">non</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Mensuel ou annuel<span class="text-danger">*</span></label>
+                                        <select name="date_fin_abonnement" id="date_fin_abonnement" class="form-control form_data">
+                                            <option value="mensuel">Mensuel</option>
+                                            <option value="annuel">Annuel</option>
+                                        </select>
+                                        <span id="type_local_error" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group row mb-0">
+                                        <div class="col-md-8 offset-md-4">
+                                            <button type="submit" class="btn btn-success">
+                                                {{ __('Commencer') }}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
                                 @endif 
                             </p>
-                            <form method="POST" action="{{ route('user.update-mdp') }}">
-                                @csrf
-                                <div class="form-group">
-                                    <label>Mensuel ou annuel<span class="text-danger">*</span></label>
-                                    <select name="date_fin_abonnement" id="date_fin_abonnement" class="form-control form_data">
-                                        <option value="mensuel">Mensuel</option>
-                                        <option value="annuel">Annuel</option>
-                                    </select>
-                                    <span id="type_local_error" class="text-danger"></span>
-                                </div>
-                            </form>
-                            <a href="{{ route('abonnements') }}" class="btn btn-primary" role="button" data-bs-toggle="button">
-                                Changer votre abonnement </a>
-                            <a href="{{ route('user.update-abonnement', [ 'id' => $user->abonnement] ) }}" class="btn btn-primary">Choisir</a>
                         </div>
                     
                     </div>

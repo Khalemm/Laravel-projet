@@ -89,46 +89,38 @@ class UserController extends Controller
         }
     }
 
-    public function updateAbonnement() //mettre à jour son abonnement
+    public function updateAbonnement(Request $requete)
     {
-        $user =  auth()->user();
-        if($user->abonnement == 0)
+        $user = auth()->user();
+
+        if( $requete->input(['oui']) )
         {
             $user->abonnement = 1;
             $user->date_abonnement = date('Y-m-d H:i:s');
-        }else
+            
+        }
+
+        $date_fin_abonnement = $requete->input(['date_fin_abonnement']);
+        if($date_fin_abonnement == 'mensuel')
         {
-            $user->abonnement = 0;
-            $user->date_abonnement = null;
+            $user->date_fin_abonnement = date('Y-m-d', strtotime(date("Y-m-d", time()) . " + 1 month"));
+        }else{
+            $user->date_fin_abonnement = date('Y-m-d', strtotime(date("Y-m-d", time()) . " + 1 year"));
         }
         $user->save();
 
-        $user->date_fin_abonnement = date('Y-m-d', strtotime(date("Y-m-d", time()) . " + 1 month"));
-        $user->date_fin_abonnement = date('Y-m-d', strtotime(date("Y-m-d", time()) . " + 365 day"));
-
-        //on revient à la page du profil
-        return redirect()->action([UserController::class, 'form_update'])->withSuccess('Votre abonnement a été mis à jour');
+        return redirect()->back()->withSuccess("Votre abonnement a été mis à jour");
     }
 
-    public function supprimerAbonnement() //mettre à jour son abonnement
+    public function supprimerAbonnement()
     {
-        $user =  auth()->user();
-        if($user->abonnement == 0)
-        {
-            $user->abonnement = 1;
-            $user->date_abonnement = date('Y-m-d H:i:s');
-        }else
-        {
-            $user->abonnement = 0;
-            $user->date_abonnement = null;
-        }
+        $user = auth()->user();
+        $user->abonnement = 0;
+        $user->date_abonnement = null;
+        $user->date_fin_abonnement = null;
         $user->save();
 
-        $user->date_fin_abonnement = date('Y-m-d H:i:s', strtotime('+4 weeks', $user->date_abonnement));
-        $user->date_fin_abonnement = date('Y-m-d',strtotime('+1 year', $user->date_abonnement));
-
-        //on revient à la page du profil
-        return redirect()->action([UserController::class, 'form_update'])->withSuccess('Votre abonnement a été mis à jour');
+        return redirect()->back()->with('info',"Votre abonnement a été supprimé");
     }
 
     public function updateMdp(Request $requete) //changer son mdp
