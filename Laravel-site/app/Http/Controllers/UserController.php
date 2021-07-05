@@ -28,9 +28,7 @@ class UserController extends Controller
 
     public function form_update() {
         $user =  auth()->user();
-        $abonnement = DB::table('abonnements')->find($user->abonnement); //on cherche dans la BDD
-        //dd($abonnement->nom);
-        return view('user_profil', [ 'user' => $user, 'abonnement' => $abonnement]);
+        return view('user_profil', [ 'user' => $user ]);
     }
 
     public function updateProfil(Request $requete) //mettre à jour le profil de l'utilisateur
@@ -91,11 +89,43 @@ class UserController extends Controller
         }
     }
 
-    public function updateAbonnement($id) //mettre à jour son abonnement
+    public function updateAbonnement() //mettre à jour son abonnement
     {
         $user =  auth()->user();
-        $user->abonnement = $id;
+        if($user->abonnement == 0)
+        {
+            $user->abonnement = 1;
+            $user->date_abonnement = date('Y-m-d H:i:s');
+        }else
+        {
+            $user->abonnement = 0;
+            $user->date_abonnement = null;
+        }
         $user->save();
+
+        $user->date_fin_abonnement = date('Y-m-d', strtotime(date("Y-m-d", time()) . " + 1 month"));
+        $user->date_fin_abonnement = date('Y-m-d', strtotime(date("Y-m-d", time()) . " + 365 day"));
+
+        //on revient à la page du profil
+        return redirect()->action([UserController::class, 'form_update'])->withSuccess('Votre abonnement a été mis à jour');
+    }
+
+    public function supprimerAbonnement() //mettre à jour son abonnement
+    {
+        $user =  auth()->user();
+        if($user->abonnement == 0)
+        {
+            $user->abonnement = 1;
+            $user->date_abonnement = date('Y-m-d H:i:s');
+        }else
+        {
+            $user->abonnement = 0;
+            $user->date_abonnement = null;
+        }
+        $user->save();
+
+        $user->date_fin_abonnement = date('Y-m-d H:i:s', strtotime('+4 weeks', $user->date_abonnement));
+        $user->date_fin_abonnement = date('Y-m-d',strtotime('+1 year', $user->date_abonnement));
 
         //on revient à la page du profil
         return redirect()->action([UserController::class, 'form_update'])->withSuccess('Votre abonnement a été mis à jour');

@@ -50,6 +50,8 @@ Route::middleware(['active'])->group( function() {
     Route::get('user/delete/{id}', 'AdminController@supprimerUser')->name('user.delete');
     Route::get('user/admin/{id}', 'AdminController@updateAdminUser')->name('user.admin');
     Route::get('users-no-confirmed', 'AdminController@supprimerUsersNonConfirmes')->name('user.non-confirme');
+    Route::get('user/abonnement/{id}', 'AdminController@updateAbonnementUser')->name('user.abonnement');
+    Route::get('user/delete/abonnement/{id}', 'AdminController@supprimerAbonnementUser')->name('user.delete-abonnement');
 
     //recherche
     Route::get('recherche','requeteMapController@geocoder')->name('requeteGeocoder');

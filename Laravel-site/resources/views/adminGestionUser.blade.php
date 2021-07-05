@@ -49,6 +49,12 @@ class="btn btn-danger">Supprimer les utilisateurs non vérifiés</a></li></ul>
                     @else
                         <a href="{{ route('user.active', [ 'id' => $user->id] ) }}" class="btn btn-success">Activer</a>
                     @endif
+
+                    @if ($user->abonnement)
+                        <a href="{{ route('user.delete-abonnement', [ 'id' => $user->id] ) }}" class="btn btn-dark">Supprimer abonnement</a>
+                    @else
+                        <a href="{{ route('user.abonnement', [ 'id' => $user->id] ) }}" class="btn btn-warning">Abonnement</a>
+                    @endif
                     
                     <a href="{{ route('user.admin', [ 'id' => $user->id] ) }}" class="btn btn-primary">Rendre Admin</a>
                     <a href="{{ route('user.delete', [ 'id' => $user->id] ) }}" onclick="return confirm('Confirmer la suppression de l`utilisateur')" class="btn btn-danger">Supprimer</a>

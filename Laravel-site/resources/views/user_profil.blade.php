@@ -160,11 +160,33 @@
                     <div class="tab-pane fade" id="abonnement" role="tabpanel" aria-labelledby="abonnement-tab">
                         <div class="card-body">
                             <p class="card-text" >
-                                Abonnement : {{ $abonnement->nom }} {{ $abonnement->type }} <br>
-                                Description : {{ $abonnement->description }} <br>
+                                Abonnement : 
+                                @if ($user->abonnement)
+                                <a href="{{ route('user.desactive', [ 'id' => $user->id] ) }}" class="btn btn-secondary">Arreter</a>
+                                Date début : {{ $user->date_abonnement }} <br>
+                                Date de fin : {{ $user->date_fin_abonnement }} <br>
+                                <a href="{{ route('abonnements') }}" class="btn btn-danger" role="button" data-bs-toggle="button">
+                                    Arreter votre abonnement </a>
+
+                                @else
+                                <a href="{{ route('user.active', [ 'id' => $user->id] ) }}" class="btn btn-success">Commencer</a>
+                                
+                                @endif 
                             </p>
+                            <form method="POST" action="{{ route('user.update-mdp') }}">
+                                @csrf
+                                <div class="form-group">
+                                    <label>Mensuel ou annuel<span class="text-danger">*</span></label>
+                                    <select name="date_fin_abonnement" id="date_fin_abonnement" class="form-control form_data">
+                                        <option value="mensuel">Mensuel</option>
+                                        <option value="annuel">Annuel</option>
+                                    </select>
+                                    <span id="type_local_error" class="text-danger"></span>
+                                </div>
+                            </form>
                             <a href="{{ route('abonnements') }}" class="btn btn-primary" role="button" data-bs-toggle="button">
                                 Changer votre abonnement </a>
+                            <a href="{{ route('user.update-abonnement', [ 'id' => $user->abonnement] ) }}" class="btn btn-primary">Choisir</a>
                         </div>
                     
                     </div>
