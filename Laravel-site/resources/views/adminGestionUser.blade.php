@@ -45,11 +45,15 @@ Administration
                 <div class="millieu-de-carte card-body">
                     @if ($user->active)
                         <a href="{{ route('user.desactive', [ 'id' => $user->id] ) }}" class="btn btn-secondary">Désactiver</a>
-                    @else
+                    @else 
+                        @if ($user->email_verified_at != null)
                         <a href="{{ route('user.active', [ 'id' => $user->id] ) }}" class="btn btn-success">Activer</a>
+                        @endif
+                        
                     @endif
-                    
-                    <a href="{{ route('user.admin', [ 'id' => $user->id] ) }}" class="btn btn-primary">Rendre Admin</a>
+                    @if ($user->email_verified_at != null)
+                        <a href="{{ route('user.admin', [ 'id' => $user->id] ) }}" class="btn btn-primary">Rendre Admin</a>
+                    @endif
                     <a href="{{ route('user.delete', [ 'id' => $user->id] ) }}" onclick="return confirm('Confirmer la suppression de l`utilisateur')" class="btn btn-danger">Supprimer</a>
                     
                 </div>
