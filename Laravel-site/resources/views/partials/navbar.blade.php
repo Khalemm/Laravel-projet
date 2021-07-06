@@ -42,7 +42,7 @@
                                 <a class="nav-link" href="{{ route('requeteGeocoder') }}">{{ __('Nouvelle évaluation') }}</a>
                         </li>
                         <li class="nav-item">
-                                <a class="nav-link" href="{{ route('user.requete') }}">{{ __('Mes requetes sauvegardées') }}</a>
+                                <a class="nav-link" href="{{ route('user.requete') }}">{{ __('Evaluations sauvegardées') }}</a>
                         </li>
                         <li class="nav-item">
                                 <a class="nav-link" href="{{ route('user.profil') }}">{{ __('Mon profil') }}</a>

@@ -63,15 +63,15 @@ class AdminController extends Controller
         return redirect()->back()->with('info',"Les utilisateurs ont bien été supprimés");
     }
 
-    public function updateAbonnementUser($id)
+    public function updateAbonnementUser($id, Request $requete)
     {
         $user = User::find($id);
         $user->abonnement = 1;
         $user->date_abonnement = date('Y-m-d H:i:s');
-        $user->date_fin_abonnement = date('Y-m-d', strtotime(date("Y-m-d", time()) . " + 1 month"));
+        $user->date_fin_abonnement = $requete->input(['date_fin_abonnement']); 
         $user->save();
-
-        return redirect()->back()->withSuccess("L'utilisateur possède maintenant un abonnement");
+        
+        return redirect()->back()->withSuccess("L'utilisateur possède un abonnement");
     }
 
     public function supprimerAbonnementUser($id)
