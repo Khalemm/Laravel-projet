@@ -6,7 +6,7 @@
 
 <script>
 //initialisation de leaflet
-var mymap = L.map('mapid').setView([{{$requete['latitude']}}, {{ $requete['longitude'] }}], 13);
+var mymap = L.map('mapid').setView([{{$requete['latitude']}}, {{ $requete['longitude'] }}], 17);
 
 L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoieWNvdXN0b3UiLCJhIjoiY2twM3ozcjNxMjhvNTJ3bXBubmd0MGt6eiJ9.E-zEULLIXG-SKK9J7sFQKg', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -23,15 +23,17 @@ var cptcarte = 0;
     var description = '<div class="popup card carte">';
 	    description +=	'<div class="haut-de-carte card-header">';
 		description +=		'<div class="texte-header">';
-		description +=			'<p>'+cptcarte+'. {{ $bien['distance'] }} mètres</p>';
+		description +=			'<p><b>'+cptcarte+'# {{ $bien['distance'] }} mètres</b></p>';
 		description +=			'<p class="adresse">{{ $bien['adresse'] }}</p>';
-		description +=			'<p class="code-postal">{{ $bien['code_postal'] }} {{ $bien['nom_commune'] }}</p>';
+		description +=			'<p class="code-postal">{{ $bien['code_postal'] }} {{ str_replace(" Arrondissement","",$bien['nom_commune']) }}</p>';
 		description +=		'</div>';
 		description +=		'<div class="prix">';
 		description +=			'<p class="total">{{ preg_replace('/(?<=\d)(?=(\d{3})+$)/', ' ', $bien['valeur_fonciere']) }} €</p>'; // format du prix changé
-		description +=			'<a class="btn btn-outline-primary rounded-circle" href="{{str_replace("((longitude))",$bien['longitude'],str_replace("((latitude))",$bien['latitude'],$urls[0]->format_url))}}" target="_blank">S</a>';
-		description +=			'<a class="btn btn-outline-primary rounded-circle" href="{{str_replace("((longitude))",$bien['longitude'],str_replace("((latitude))",$bien['latitude'],$urls[2]->format_url))}}" target="_blank">T</a>';
-		description +=			'<a class="btn btn-outline-primary rounded-circle" href="{{str_replace("((longitude))",$bien['longitude'],str_replace("((latitude))",$bien['latitude'],$urls[1]->format_url))}}" target="_blank">P</a>';
+		description +=			'<p>';
+		description +=				'<a class="btn btn-outline-primary rounded-circle" href="{{str_replace("((longitude))",$bien['longitude'],str_replace("((latitude))",$bien['latitude'],$urls[2]->format_url))}}" target="_blank">V</a> ';
+		description +=				'<a class="btn btn-outline-primary rounded-circle" href="{{str_replace("((longitude))",$bien['longitude'],str_replace("((latitude))",$bien['latitude'],$urls[1]->format_url))}}" target="_blank">P</a> ';
+		description +=				'<a class="btn btn-outline-primary rounded-circle" href="{{str_replace("((longitude))",$bien['longitude'],str_replace("((latitude))",$bien['latitude'],$urls[0]->format_url))}}" target="_blank">S</a>';
+		description +=			'</p>';
 		description +=		'</div>';
 		description +=	'</div>';
 		description +=	'<div class="millieu-de-carte card-body">';
@@ -40,6 +42,7 @@ var cptcarte = 0;
 		description +=				'<p>{{ $bien['type_local'] }}  {{ $bien['nombre_pieces_principales'] }} pièces</p>';
 		description +=			'</div>';
 		description +=			'<p>Surface : {{ $bien['surface_reelle_bati'] }} m²  </p>';
+		description +=          '<p>{{ $bien['nature_mutation'] }} le {{ $bien['date_mutation'] }}</p>';
 		description +=		'</div>';
 		description +=		'<div class="info-droite">';
 		description +=			'<p>{{ preg_replace('/(?<=\d)(?=(\d{3})+$)/', ' ', $bien['z_prixm2']) }} €/m²  </p>'; // format changé
@@ -47,9 +50,6 @@ var cptcarte = 0;
 			description +=		'<p>Terrain : {{ $bien['surface_terrain'] }} m²  </p>';
 		}
 		description +=		'</div>';
-		description +=	'</div>';
-		description +=	'<div class="bas-de-carte card-footer">';
-		description +=		'<p>{{ $bien['nature_mutation'] }} le <strong>{{ $bien['date_mutation'] }}</strong></p>';
 		description +=	'</div>';
 		description +='</div>';
     var marker = L.marker([{{ $bien['latitude'] }}, {{ $bien['longitude'] }}]).addTo(mymap);

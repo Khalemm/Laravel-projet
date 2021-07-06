@@ -107,6 +107,29 @@ body {
     padding-bottom: 5px;
 }
 
+/* -------------------------- page resultat -------------------------------- */
+.col-gauche {
+	width: 66%!important;
+	max-width: 66%!important;
+}
+
+.col-droite {
+	width: 34%!important;
+	max-width: 34%!important;
+	padding-left: 10px;
+}
+
+@media (max-width: 1450px) { 
+	.col-gauche {
+		width: 100%!important;
+		max-width: 100%!important;
+	}
+	
+	.col-droite {
+		width: 100%!important;
+		max-width: 100%!important;
+	}
+}
 /* ------------------------- cartes et popups ------------------------------ */
 
 .row.margin-fix {
@@ -126,14 +149,12 @@ body {
 }
 
 .popup {
-	min-width: 350px;
-	max-width: 375px;
 	margin-top: 10px;
 	margin-left: 5px;
 }
 
 .popup.card.carte {
-	width: 375px;
+	width: 425px;
 	margin-top: 0px;
 	margin-left: 0px;
 }
@@ -164,7 +185,7 @@ body {
 .texte-header {
 	font-size: 0.95rem;
 	line-height: 10px;
-	font-weight: 700;
+	font-weight: 500;
 }
 
 .adresse {

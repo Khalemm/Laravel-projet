@@ -10,16 +10,16 @@
         <div class="popup card liste">
             <div class="haut-de-carte card-header">
                 <div class="texte-header">
-                    <p>{{ $cptcarte+=1 }}. {{ $bien['distance'] }} mètres</p>
+                    <p><b>{{ $cptcarte+=1 }}# {{ $bien['distance'] }} mètres</b></p>
                     <p class="adresse">{{ $bien['adresse'] }}</p>
-                    <p class="code-postal">{{ $bien['code_postal'] }} {{ $bien['nom_commune'] }}</p>
+                    <p class="code-postal">{{ $bien['code_postal'] }} {{ str_replace(" Arrondissement","",$bien['nom_commune']) }}</p>
                 </div>
                 <div class="prix">
                     <p class="total">{{ preg_replace('/(?<=\d)(?=(\d{3})+$)/', ' ', $bien['valeur_fonciere']) }} €</p> <!-- format du prix changé -->
                     <p>
-                        <a class="btn btn-outline-primary rounded-circle" href="{{str_replace("((longitude))",$bien['longitude'],str_replace("((latitude))",$bien['latitude'],$urls[0]->format_url))}}" target="_blank">S</a>
-                        <a class="btn btn-outline-primary rounded-circle" href="{{str_replace("((longitude))",$bien['longitude'],str_replace("((latitude))",$bien['latitude'],$urls[2]->format_url))}}" target="_blank">T</a>
+                        <a class="btn btn-outline-primary rounded-circle" href="{{str_replace("((longitude))",$bien['longitude'],str_replace("((latitude))",$bien['latitude'],$urls[2]->format_url))}}" target="_blank">V</a>
                         <a class="btn btn-outline-primary rounded-circle" href="{{str_replace("((longitude))",$bien['longitude'],str_replace("((latitude))",$bien['latitude'],$urls[1]->format_url))}}" target="_blank">P</a>
+                        <a class="btn btn-outline-primary rounded-circle" href="{{str_replace("((longitude))",$bien['longitude'],str_replace("((latitude))",$bien['latitude'],$urls[0]->format_url))}}" target="_blank">S</a>
                     </p>
                     
                 </div>
@@ -30,6 +30,7 @@
                         <p>{{ $bien['type_local'] }}  {{ $bien['nombre_pieces_principales'] }} pièces</p>
                     </div>
                     <p>Surface : {{ $bien['surface_reelle_bati'] }} m²  </p>
+                    <p>{{ $bien['nature_mutation'] }} le {{ $bien['date_mutation'] }}</p>
                 </div>
                 <div class="info-droite">
                     <p>{{ preg_replace('/(?<=\d)(?=(\d{3})+$)/', ' ', $bien['z_prixm2']) }} €/m²  </p><!-- format changé -->
@@ -37,9 +38,6 @@
                     <p>Terrain : {{ $bien['surface_terrain'] }} m²  </p>
                 @endif
                 </div>
-            </div>
-            <div class="bas-de-carte card-footer">
-                <p>{{ $bien['nature_mutation'] }} le <strong>{{ $bien['date_mutation'] }}</strong></p>
             </div>
         </div>
     </div>
