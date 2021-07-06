@@ -35,14 +35,14 @@ class="btn btn-danger">Supprimer les utilisateurs non vérifiés</a></li></ul>
             @endif
                 <div class="haut-de-carte card-header">
                     <div class="texte-header">
-                        <p>Créé le {{ $user->created_at->format('Y-m-d') }}</p>
+                        <p>Créé le {{ $user->created_at->format('d/m/Y') }}</p>
                         <p>Nom : {{$user->name}}</p>
                         <p>Prenom : {{$user->last_name}}</p>
                         <p>E-mail : {{$user->email}}</p>
                         <p>Entreprise : {{$user->nom_entreprise}}</p>
                         <p>Telephone : {{$user->tel_mobile}}</p>
                         <p>Abonnement : 
-                        @if ($user->abonnement ) Oui jusqu'au {{ date_format(new DateTime($user->date_fin_abonnement), 'Y-m-d') }}
+                        @if ($user->abonnement ) Oui jusqu'au {{ date_format(new DateTime($user->date_fin_abonnement), 'd/m/Y') }}
                         @else Non
                         @endif
                         @if ($user->active)
@@ -50,7 +50,10 @@ class="btn btn-danger">Supprimer les utilisateurs non vérifiés</a></li></ul>
                             @csrf
                             <input id="date_fin_abonnement" type="date" name="date_fin_abonnement" 
                             value="{{ date_format(new DateTime($user->date_fin_abonnement), 'Y-m-d') }}">
-                            <button type="submit" class="btn btn-warning">{{ __('Modifier Abonnement') }}</button>
+                            <button type="submit" class="btn btn-warning">{{ __('Modifier') }}</button>
+                            @if ($user->abonnement)
+                                <a href="{{ route('user.delete-abonnement', [ 'id' => $user->id] ) }}" class="btn btn-dark">Supprimer</a>
+                            @endif
                         </form>
                         @endif
                         </p>
@@ -68,10 +71,6 @@ class="btn btn-danger">Supprimer les utilisateurs non vérifiés</a></li></ul>
 
                 @if ($user->active)
                     <a href="{{ route('user.admin', [ 'id' => $user->id] ) }}" class="btn btn-primary">Rendre Admin</a>
-                @endif
-
-                @if ($user->abonnement)
-                    <a href="{{ route('user.delete-abonnement', [ 'id' => $user->id] ) }}" class="btn btn-dark">Supprimer abonnement</a>
                 @endif
                     <a href="{{ route('user.delete', [ 'id' => $user->id] ) }}" onclick="return confirm('Confirmer la suppression de l`utilisateur')" class="btn btn-danger">Supprimer</a>
                 
