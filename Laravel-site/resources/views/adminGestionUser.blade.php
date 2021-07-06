@@ -42,18 +42,39 @@ class="btn btn-danger">Supprimer les utilisateurs non vérifiés</a></li></ul>
                         <p>Entreprise : {{$user->nom_entreprise}}</p>
                         <p>Telephone : {{$user->tel_mobile}}</p>
                         <p>Abonnement : 
-                        @if ($user->abonnement ) Oui jusqu'au {{ date_format(new DateTime($user->date_fin_abonnement), 'd/m/Y') }}
+                        @if ($user->abonnement ) 
+                        Oui du {{ date_format(new DateTime($user->date_abonnement), 'd/m/Y') }} au {{ date_format(new DateTime($user->date_fin_abonnement), 'd/m/Y') }}
                         @else Non
                         @endif
                         @if ($user->active)
-                        <form method="POST" action="{{ route('user.abonnement', [ 'id' => $user->id]) }}" id="abo">
+                        <form method="POST" action="{{ route('user.abonnement', [ 'id' => $user->id]) }}">
                             @csrf
-                            <input id="date_fin_abonnement" type="date" name="date_fin_abonnement" 
-                            value="{{ date_format(new DateTime($user->date_fin_abonnement), 'Y-m-d') }}">
-                            <button type="submit" class="btn btn-warning">{{ __('Modifier') }}</button>
-                            @if ($user->abonnement)
-                                <a href="{{ route('user.delete-abonnement', [ 'id' => $user->id] ) }}" class="btn btn-dark">Supprimer</a>
+                            <div style="float: left;">
+                                <div class="form-group row">
+                                    <label for="name" class="col-md-4 col-form-label text-md-left">{{ __('Début :') }}</label>
+
+                                    <div class="col-md-3">
+                                        <input id="date_abonnement" type="date" name="date_abonnement" 
+                                        value="{{ date_format(new DateTime($user->date_abonnement), 'Y-m-d') }}">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="name" class="col-md-4 col-form-label text-md-left">{{ __('Fin :') }}</label>
+
+                                    <div class="col-md-3">
+                                        <input id="date_fin_abonnement" type="date" name="date_fin_abonnement" 
+                                        value="{{ date_format(new DateTime($user->date_fin_abonnement), 'Y-m-d') }}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="float: right;">
+                            @if (!$user->abonnement)
+                            <button type="submit" class="btn btn-secondary" style="margin-left: 40px;">{{ __('Ajouter') }}</button>
+                            @else
+                            <button type="submit" class="btn btn-secondary" style="margin-left: 40px;">{{ __('Modifier') }}</button>
+                                <a href="{{ route('user.delete-abonnement', [ 'id' => $user->id] ) }}" class="btn btn-danger" style="margin-left: 20px;">Supprimer</a>
                             @endif
+                            </div>
                         </form>
                         @endif
                         </p>

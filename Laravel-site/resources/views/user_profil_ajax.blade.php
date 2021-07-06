@@ -24,7 +24,7 @@ $(function(){
                   $('span.'+prefix+'_error').text(val[0]);
                 });
               }else{
-                $('#updateProfil')[0].reset();
+                $('#updateProfil')[0];
                 $("div.alert").text(data.msg);
                 $("div.alert").addClass("alert-success");
                 $("<button type='button' class='close' data-dismiss='alert'>×</button>").appendTo("div.alert");
@@ -51,7 +51,7 @@ $(function(){
                   $('span.'+prefix+'_error').text(val[0]);
                 });
               }else{
-                $('#updateEntreprise')[0].reset();
+                $('#updateEntreprise')[0];
                 $("div.alert").text(data.msg);
                 $("div.alert").addClass("alert-success");
                 $("<button type='button' class='close' data-dismiss='alert'>×</button>").appendTo("div.alert");

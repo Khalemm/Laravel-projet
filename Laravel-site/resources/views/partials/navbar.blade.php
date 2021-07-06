@@ -32,11 +32,6 @@
                         </li>
                     @endif
                 @endguest
-                    @admin
-                        <li class="nav-item">
-                                <a class="nav-link" href="{{ route('user.administration') }}">{{ __('Administration') }}</a>
-                        </li>
-                    @endadmin
                     @active
                         <li class="nav-item">
                                 <a class="nav-link" href="{{ route('requeteGeocoder') }}">{{ __('Nouvelle évaluation') }}</a>
@@ -44,6 +39,11 @@
                         <li class="nav-item">
                                 <a class="nav-link" href="{{ route('user.requete') }}">{{ __('Evaluations sauvegardées') }}</a>
                         </li>
+                        @admin
+                        <li class="nav-item">
+                                <a class="nav-link" href="{{ route('user.administration') }}">{{ __('Administration') }}</a>
+                        </li>
+                        @endadmin
                         <li class="nav-item">
                                 <a class="nav-link" href="{{ route('user.profil') }}">{{ __('Mon profil') }}</a>
                         </li>

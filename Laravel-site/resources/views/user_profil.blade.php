@@ -13,13 +13,6 @@
     </div>
 @endif
 
-<!--@if(Session::has('error'))
-    <div class="alert alert-warning">
-        <button type="button" class="close" data-dismiss="alert">×</button>   
-        {{Session::get('error')}}
-    </div>
-@endif-->
-
 <main class="py-4">
     @yield('content')
 </main>
