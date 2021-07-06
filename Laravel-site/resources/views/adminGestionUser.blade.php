@@ -1,7 +1,5 @@
 @extends('layouts.app')
 
-@extends('admin')
-
 @section('titre')
 Administration    
 @endsection
