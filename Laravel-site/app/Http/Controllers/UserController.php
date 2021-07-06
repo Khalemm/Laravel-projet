@@ -89,7 +89,7 @@ class UserController extends Controller
         }
     }
 
-    public function updateAbonnement(Request $requete)
+    /*public function updateAbonnement(Request $requete)
     {
         $user = auth()->user();
 
@@ -110,18 +110,7 @@ class UserController extends Controller
         $user->save();
 
         return redirect()->back()->withSuccess("Votre abonnement a été mis à jour");
-    }
-
-    public function supprimerAbonnement()
-    {
-        $user = auth()->user();
-        $user->abonnement = 0;
-        $user->date_abonnement = null;
-        $user->date_fin_abonnement = null;
-        $user->save();
-
-        return redirect()->back()->with('info',"Votre abonnement a été supprimé");
-    }
+    }*/
 
     public function updateMdp(Request $requete) //changer son mdp
     {

@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@extends('admin')
+
 @section('titre')
 Administration    
 @endsection
@@ -35,36 +37,46 @@ class="btn btn-danger">Supprimer les utilisateurs non vérifiés</a></li></ul>
             @endif
                 <div class="haut-de-carte card-header">
                     <div class="texte-header">
-                        <p>Créé le {{date_format($user->created_at, 'd/m/y à H:i')}}</p>
+                        <p>Créé le {{ $user->created_at->format('Y-m-d') }}</p>
                         <p>Nom : {{$user->name}}</p>
                         <p>Prenom : {{$user->last_name}}</p>
                         <p>E-mail : {{$user->email}}</p>
                         <p>Entreprise : {{$user->nom_entreprise}}</p>
                         <p>Telephone : {{$user->tel_mobile}}</p>
-                        <p>Abonnement : @if ($user->abonnement) Oui jusqu'à le
-                        {{ date_format(new DateTime($user->date_fin_abonnement), 'd/m/y')}} @else Non @endif</p>
+                        <p>Abonnement : 
+                        @if ($user->abonnement ) Oui jusqu'au {{ date_format(new DateTime($user->date_fin_abonnement), 'Y-m-d') }}
+                        @else Non
+                        @endif
+                        @if ($user->active)
+                        <form method="POST" action="{{ route('user.abonnement', [ 'id' => $user->id]) }}" id="abo">
+                            @csrf
+                            <input id="date_fin_abonnement" type="date" name="date_fin_abonnement" 
+                            value="{{ date_format(new DateTime($user->date_fin_abonnement), 'Y-m-d') }}">
+                            <button type="submit" class="btn btn-warning">{{ __('Modifier Abonnement') }}</button>
+                        </form>
+                        @endif
+                        </p>
                     </div>
                 </div>
                 <div class="millieu-de-carte card-body">
-                    @if ($user->active)
-                        <a href="{{ route('user.desactive', [ 'id' => $user->id] ) }}" class="btn btn-secondary">Désactiver</a>
-                    @else 
-                        @if ($user->email_verified_at != null)
-                        <a href="{{ route('user.active', [ 'id' => $user->id] ) }}" class="btn btn-success">Activer</a>
-                        @endif
-                        
-                    @endif
+                @if ($user->active)
+                    <a href="{{ route('user.desactive', [ 'id' => $user->id] ) }}" class="btn btn-secondary">Désactiver</a>
+                @else 
                     @if ($user->email_verified_at != null)
-                        <a href="{{ route('user.admin', [ 'id' => $user->id] ) }}" class="btn btn-primary">Rendre Admin</a>
+                    <a href="{{ route('user.active', [ 'id' => $user->id] ) }}" class="btn btn-success">Activer</a>
                     @endif
-                    
-                    @if ($user->abonnement)
-                        <a href="{{ route('user.delete-abonnement', [ 'id' => $user->id] ) }}" class="btn btn-dark">Supprimer abonnement</a>
-                    @else
-                        <a href="{{ route('user.abonnement', [ 'id' => $user->id] ) }}" class="btn btn-warning">Abonnement</a>
-                    @endif
+
+                @endif
+
+                @if ($user->active)
+                    <a href="{{ route('user.admin', [ 'id' => $user->id] ) }}" class="btn btn-primary">Rendre Admin</a>
+                @endif
+
+                @if ($user->abonnement)
+                    <a href="{{ route('user.delete-abonnement', [ 'id' => $user->id] ) }}" class="btn btn-dark">Supprimer abonnement</a>
+                @endif
                     <a href="{{ route('user.delete', [ 'id' => $user->id] ) }}" onclick="return confirm('Confirmer la suppression de l`utilisateur')" class="btn btn-danger">Supprimer</a>
-                    
+                
                 </div>
             </div>
         </div>

@@ -36,10 +36,11 @@ crossorigin=""/>
       <br>
       <h2>Analyse des biens</h2>
       @forelse ($commune as $info_commune)
-        <p>Population dans la commune {{$info_commune->nom_commune}} : {{preg_replace('/(?<=\d)(?=(\d{3})+$)/', ' ', $info_commune->population)}}</p>
+        <p>Population dans la commune {{$info_commune->nom_commune}} : {{preg_replace('/(?<=\d)(?=(\d{3})+$)/', ' ', $info_commune->population)}}.</p>
       @empty
       <span>Les données sur la population de la commune ne sont pas encore disponibles.</span>
       @endforelse
+      @if ($analyses)
         <table class="table caption-top">
           <thead>
             <tr>
@@ -66,6 +67,9 @@ crossorigin=""/>
           @endforeach
           </tbody>
         </table>
+      @else
+        <span>L'analyse de votre requete n'est pas encore disponible.</span>
+      @endif
       </div>
       
     </div>
