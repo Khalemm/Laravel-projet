@@ -36,7 +36,7 @@ crossorigin=""/>
       <br>
       <h2>Analyse des biens</h2>
       @forelse ($commune as $info_commune)
-        <p>Population dans la commune {{$info_commune->nom_commune}} : {{preg_replace('/(?<=\d)(?=(\d{3})+$)/', ' ', $info_commune->population)}}.</p>
+        <p>Population dans la commune {{str_replace(" Arrondissement","",$info_commune->nom_commune)}} : {{preg_replace('/(?<=\d)(?=(\d{3})+$)/', ' ', $info_commune->population)}}.</p>
         <p>Code commune : {{$info_commune->code_commune}} </p>
       @empty
       <span>Les données sur la population de la commune ne sont pas encore disponibles.</span>
@@ -47,10 +47,10 @@ crossorigin=""/>
             <tr>
               <th scope="col">Annee</th>
               <th scope="col">Catégorie</th>
-              
+              <!--
               <th scope="col">Code Postal</th>
               <th scope="col">Code Commune</th>
-              
+              -->
               <th scope="col">Moyenne prix m2</th>
               <th scope="col">Moyenne surface m2</th>
               <th scope="col">Nombre de transactions</th>
@@ -61,10 +61,10 @@ crossorigin=""/>
             <tr>
               <th scope="row">{{$analyse->annee_mutation}}</th>
               <td>{{$analyse->categorie}}</td>
-              
+              <!--
               <td>{{$analyse->code_postal}}</td>
               <td>{{$analyse->code_commune}}</td>
-              
+              -->
               <td>{{preg_replace('/(?<=\d)(?=(\d{3})+$)/', ' ', $analyse->avg_prix_m2)}}€</td>
               <td>{{$analyse->avg_surface_m2}}</td>
               <td>{{$analyse->nb_transactions}}</td>

@@ -10,7 +10,7 @@
         <div class="popup card liste">
             <div class="haut-de-carte card-header">
                 <div class="texte-header">
-                    <p><b>{{ $cptcarte+=1 }}# {{ $bien['distance'] }} mètres</b></p>
+                    <p><b>{{ $cptcarte+=1 }}#</b> {{ $bien['distance'] }} mètres</p>
                     <p class="adresse">{{ $bien['adresse'] }}</p>
                     <p class="code-postal">{{ $bien['code_postal'] }} {{ str_replace(" Arrondissement","",$bien['nom_commune']) }}</p>
                 </div>
@@ -30,7 +30,7 @@
                         <p>{{ $bien['type_local'] }}  {{ $bien['nombre_pieces_principales'] }} pièces</p>
                     </div>
                     <p>Surface : {{ $bien['surface_reelle_bati'] }} m²  </p>
-                    <p>{{ $bien['nature_mutation'] }} le {{ $bien['date_mutation'] }}</p>
+                    <p>{{ $bien['nature_mutation'] }} le {{ date_format(new DateTime($bien['date_mutation']), 'd/m/Y') }}</p>
                 </div>
                 <div class="info-droite">
                     <p>{{ preg_replace('/(?<=\d)(?=(\d{3})+$)/', ' ', $bien['z_prixm2']) }} €/m²  </p><!-- format changé -->

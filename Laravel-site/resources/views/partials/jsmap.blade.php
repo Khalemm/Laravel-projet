@@ -23,7 +23,7 @@ var cptcarte = 0;
     var description = '<div class="popup card carte">';
 	    description +=	'<div class="haut-de-carte card-header">';
 		description +=		'<div class="texte-header">';
-		description +=			'<p><b>'+cptcarte+'# {{ $bien['distance'] }} mètres</b></p>';
+		description +=			'<p><b>'+cptcarte+'#</b> {{ $bien['distance'] }} mètres</p>';
 		description +=			'<p class="adresse">{{ $bien['adresse'] }}</p>';
 		description +=			'<p class="code-postal">{{ $bien['code_postal'] }} {{ str_replace(" Arrondissement","",$bien['nom_commune']) }}</p>';
 		description +=		'</div>';
@@ -42,7 +42,7 @@ var cptcarte = 0;
 		description +=				'<p>{{ $bien['type_local'] }}  {{ $bien['nombre_pieces_principales'] }} pièces</p>';
 		description +=			'</div>';
 		description +=			'<p>Surface : {{ $bien['surface_reelle_bati'] }} m²  </p>';
-		description +=          '<p>{{ $bien['nature_mutation'] }} le {{ $bien['date_mutation'] }}</p>';
+		description +=          '<p>{{ $bien['nature_mutation'] }} le {{ date_format(new DateTime($bien['date_mutation']), 'd/m/Y') }}</p>';
 		description +=		'</div>';
 		description +=		'<div class="info-droite">';
 		description +=			'<p>{{ preg_replace('/(?<=\d)(?=(\d{3})+$)/', ' ', $bien['z_prixm2']) }} €/m²  </p>'; // format changé
