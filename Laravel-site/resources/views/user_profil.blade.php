@@ -164,7 +164,7 @@
                                 @if ($user->abonnement)
                                 Oui <br>
                                 Du {{ date_format(new DateTime($user->date_abonnement), 'd/m/Y') }}
-                                à {{ date_format(new DateTime($user->date_fin_abonnement), 'd/m/Y') }}
+                                au {{ date_format(new DateTime($user->date_fin_abonnement), 'd/m/Y') }}
                                 @else
                                 Non
                                 @endif 
