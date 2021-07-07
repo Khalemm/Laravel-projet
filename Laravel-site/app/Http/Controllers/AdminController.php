@@ -67,7 +67,7 @@ class AdminController extends Controller
     {
         $user = User::find($id);
         $user->abonnement = 1;
-        $user->date_abonnement = date('Y-m-d H:i:s');
+        $user->date_abonnement = $requete->input(['date_abonnement']); 
         $user->date_fin_abonnement = $requete->input(['date_fin_abonnement']); 
         $user->save();
         

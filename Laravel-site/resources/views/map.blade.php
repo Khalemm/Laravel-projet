@@ -3,7 +3,7 @@
 Résultat
 @endsection
 
-@section('scripts')
+@section('scripts') 
 <!-- leaflet -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
 integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
@@ -38,6 +38,7 @@ crossorigin=""/>
       @forelse ($commune as $info_commune)
         <p>Population dans la commune {{str_replace(" Arrondissement","",$info_commune->nom_commune)}} : {{preg_replace('/(?<=\d)(?=(\d{3})+$)/', ' ', $info_commune->population)}}.</p>
         <p>Code commune : {{$info_commune->code_commune}} </p>
+        <p>Code postal : {{$info_commune->code_postal}} </p>
       @empty
       <span>Les données sur la population de la commune ne sont pas encore disponibles.</span>
       @endforelse
@@ -51,10 +52,10 @@ crossorigin=""/>
               <th scope="col">Code Postal</th>
               <th scope="col">Code Commune</th>
               -->
-              <th scope="col">Moyenne prix m2</th>
-              <th scope="col">Moyenne surface m2</th>
+              <th scope="col">Prix m²</th>
+              <th scope="col">Surface m²</th>
               <th scope="col">Nombre de transactions</th>
-            </tr>
+            </tr> 
           </thead>
           <tbody>
           @foreach ($analyses as $analyse)
@@ -65,7 +66,7 @@ crossorigin=""/>
               <td>{{$analyse->code_postal}}</td>
               <td>{{$analyse->code_commune}}</td>
               -->
-              <td>{{preg_replace('/(?<=\d)(?=(\d{3})+$)/', ' ', $analyse->avg_prix_m2)}}€</td>
+              <td style="margin-right: 40px;">{{preg_replace('/(?<=\d)(?=(\d{3})+$)/', ' ', $analyse->avg_prix_m2)}}€</td>
               <td>{{$analyse->avg_surface_m2}}</td>
               <td>{{$analyse->nb_transactions}}</td>
             </tr>

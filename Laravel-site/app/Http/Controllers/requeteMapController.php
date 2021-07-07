@@ -53,6 +53,7 @@ class requeteMapController extends Controller { // Controller pour la recherche 
         $requete->merge( session('clé' ) );
         $id_user = Auth::id(); //id de l'utilisateur
 
+        //quand l'utilisateur n'a pas mis de prix, on leur associe une valeur pour faire la requete
         if ($requete['prix_min'] == null) //prix min facultatif
         {
             $requete['prix_min'] = 0;
@@ -71,14 +72,15 @@ class requeteMapController extends Controller { // Controller pour la recherche 
             WHERE 
                 code_postal = :code_postal",
 
-            [ 'code_postal' => $requete['code_postal'] ] //en paramètre le code postal de la requete de l'utilisateur
+            [ 'code_postal' => $requete['code_postal'] ] //en paramètre le code postal venant du geocoder
             );
-            $code_commune = $commune[0]->code_commune;
+            $code_commune = $commune[0]->code_commune; //$commune est un array, on extrait le code commune
             
-            //nombre de lignes de la requete
+            //on compte nombre de lignes de la requete
             $count_commune = count((array)$commune);
 
-            //dans le cas où un code postal appartient à plusieurs communes
+            //si y a plus d'une ligne, ça signifie qu'un code postal appartient à plusieurs communes
+            //donc on refait la requete avec cp et nom commune en paramètre
             if($count_commune > 1)
             {
                 $commune_exacte = DB::select("SELECT code_commune, code_postal, nom_commune, population
@@ -88,13 +90,42 @@ class requeteMapController extends Controller { // Controller pour la recherche 
                     AND code_postal = :code_postal",
 
                 [ 'nom_commune' => '%'.$requete['nom_commune'].'%', 
-                'code_postal' => $requete['code_postal'] ] //en paramètre le code postal et le nom commune de la requete de l'utilisateur
+                'code_postal' => $requete['code_postal'] ] //en paramètre le code postal et le nom commune venant du geocoder
                 );
 
-                $code_commune = $commune_exacte[0]->code_commune;
-                $commune = $commune_exacte;
+                $code_commune = $commune_exacte[0]->code_commune; //on extrait le code commune
+                $commune = $commune_exacte; 
             }
 
+            //requete lorsque l'utilisateur souhaite voir des biens avec 5 pièces et plus
+            if($requete['nombre_pieces_principales'] == 5)
+            {
+                $resultat_plus_de_5_pieces = DB::select("SELECT id_mutation , date_mutation, annee_mutation, nature_mutation, valeur_fonciere,
+                CONCAT(adresse_numero, adresse_suffixe, ' ', adresse_nom_voie) as adresse,
+                code_postal, code_commune, nom_commune, id_parcelle,  type_local, 
+                surface_reelle_bati, nombre_pieces_principales, surface_terrain, 
+                z_prixm2, geom, ROUND(ST_Distance(geom, ref_geom)) AS distance, latitude, longitude  
+                FROM dvfneocy CROSS JOIN (SELECT ST_MakePoint(:longitude,:latitude)::geography AS ref_geom) AS r  
+                WHERE 
+                    code_commune = :code_commune
+                    AND nature_mutation = :nature_mutation
+                    AND type_local = :type_local 
+                    AND nombre_pieces_principales IN (5,6,7,8,9,10) /*nombre de pièces*/
+                    AND ST_DWithin(geom, ref_geom, 2500)
+                    AND valeur_fonciere BETWEEN :prix_min and :prix_max
+                ORDER BY ST_Distance(geom, ref_geom) LIMIT 25",
+
+                ['longitude' => $requete['longitude'],
+                'latitude' => $requete['latitude'],
+                'code_commune' => $code_commune,
+                'nature_mutation' => $requete['nature_mutation'],
+                'type_local' => $requete['type_local'],
+                'prix_min' => $requete['prix_min'],
+                'prix_max' => $requete['prix_max'] ]
+                );
+                $resultat = $resultat_plus_de_5_pieces;
+            }
+            else{
             //requete avec les paramètres pour avoir la liste des 25 biens 
             $resultat = DB::select("SELECT id_mutation , date_mutation, annee_mutation, nature_mutation, valeur_fonciere,
                 CONCAT(adresse_numero, adresse_suffixe, ' ', adresse_nom_voie) as adresse,
@@ -120,6 +151,7 @@ class requeteMapController extends Controller { // Controller pour la recherche 
                 'prix_min' => $requete['prix_min'],
                 'prix_max' => $requete['prix_max'] ]
             );
+            }
 
             //vérifie si la requête n'est pas vide
             if($resultat == []) {
@@ -127,7 +159,8 @@ class requeteMapController extends Controller { // Controller pour la recherche 
                 return view('rechercheBienGeocoder', ['erreur' => $erreur]);
             }
 
-            //on recupere les parametres du second formulaire pour enregistrer la requete
+            //on recupere les parametrès du second formulaire de session pour enregistrer la requete de 
+            //l'utilisateur dans la BDD
             $requete_user = Requete::firstOrCreate([
             'age_bien' => $requete['nature_mutation'], 
             'type_bien' => $requete['type_local'],
@@ -142,7 +175,8 @@ class requeteMapController extends Controller { // Controller pour la recherche 
             'nom_commune' => $requete['nom_commune'] 
             ]);
             
-            //requete avec les paramètres pour l'analyse des biens
+            //requete avec le code commune qu'on a extrait précédemment et les paramètres venant de
+            //la requete de l'utilisateur pour faire l'analyse des biens
             $analyses = DB::select("SELECT distinct(annee_mutation), code_departement, code_postal, code_commune, type_local, nature_mutation, 
             categorie, nb_transactions, avg_prix_m2, avg_surface_m2
             FROM prixneocy
@@ -153,7 +187,7 @@ class requeteMapController extends Controller { // Controller pour la recherche 
                 AND categorie LIKE :categorie
             ORDER BY annee_mutation",
 
-            ['code_commune' => $code_commune, //on recupère le code commune de la requete Commune
+            ['code_commune' => $code_commune, //le code commune de la requete Commune
             'nature_mutation' => $requete['nature_mutation'],
             'type_local' => $requete['type_local'],
             'categorie' => 'T'.$requete['nombre_pieces_principales'].'%' ] //categorie = nb pièces dans la requete
@@ -172,7 +206,7 @@ class requeteMapController extends Controller { // Controller pour la recherche 
         }
     }
 
-    //quand l'utilisateur veut voir sa requete à partir de sa liste de requetes ///////////////////////////////////////////////////
+    //quand l'utilisateur veut voir sa requete à partir de ses évaluations sauvegardées 
     public function voirRequete($req_id)
     {
         $requete = DB::table('requetes')->find($req_id); //on cherche dans la BDD sa requete
@@ -197,12 +231,13 @@ class requeteMapController extends Controller { // Controller pour la recherche 
 
         [ 'code_postal' => $code_postal ] //en paramètre le code postal de la requete de l'utilisateur
         );
-        $code_commune = $commune[0]->code_commune;
+        $code_commune = $commune[0]->code_commune; //$commune est un array, on extrait code_commune
         
-        //nombre de lignes de la requete
+        //on compte le nombre de lignes de la requete
         $count_commune = count((array)$commune);
 
-        //dans le cas où un code postal appartient à plusieurs communes
+        //si y a plus d'une ligne, ça signifie qu'un code postal appartient à plusieurs communes
+        //donc on refait la requete avec cp et nom commune en paramètre
         if($count_commune > 1)
         {
             $commune_exacte = DB::select("SELECT code_commune, code_postal, nom_commune, population
@@ -219,33 +254,64 @@ class requeteMapController extends Controller { // Controller pour la recherche 
             $commune = $commune_exacte;
         }
 
-        //meme requete avec les paramètres pour avoir la liste de biens 
-        $resultat = DB::select("SELECT id_mutation , date_mutation, annee_mutation, nature_mutation, valeur_fonciere,
-            CONCAT(adresse_numero, adresse_suffixe, ' ', adresse_nom_voie) as adresse,
-            code_postal, code_commune, nom_commune, id_parcelle,  type_local, 
-            surface_reelle_bati, nombre_pieces_principales, surface_terrain, 
-            z_prixm2, geom, ROUND(ST_Distance(geom, ref_geom)) AS distance, latitude, longitude  
-            FROM dvfneocy CROSS JOIN (SELECT ST_MakePoint(:longitude,:latitude)::geography AS ref_geom) AS r  
-            WHERE 
-                code_commune = :code_commune
-                AND nature_mutation = :nature_mutation
-                AND type_local = :type_local 
-                AND nombre_pieces_principales = :nombre_pieces_principales  
-                AND ST_DWithin(geom, ref_geom, 2500)
-                AND valeur_fonciere BETWEEN :prix_min and :prix_max
-            ORDER BY ST_Distance(geom, ref_geom) LIMIT 25",
+        //lorsque l'utilisateur souhaite voir sa requete avec 5 pièces et plus
+        if($nb_pieces == 5)
+            {
+                $resultat_plus_de_5_pieces = DB::select("SELECT id_mutation , date_mutation, annee_mutation, nature_mutation, valeur_fonciere,
+                CONCAT(adresse_numero, adresse_suffixe, ' ', adresse_nom_voie) as adresse,
+                code_postal, code_commune, nom_commune, id_parcelle,  type_local, 
+                surface_reelle_bati, nombre_pieces_principales, surface_terrain, 
+                z_prixm2, geom, ROUND(ST_Distance(geom, ref_geom)) AS distance, latitude, longitude  
+                FROM dvfneocy CROSS JOIN (SELECT ST_MakePoint(:longitude,:latitude)::geography AS ref_geom) AS r  
+                WHERE 
+                    code_commune = :code_commune
+                    AND nature_mutation = :nature_mutation
+                    AND type_local = :type_local 
+                    AND nombre_pieces_principales IN (5,6,7,8,9,10) /*nombre de pièces*/
+                    AND ST_DWithin(geom, ref_geom, 2500)
+                    AND valeur_fonciere BETWEEN :prix_min and :prix_max
+                ORDER BY ST_Distance(geom, ref_geom) LIMIT 25",
 
-            ['longitude' => $longitude,
-            'latitude' => $latitude,
-            'code_commune' => $code_commune,
-            'nature_mutation' => $nature_mutation,
-            'type_local' => $type_bien,
-            'nombre_pieces_principales' => $nb_pieces,
-            'prix_min' => $prix_min,
-            'prix_max' => $prix_max ]
-        );
+                ['longitude' => $longitude,
+                'latitude' => $latitude,
+                'code_commune' => $code_commune,
+                'nature_mutation' => $nature_mutation,
+                'type_local' => $type_bien,
+                'prix_min' => $prix_min,
+                'prix_max' => $prix_max ]
+                );
+                $resultat = $resultat_plus_de_5_pieces;
+            }
+            else{
+            //meme requete avec les paramètres pour avoir la liste de biens 
+            $resultat = DB::select("SELECT id_mutation , date_mutation, annee_mutation, nature_mutation, valeur_fonciere,
+                CONCAT(adresse_numero, adresse_suffixe, ' ', adresse_nom_voie) as adresse,
+                code_postal, code_commune, nom_commune, id_parcelle,  type_local, 
+                surface_reelle_bati, nombre_pieces_principales, surface_terrain, 
+                z_prixm2, geom, ROUND(ST_Distance(geom, ref_geom)) AS distance, latitude, longitude  
+                FROM dvfneocy CROSS JOIN (SELECT ST_MakePoint(:longitude,:latitude)::geography AS ref_geom) AS r  
+                WHERE 
+                    code_commune = :code_commune
+                    AND nature_mutation = :nature_mutation
+                    AND type_local = :type_local 
+                    AND nombre_pieces_principales = :nombre_pieces_principales  
+                    AND ST_DWithin(geom, ref_geom, 2500)
+                    AND valeur_fonciere BETWEEN :prix_min and :prix_max
+                ORDER BY ST_Distance(geom, ref_geom) LIMIT 25",
 
-        //requete avec les paramètres pour l'analyse des biens
+                ['longitude' => $longitude,
+                'latitude' => $latitude,
+                'code_commune' => $code_commune,
+                'nature_mutation' => $nature_mutation,
+                'type_local' => $type_bien,
+                'nombre_pieces_principales' => $nb_pieces,
+                'prix_min' => $prix_min,
+                'prix_max' => $prix_max ]
+            );
+            }
+
+        //requete avec le code commune qu'on a extrait précédemment et les paramètres venant de
+        //la requete de l'utilisateur pour faire l'analyse des biens
         $analyses = DB::select("SELECT distinct(annee_mutation), code_departement, code_postal, code_commune, type_local, nature_mutation, 
         categorie, nb_transactions, avg_prix_m2, avg_surface_m2
         FROM prixneocy
@@ -256,7 +322,7 @@ class requeteMapController extends Controller { // Controller pour la recherche 
             AND categorie LIKE :categorie
         ORDER BY annee_mutation",
 
-        ['code_commune' => $code_commune, //on recupère le code commune de la requete précédente
+        ['code_commune' => $code_commune, //code commune de la requete $commune
         'nature_mutation' => $nature_mutation,
         'type_local' => $type_bien,
         'categorie' => 'T'.$nb_pieces.'%' ] //categorie = nb pièces dans la requete
@@ -270,16 +336,11 @@ class requeteMapController extends Controller { // Controller pour la recherche 
         return view('map', [ 'analyses' => $analyses, 'commune' => $commune]);
     }
 
-    public function supprimerRequete($reqid) //l'utilisateur supprime une requete
+    public function supprimerRequete($reqid) //l'utilisateur veut supprimer une requete
     {
         $requete = Requete::find($reqid) ;
         $requete->delete();
 
         return redirect()->back()->with('info',"Votre requete a été supprimée");
-    }
-
-    function change_format($value)
-    {
-        return preg_replace('/(?<=\d)(?=(\d{3})+$)/', ' ', $value);
     }
 }

@@ -34,7 +34,7 @@ class="btn btn-danger">Supprimer les utilisateurs non vérifiés</a></li></ul>
             <div class="popup card liste">
             @endif
                 <div class="haut-de-carte-liste card-header">
-                    <div class="texte-header">
+                    <div class="texte-header-liste">
                         <p>Créé le {{ $user->created_at->format('d/m/Y') }}</p>
                         <p>Nom : {{$user->name}}</p>
                         <p>Prenom : {{$user->last_name}}</p>
@@ -42,21 +42,44 @@ class="btn btn-danger">Supprimer les utilisateurs non vérifiés</a></li></ul>
                         <p>Entreprise : {{$user->nom_entreprise}}</p>
                         <p>Telephone : {{$user->tel_mobile}}</p>
                         <p>Abonnement : 
-                        @if ($user->abonnement ) Oui jusqu'au {{ date_format(new DateTime($user->date_fin_abonnement), 'd/m/Y') }}
+                        @if ($user->abonnement ) 
+                        Oui du {{ date_format(new DateTime($user->date_abonnement), 'd/m/Y') }} au {{ date_format(new DateTime($user->date_fin_abonnement), 'd/m/Y') }}
                         @else Non
                         @endif
+                        </p>
                         @if ($user->active)
-                        <form method="POST" action="{{ route('user.abonnement', [ 'id' => $user->id]) }}" id="abo">
+                        <form method="POST" action="{{ route('user.abonnement', [ 'id' => $user->id]) }}">
                             @csrf
-                            <input id="date_fin_abonnement" type="date" name="date_fin_abonnement" 
-                            value="{{ date_format(new DateTime($user->date_fin_abonnement), 'Y-m-d') }}">
-                            <button type="submit" class="btn btn-secondary">{{ __('Modifier') }}</button>
-                            @if ($user->abonnement)
-                                <a href="{{ route('user.delete-abonnement', [ 'id' => $user->id] ) }}" class="btn btn-danger">Supprimer</a>
-                            @endif
+                            <div class="d-flex">
+                            <div class="info-abonnement">
+                                <div class="champ-abo-admin input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">{{ __('Début :') }}</span>
+                                    </div>
+                                    <label for="name"></label>
+                                    <input class="form-control" id="date_abonnement" type="date" name="date_abonnement" 
+                                        value="{{ date_format(new DateTime($user->date_abonnement), 'Y-m-d') }}">
+                                </div>
+                                <div class="champ-abo-admin input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">{{ __('Fin :') }}</span>
+                                    </div>
+                                    <input class="form-control" id="date_fin_abonnement" type="date" name="date_fin_abonnement" 
+                                        value="{{ date_format(new DateTime($user->date_fin_abonnement), 'Y-m-d') }}">
+                                </div>
+                            </div>
+                            <div class="btn-abonnement">
+                                @if (!$user->abonnement)
+                                    <button type="submit" class="btn btn-secondary" >{{ __('Ajouter') }}</button>
+                                @else
+                                    <button type="submit" class="btn btn-secondary" >{{ __('Modifier') }}</button>
+                                    <a href="{{ route('user.delete-abonnement', [ 'id' => $user->id] ) }}" class="btn btn-danger" >Supprimer</a>
+                                @endif
+                            </div>
+                            </div>
                         </form>
                         @endif
-                        </p>
+                        
                     </div>
                 </div>
                 <div class="boutons-carte card-body">
