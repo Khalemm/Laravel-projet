@@ -47,6 +47,7 @@ class="btn btn-danger">Supprimer les utilisateurs non vérifiés</a></li></ul>
                         @else Non
                         @endif
                         </p>
+                        @include('admin_script')
                         @if ($user->active)
                         <form method="POST" action="{{ route('user.abonnement', [ 'id' => $user->id]) }}">
                             @csrf
@@ -65,6 +66,7 @@ class="btn btn-danger">Supprimer les utilisateurs non vérifiés</a></li></ul>
                                         <span class="input-group-text">{{ __('Fin :') }}</span>
                                     </div>
                                     <input class="form-control" id="date_fin_abonnement" type="date" name="date_fin_abonnement" 
+                                        min="{{ date_format(new DateTime($user->date_abonnement), 'Y-m-d') }}" 
                                         value="{{ date_format(new DateTime($user->date_fin_abonnement), 'Y-m-d') }}">
                                 </div>
                             </div>

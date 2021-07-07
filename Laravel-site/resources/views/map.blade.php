@@ -66,7 +66,7 @@ crossorigin=""/>
               <td>{{$analyse->code_postal}}</td>
               <td>{{$analyse->code_commune}}</td>
               -->
-              <td style="margin-right: 40px;">{{preg_replace('/(?<=\d)(?=(\d{3})+$)/', ' ', $analyse->avg_prix_m2)}}€</td>
+              <td>{{preg_replace('/(?<=\d)(?=(\d{3})+$)/', ' ', $analyse->avg_prix_m2)}}€</td>
               <td>{{$analyse->avg_surface_m2}}</td>
               <td>{{$analyse->nb_transactions}}</td>
             </tr>

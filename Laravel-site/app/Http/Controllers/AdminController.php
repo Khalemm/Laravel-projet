@@ -71,7 +71,7 @@ class AdminController extends Controller
         $user->date_fin_abonnement = $requete->input(['date_fin_abonnement']); 
         $user->save();
         
-        return redirect()->back()->withSuccess("L'utilisateur possède un abonnement");
+        return redirect()->back()->withSuccess("L'abonnement de l'utilisateur a été mis à jour");
     }
 
     public function supprimerAbonnementUser($id)
