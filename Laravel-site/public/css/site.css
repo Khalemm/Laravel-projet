@@ -201,12 +201,6 @@ body {
 	justify-content: space-between;
 }
 
-.haut-de-carte-liste {
-	display: block;
-	height: 265px;
-	justify-content: space-between;
-}
-
 .texte-header {
 	font-size: 0.95rem;
 	line-height: 10px;
@@ -293,6 +287,35 @@ body {
 
 /* ---------------------------- administration ----------------------------- */
 
+.haut-de-carte-liste {
+	display: block;
+	height: 290px;
+	justify-content: space-between;
+}
+
+.texte-header-liste {
+	font-size: 0.95rem;
+	line-height: 10px;
+	font-weight: 500;
+}
+
+.info-abonnement {
+	max-width: 200px;
+}
+
+.champ-abo-admin {
+	margin-bottom: 10px;
+}
+
+.btn-abonnement {
+	text-align: right;
+	width: 30%;
+}
+
+.btn-abonnement button {
+	margin-bottom: 10px;
+}
+
 
 .liste-users {
 	margin: 15px;
@@ -305,9 +328,14 @@ body {
 	}
 }
 
-@media (max-width: 800px) { 
+@media (max-width: 900px) { 
 	.liste-users {
 		margin: 15px 5%;
 		width: 90%;
+	}
+
+	.btn-abonnement {
+		text-align: right;
+		width: 25%;
 	}
 }
