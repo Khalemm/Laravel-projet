@@ -46,13 +46,13 @@ crossorigin=""/>
         <table class="table caption-top">
           <thead>
             <tr>
-              <th scope="col">Année</th>
+              <th scope="col">Annee</th>
               <th scope="col">Catégorie</th>
               <!--
               <th scope="col">Code Postal</th>
               <th scope="col">Code Commune</th>
               -->
-              <th scope="col">Prix €/m²</th>
+              <th scope="col">Prix m²</th>
               <th scope="col">Surface m²</th>
               <th scope="col">Nombre de transactions</th>
             </tr> 
@@ -66,9 +66,9 @@ crossorigin=""/>
               <td>{{$analyse->code_postal}}</td>
               <td>{{$analyse->code_commune}}</td>
               -->
-              <td>{{preg_replace('/(?<=\d)(?=(\d{3})+$)/', ' ', $analyse->avg_prix_m2)}}</td>
+              <td>{{preg_replace('/(?<=\d)(?=(\d{3})+$)/', ' ', $analyse->avg_prix_m2)}}€</td>
               <td>{{$analyse->avg_surface_m2}}</td>
-              <td>{{preg_replace('/(?<=\d)(?=(\d{3})+$)/', ' ', $analyse->nb_transactions)}}</td>
+              <td>{{$analyse->nb_transactions}}</td>
             </tr>
           @endforeach
           </tbody>
