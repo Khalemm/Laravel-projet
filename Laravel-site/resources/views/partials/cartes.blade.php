@@ -10,7 +10,7 @@
         <div class="popup card liste">
             <div class="haut-de-carte card-header">
                 <div class="texte-header">
-                    <p><b>{{ $cptcarte+=1 }}#</b> {{ $bien['distance'] }} mètres</p>
+                    <p><b class="border-num rounded-circle">{{ $cptcarte+=1 }}</b> {{ $bien['distance'] }} mètres</p>
                     <p class="adresse">{{ $bien['adresse'] }}</p>
                     <p class="code-postal">{{ $bien['code_postal'] }} {{ str_replace(" Arrondissement","",$bien['nom_commune']) }}</p>
                 </div>

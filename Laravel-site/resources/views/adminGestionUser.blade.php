@@ -27,13 +27,13 @@ class="btn btn-danger">Supprimer les utilisateurs non vérifiés</a></li></ul>
 <div class="row margin-fix">
     @foreach ($users as $user)
         @if ($user->admin == false)
-        <div class="liste-users">
+        <div class="liste-users d-flex ">
             @if ($user->email_verified_at == null)
             <div class="popup card liste noemail">
             @else
             <div class="popup card liste">
             @endif
-                <div class="haut-de-carte card-header">
+                <div class="haut-de-carte-liste card-header">
                     <div class="texte-header">
                         <p>Créé le {{ $user->created_at->format('d/m/Y') }}</p>
                         <p>Nom : {{$user->name}}</p>
@@ -50,16 +50,16 @@ class="btn btn-danger">Supprimer les utilisateurs non vérifiés</a></li></ul>
                             @csrf
                             <input id="date_fin_abonnement" type="date" name="date_fin_abonnement" 
                             value="{{ date_format(new DateTime($user->date_fin_abonnement), 'Y-m-d') }}">
-                            <button type="submit" class="btn btn-warning">{{ __('Modifier') }}</button>
+                            <button type="submit" class="btn btn-secondary">{{ __('Modifier') }}</button>
                             @if ($user->abonnement)
-                                <a href="{{ route('user.delete-abonnement', [ 'id' => $user->id] ) }}" class="btn btn-dark">Supprimer</a>
+                                <a href="{{ route('user.delete-abonnement', [ 'id' => $user->id] ) }}" class="btn btn-danger">Supprimer</a>
                             @endif
                         </form>
                         @endif
                         </p>
                     </div>
                 </div>
-                <div class="millieu-de-carte card-body">
+                <div class="boutons-carte card-body">
                 @if ($user->active)
                     <a href="{{ route('user.desactive', [ 'id' => $user->id] ) }}" class="btn btn-secondary">Désactiver</a>
                 @else 

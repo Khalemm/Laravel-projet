@@ -165,20 +165,45 @@ body {
 	margin-left: 1.25%;
 }
 .popup.card.liste {
-	max-width: 100%;
+	width: 100%;
 	margin:0;
 }
 
 .popup.card.liste.noemail {
-	max-width: 100%;
+	width: 100%;
 	margin:0;
 	background-color: #f3aeb2 ;
 }
 
+.haut-de-carte-liste a {
+	margin-left: 10px;
+}
+
+.haut-de-carte-liste button {
+	margin-left: 10px;
+}
+
 /*haut de la carte*/
+.border-num {
+	border: 1px solid #3490dc;
+	color: #3490dc;
+	line-height: 1.5;
+	font-weight: 400;
+	padding: .375rem .75rem;
+	font-size: 1rem;
+	display: inline-block;
+	vertical-align: middle;
+}
+
 .haut-de-carte {
 	display: flex;
 	flex-direction: row;
+	justify-content: space-between;
+}
+
+.haut-de-carte-liste {
+	display: block;
+	height: 265px;
 	justify-content: space-between;
 }
 
@@ -245,6 +270,12 @@ body {
 	justify-content: space-between;
 }
 
+.boutons-carte {
+	font-size: 1rem;
+	display: block;
+	justify-content: space-between;
+}
+
 .millieu-de-carte p {
 	margin: 10px;
 }
@@ -265,7 +296,7 @@ body {
 
 .liste-users {
 	margin: 15px;
-	width: 46%;
+	width: 31%;
 }
 
 @media (max-width: 1300px) { 
