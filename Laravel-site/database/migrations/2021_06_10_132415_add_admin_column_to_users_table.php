@@ -15,8 +15,8 @@ class AddAdminColumnToUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->string('last_name');
-            $table->bigInteger('tel_fixe')->nullable();
-            $table->bigInteger('tel_mobile')->nullable();
+            $table->string('tel_fixe')->nullable();
+            $table->string('tel_mobile')->nullable();
             $table->string('nom_entreprise')->nullable();
             $table->string('adresse_entreprise')->nullable();
             $table->integer('code_postal')->nullable();

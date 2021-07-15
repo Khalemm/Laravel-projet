@@ -42,7 +42,7 @@ Rechercher une adresse
                 <input type="hidden" name="code_postal" readonly="readonly" id="code_postal" class="form-control form_data" />
                 <input type="hidden" name="nom_commune" readonly="readonly" id="nom_commune" class="form-control form_data" />
                 <div class="validation-form">
-                    <button class="btn btn-primary" type="submit">valider</button>
+                    <button class="btn btn-primary" type="submit">Valider</button>
                 </div>
             </form>
         </div>

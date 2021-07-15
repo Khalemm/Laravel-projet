@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('titre')
-profil
+Evaluations
 @endsection
 @section('contenu')
 
@@ -21,13 +21,13 @@ profil
     <div class="card h-75" style="margin-bottom: 50px;" >
       <div class="card-header">{{ $requete->adresse }}</div>
       <div class="card-body" style="text-align: center;">
-        <!--<h5 class="card-title" ></h5>-->
         <p class="card-text">
           {{ $requete-> type_bien }}<br>
           {{ $requete-> age_bien }}<br>
-          {{ $requete-> nombre_pieces }} pièce(s)<br>
+          {{ $requete-> nombre_pieces }} pièce(s)
+          @if ($requete-> nombre_pieces == 5) et plus @endif <br>
           Avec un prix allant de {{ preg_replace('/(?<=\d)(?=(\d{3})+$)/', ' ', $requete->prix_min) }} 
-          à {{ preg_replace('/(?<=\d)(?=(\d{3})+$)/', ' ', $requete->prix_max) }}€
+          à {{ preg_replace('/(?<=\d)(?=(\d{3})+$)/', ' ', $requete->prix_max) }} €
         </p>
       </div>
       <div class="card-footer" style="text-align: center;">

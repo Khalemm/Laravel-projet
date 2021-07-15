@@ -53,7 +53,7 @@ Rechercher une adresse
                     <input type="number" name="prix_max" id="prix_max" placeholder="600000000" class="form-control form_data" />
                     <span id="prix_max_error" class="text-danger"></span>
                 </div>
-                <button class="btn btn-primary" type="submit">valider</button>
+                <button class="btn btn-primary" type="submit">Valider</button>
             </form>
         </div>
     </div>

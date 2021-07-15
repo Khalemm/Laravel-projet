@@ -102,7 +102,9 @@ class="btn btn-danger">Supprimer les utilisateurs non vérifiés</a></li></ul>
                 </div>
             </div>
         </div>
-        @endif
+        @else
+        <ul><li>Il n'y a pas d'utilisateurs.</li></ul>
+        @endif        
     @endforeach
 </div>
 

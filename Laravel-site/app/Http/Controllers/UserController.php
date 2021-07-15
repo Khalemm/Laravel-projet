@@ -35,7 +35,7 @@ class UserController extends Controller
     {
         $validator = Validator::make($requete->all(),[ //Valider le formulaire
             'name'=>'required|regex:/^[a-zA-Z]+$/u',
-            'last_name'=>'required|regex:/^[a-zA-Z]+$/u',
+            'last_name'=>"required|regex:/^[a-zA-Z' -]+$/u", 
             'tel_fixe'=>'digits:10|nullable',
             'tel_mobile' =>'digits:10|nullable'
             ],[
@@ -45,7 +45,7 @@ class UserController extends Controller
             'name.regex'=>'Champ non valide.',
             'last_name.regex'=>'Champ non valide.',
             'tel_fixe.digits'=>'Veuillez entrer 10 valeurs.',
-            'tel_mobile.digits'=>'Veuillez entrer 10 valeurs.',
+            'tel_mobile.digits'=>'Veuillez entrer 10 valeurs.', 
         ]);
 
         if( !$validator->passes() ){ //si le form n'est pas valide on a des messages d'erreur
@@ -58,7 +58,12 @@ class UserController extends Controller
             'tel_fixe' => $requete->tel_fixe,
             'tel_mobile' => $requete->tel_mobile
         ]);
-        return response()->json(['status'=>1,'msg'=>'Votre profil a été mis à jour']);
+        
+        if( !$update ){ //message d'erreur si mise à jour échoué
+            return redirect()->back()->with('error','Mise à jour échouée');
+        }else{
+            return response()->json(['status'=>1,'msg'=>'Votre profil a été mis à jour']);
+        }
         }
     }
 
@@ -85,32 +90,14 @@ class UserController extends Controller
             'code_postal' => $requete->code_postal,
             'ville_entreprise' => $requete->ville_entreprise
         ]);
-        return response()->json(['status'=>1,'msg'=>'Votre entreprise a été mise à jour']);
+        
+        if( !$update ){ //message d'erreur si mise à jour échoué
+            return redirect()->back()->with('error','Mise à jour échouée');
+        }else{
+            return response()->json(['status'=>1,'msg'=>'Votre entreprise a été mise à jour']);
+        }
         }
     }
-
-    /*public function updateAbonnement(Request $requete)
-    {
-        $user = auth()->user();
-
-        if( $requete->input(['oui']) )
-        {
-            $user->abonnement = 1;
-            $user->date_abonnement = date('Y-m-d H:i:s');
-            
-        }
-
-        $date_fin_abonnement = $requete->input(['date_fin_abonnement']);
-        if($date_fin_abonnement == 'mensuel')
-        {
-            $user->date_fin_abonnement = date('Y-m-d', strtotime(date("Y-m-d", time()) . " + 1 month"));
-        }else{
-            $user->date_fin_abonnement = date('Y-m-d', strtotime(date("Y-m-d", time()) . " + 1 year"));
-        }
-        $user->save();
-
-        return redirect()->back()->withSuccess("Votre abonnement a été mis à jour");
-    }*/
 
     public function updateMdp(Request $requete) //changer son mdp
     {
@@ -135,7 +122,7 @@ class UserController extends Controller
         }else{
         //changement du mdp
         $update = auth()->user()->update(['password'=>Hash::make($requete->newpassword)]);
-
+ 
         if( !$update ){ //message d'erreur si changement échoué
             return redirect()->back()->with('error','Changement du mot de passe échoué');
         }else{
