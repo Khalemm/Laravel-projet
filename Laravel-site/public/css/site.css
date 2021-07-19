@@ -59,6 +59,10 @@ body {
 	border-bottom: solid 2px #d9d9d9 ;
 }
 
+.contenu-presentation {
+	margin-top: 10px;
+}
+
 @media (max-width: 1300px) { 
 	.presentation-bloc {
 		margin-left: 15%;
@@ -300,7 +304,10 @@ body {
 }
 
 .info-abonnement {
-	max-width: 200px;
+	min-width: 220px;
+}
+.info-abonnement .input-group-text {
+	min-width: 75px;
 }
 
 .champ-abo-admin {
