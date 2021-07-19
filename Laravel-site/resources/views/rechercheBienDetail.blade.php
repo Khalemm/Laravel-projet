@@ -50,7 +50,7 @@ Rechercher une adresse
 
                 <div class="form-group">
                     <label>Prix max</label>
-                    <input type="number" name="prix_max" id="prix_max" placeholder="600000000" class="form-control form_data" />
+                    <input type="number" name="prix_max" id="prix_max" placeholder="2000000" class="form-control form_data" />
                     <span id="prix_max_error" class="text-danger"></span>
                 </div>
                 <button class="btn btn-primary" type="submit">Valider</button>

@@ -10,7 +10,7 @@
         <div class="popup card liste">
             <div class="haut-de-carte card-header">
                 <div class="texte-header">
-                    <p><b class="border-num rounded-circle">{{ $cptcarte+=1 }}</b> {{ $bien['distance'] }} mètres</p>
+                    <p><b class="border-num rounded-circle">{{ $cptcarte+=1 }}</b>&#160;&#160; {{ $bien['distance'] }} mètres</p>
                     <p class="adresse">{{ $bien['adresse'] }}</p>
                     <p class="code-postal">{{ $bien['code_postal'] }} {{ str_replace(" Arrondissement","",$bien['nom_commune']) }}</p>
                 </div>
@@ -18,7 +18,7 @@
                     <p class="total">{{ preg_replace('/(?<=\d)(?=(\d{3})+$)/', ' ', $bien['valeur_fonciere']) }} €</p> <!-- format du prix changé -->
                     <p>
                         <a class="btn btn-outline-primary rounded-circle" href="{{str_replace("((longitude))",$bien['longitude'],str_replace("((latitude))",$bien['latitude'],$urls[2]->format_url))}}" target="_blank">V</a>
-                        <a class="btn btn-outline-primary rounded-circle" href="{{str_replace("((longitude))",$bien['longitude'],str_replace("((latitude))",$bien['latitude'],$urls[1]->format_url))}}" target="_blank">P</a>
+                        <a class="btn btn-outline-primary rounded-circle" href="{{str_replace("((longitude))",$bien['longitude'],str_replace("((latitude))",$bien['latitude'],$urls[1]->format_url))}}" target="_blank">M</a>
                         <a class="btn btn-outline-primary rounded-circle" href="{{str_replace("((longitude))",$bien['longitude'],str_replace("((latitude))",$bien['latitude'],$urls[0]->format_url))}}" target="_blank">S</a>
                     </p>
                     
@@ -33,7 +33,7 @@
                     <p>{{ $bien['nature_mutation'] }} le {{ date_format(new DateTime($bien['date_mutation']), 'd/m/Y') }}</p>
                 </div>
                 <div class="info-droite">
-                    <p>{{ preg_replace('/(?<=\d)(?=(\d{3})+$)/', ' ', $bien['z_prixm2']) }} €/m²  </p><!-- format changé -->
+                    <p>{{ preg_replace('/(?<=\d)(?=(\d{3})+$)/', ' ', $bien['z_prixm2']) }} € /m²  </p><!-- format changé -->
                 @if($bien['type_local'] == "Maison")
                     <p>Terrain : {{ $bien['surface_terrain'] }} m²  </p>
                 @endif

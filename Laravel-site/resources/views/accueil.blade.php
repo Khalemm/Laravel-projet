@@ -43,10 +43,8 @@ Accueil
             </div>
             <div class="contenu-presentation">
                 <p> Ici vous pourrez estimer le prix des biens près de chez vous </p>
-                <p> texte de remplissage </p>
-                <p> je sais pas quoi mettre encore ici ;_;</p>
-                <p> Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ullam, voluptate ipsum corporis suscipit voluptates repellat obcaecati molestias fuga praesentium dolore quos, aperiam perspiciatis voluptatem magnam nam minima placeat. Reprehenderit, eum?</p>
-            </div>
+                <a class="btn btn-primary" href="/recherche"> Faire une nouvelle évaluation</a>
+                </div>
         </div>
     </div>
 </div>

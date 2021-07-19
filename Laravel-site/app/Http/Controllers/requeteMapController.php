@@ -64,7 +64,7 @@ class requeteMapController extends Controller { // Controller pour la recherche 
 
         if ($requete['prix_max'] == null) //prix max facultatif
         {
-            $requete['prix_max'] = 600000000;
+            $requete['prix_max'] = 2000000;
         }
         
         //si jamais une erreur insoupconné arrive, on fait ici un try/catch
