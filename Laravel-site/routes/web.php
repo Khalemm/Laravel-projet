@@ -24,11 +24,6 @@ Route::get('dada', 'Test_AuthController@dada' );
 Route::get('dodo', 'Test_AuthController@dodo' );
 
 //vérification du mail après l'inscription
-
-/*Route::get('/email/verify', function () {
-    return view('verify-email');
-})->middleware('auth')->name('verification.notice'); */
-
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
 
@@ -40,7 +35,7 @@ Route::get('/email/verification-notification', function (Request $request) { //o
     return back()->with('info','Un nouveau lien de vérification vous a été envoyé par mail.');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
-//quand le compte est activé on a accès aux routes
+//quand le compte de l'utilisateur est activé il a accès aux pages
 Route::middleware(['active'])->group( function() {
 
     //admin 
@@ -59,7 +54,6 @@ Route::middleware(['active'])->group( function() {
 
     Route::get('recherche2', 'requeteMapController@geocoder')->name('requeteInfo');
     Route::post('recherche2', 'requeteMapController@postInformationsComplementaires')->name('postInfo'); //on recup param
-    //Route::get('resultat', 'requeteMapController@geocoder')->name('resultat');
 
     //requetes de l'utilisateur
     Route::get('user/requete', 'UserController@show')->name('user.requete');
@@ -74,17 +68,6 @@ Route::middleware(['active'])->group( function() {
 
 });
 
-/*Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
-
-require __DIR__.'/auth.php';*/
-
-/*Route::get('/test', function() {
-    return response()->json([
-     'stuff' => phpinfo()
-    ]);
- });*/
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

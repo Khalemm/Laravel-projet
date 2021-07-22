@@ -153,7 +153,7 @@ class requeteMapController extends Controller { // Controller pour la recherche 
             }
 
             //on recupere les variables du geocoder et les valeurs saisies du second formulaire de session pour enregistrer 
-            //la requete de l'utilisateur dans la BDD
+            //la requete de l'utilisateur dans la base de données
             $requete_user = Requete::firstOrCreate([
             'age_bien' => $requete['nature_mutation'], 
             'type_bien' => $requete['type_local'],
@@ -195,7 +195,7 @@ class requeteMapController extends Controller { // Controller pour la recherche 
     //quand l'utilisateur veut voir sa requete à partir de ses évaluations sauvegardées 
     public function voirRequete($req_id)
     {
-        $requete = DB::table('requetes')->find($req_id); //on cherche dans la BDD la requete de l'utilisateur connecté
+        $requete = DB::table('requetes')->find($req_id); //on cherche dans la base de données la requete de l'utilisateur connecté
 
         $type_bien = $requete->type_bien; //on recupère chaque info pour les utiliser dans les requetes qui suivent en paramètre
         $nature_mutation = $requete->age_bien;
@@ -296,6 +296,12 @@ class requeteMapController extends Controller { // Controller pour la recherche 
         ->orderBy('annee_mutation')
         ->get();
 
+        session(['res' => $resultat]); 
+        session(['req' => [
+            'longitude' => $requete->longitude, 
+            'latitude' => $requete->latitude, 
+            'adresse' => $requete->adresse
+        ]]);
         return view('map', [ 'analyses' => $analyses, 'commune' => $commune]);
     }
 

@@ -45,10 +45,6 @@ crossorigin=""/>
             <tr>
               <th scope="col">Annee</th>
               <th scope="col">Catégorie</th>
-              <!--
-              <th scope="col">Code Postal</th>
-              <th scope="col">Code Commune</th>
-              -->
               <th scope="col">Prix m²</th>
               <th scope="col">Surface m²</th>
               <th scope="col">Nb transactions</th>
@@ -59,10 +55,6 @@ crossorigin=""/>
             <tr>
               <th scope="row">{{$analyse->annee_mutation}}</th>
               <td>{{$analyse->categorie}}</td>
-              <!--
-              <td>{{$analyse->code_postal}}</td>
-              <td>{{$analyse->code_commune}}</td>
-              -->
               <td>{{preg_replace('/(?<=\d)(?=(\d{3})+$)/', ' ', $analyse->avg_prix_m2)}} €</td>
               <td>{{$analyse->avg_surface_m2}}</td>
               <td>{{$analyse->nb_transactions}}</td>
@@ -71,7 +63,7 @@ crossorigin=""/>
           </tbody>
         </table>
       @else
-        <span>L'analyse de votre requete n'est pas encore disponible.</span>
+        <span>L'analyse de votre évaluation n'est pas encore disponible.</span>
       @endif
       </div>
       

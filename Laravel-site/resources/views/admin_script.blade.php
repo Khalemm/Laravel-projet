@@ -1,4 +1,4 @@
-
+<!-- script dates abonnement -->
 <script>
 document.getElementById("date_abonnement").onchange = function ()
 {

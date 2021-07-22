@@ -16,20 +16,20 @@ class AdminController extends Controller
 
     public function administration() {
 
-        $users = User::all()->sortByDesc('created_at'); //cherche tous les users
+        $users = User::all()->sortByDesc('created_at'); //cherche tous les utilisateurs
         return view("adminGestionUser", compact('users'));
     }
     
-    public function activerUser($id)
+    public function activerUser($id) //activation du compte de l'utilisateur
     {
         $user = User::find($id);
-        $user->active = 1; //activation du compte
-        $user->save();
+        $user->active = 1; 
+        $user->save(); //update dans la base de données
 
         return redirect()->back()->withSuccess("Le compte de l'utilisateur est activé");
     }
 
-    public function desactiverUser($id)
+    public function desactiverUser($id) //desactivation du compte de l'utilisateur
     {
         $user = User::find($id);
         $user->active = 0; //desactive le compte
@@ -38,20 +38,19 @@ class AdminController extends Controller
         return redirect()->back()->with('info',"Le compte de l'utilisateur est desactivé");
     }
 
-    public function supprimerUser($id)
+    public function supprimerUser($id) //supprime le compte de l'utilisateur
     {
         $user = User::find($id) ;
-        $user->delete();
+        $user->delete(); //supprime dans la base de données
 
-        return redirect()->back()->with('info',"L'utilisateur a été supprimée"); //fenetre pop up ?
+        return redirect()->back()->with('info',"L'utilisateur a été supprimée");
     }
 
-    public function updateAdminUser($id)
+    public function updateAdminUser($id) //rend un utilisateur administrateur
     {
         $user = User::find($id);
-        $user->active = 1;
-        $user->admin = 1; //rend un utilisateur administrateur et active son compte
-        $user->save();
+        $user->admin = 1;
+        $user->save(); //update dans la base de données
 
         return redirect()->back()->withSuccess("L'utilisateur possède maintenant le role d'administrateur");
     }
@@ -63,24 +62,24 @@ class AdminController extends Controller
         return redirect()->back()->with('info',"Les utilisateurs ont bien été supprimés");
     }
 
-    public function updateAbonnementUser($id, Request $requete)
+    public function updateAbonnementUser($id, Request $requete) //ajoute ou modifie l'abonnement d'un utilisateur
     {
         $user = User::find($id);
         $user->abonnement = 1;
-        $user->date_abonnement = $requete->input(['date_abonnement']); 
-        $user->date_fin_abonnement = $requete->input(['date_fin_abonnement']); 
-        $user->save();
+        $user->date_abonnement = $requete->input(['date_abonnement']); //date début saisie dans le champ
+        $user->date_fin_abonnement = $requete->input(['date_fin_abonnement']); //date de fin saisie dans le champ
+        $user->save(); //update dans la base de données
         
         return redirect()->back()->withSuccess("L'abonnement de l'utilisateur a été mis à jour");
     }
 
-    public function supprimerAbonnementUser($id)
+    public function supprimerAbonnementUser($id) //supprime l'abonnement de l'utilisateur
     {
         $user = User::find($id);
         $user->abonnement = 0;
-        $user->date_abonnement = null;
-        $user->date_fin_abonnement = null;
-        $user->save();
+        $user->date_abonnement = null; 
+        $user->date_fin_abonnement = null; //les 2 dates sont nul
+        $user->save(); //update dans la base de données
 
         return redirect()->back()->with('info',"L'abonnement de l'utilisateur a été supprimé");
     }

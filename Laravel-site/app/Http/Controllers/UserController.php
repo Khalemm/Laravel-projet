@@ -21,19 +21,19 @@ class UserController extends Controller
 
     public function show()
     {
-        $user =  auth()->user(); //cherche user par l'id
+        $user =  auth()->user(); //cherche l'utilisateur par l'id
 
         return view('user_requete', [ 'user' => $user]);
     }
 
-    public function form_update() {
+    public function form_update() { //affiche le profil de l'utilisateur
         $user =  auth()->user();
         return view('user_profil', [ 'user' => $user ]);
     }
 
-    public function updateProfil(Request $requete) //mettre à jour le profil de l'utilisateur
+    public function updateProfil(Request $requete) //met à jour le profil de l'utilisateur
     {
-        $validator = Validator::make($requete->all(),[ //Valider le formulaire
+        $validator = Validator::make($requete->all(),[ //Valide les champs du formulaire
             'name'=>'required|regex:/^[a-zA-Z]+$/u',
             'last_name'=>"required|regex:/^[a-zA-Z' -]+$/u", 
             'tel_fixe'=>'digits:10|nullable',
@@ -41,25 +41,25 @@ class UserController extends Controller
             ],[
             //controles de validité
             'name.required'=>'Veuillez renseigner ce champ.',
-            'last_name.required'=>'Veuillez renseigner ce champ.',
+            'last_name.required'=>'Veuillez renseigner ce champ.', //nom et prenom obligatoire
             'name.regex'=>'Champ non valide.',
-            'last_name.regex'=>'Champ non valide.',
+            'last_name.regex'=>'Champ non valide.', //non valide si l'utilisateur saisit des caractères spéciaux
             'tel_fixe.digits'=>'Veuillez entrer 10 valeurs.',
             'tel_mobile.digits'=>'Veuillez entrer 10 valeurs.', 
         ]);
 
-        if( !$validator->passes() ){ //si le form n'est pas valide on a des messages d'erreur
+        if( !$validator->passes() ){ //si le formulaire n'est pas valide on affiche des messages d'erreur
             return response()->json(['status'=>0,'error'=>$validator->errors()->toArray()]);
         }else{
         //modification
-        $update = auth()->user()->update([
+        $update = auth()->user()->update([ //on rentre les valeurs dans la base de données
             'name' => $requete->name,
             'last_name' => $requete->last_name,
             'tel_fixe' => $requete->tel_fixe,
             'tel_mobile' => $requete->tel_mobile
         ]);
         
-        if( !$update ){ //message d'erreur si mise à jour échoué
+        if( !$update ){ //message d'erreur si la mise à jour a échoué
             return redirect()->back()->with('error','Mise à jour échouée');
         }else{
             return response()->json(['status'=>1,'msg'=>'Votre profil a été mis à jour']);
@@ -67,9 +67,9 @@ class UserController extends Controller
         }
     }
 
-    public function updateEntreprise(Request $requete) //mettre à jour les infos de son entreprise
+    public function updateEntreprise(Request $requete) //met à jour les infos de son entreprise
     {
-        $validator = Validator::make($requete->all(),[ //Valider le formulaire
+        $validator = Validator::make($requete->all(),[ //Valide les champs du formulaire
             'nom_entreprise'=>'string|nullable',
             'adresse_entreprise'=>'string|nullable',
             'code_postal'=>'digits:5|nullable',
@@ -77,21 +77,21 @@ class UserController extends Controller
             ],[
             //controles de validité
             'code_postal.digits'=>'Veuillez entrer 5 valeurs.',
-            'ville_entreprise.regex'=>'Champ non valide.',
+            'ville_entreprise.regex'=>'Champ non valide.', ////non valide si l'utilisateur saisit des caractères spéciaux
         ]);
 
-        if( !$validator->passes() ){ //si le form n'est pas valide on a des messages d'erreur
+        if( !$validator->passes() ){ //si le formulaire n'est pas valide on affiche des messages d'erreur
             return response()->json(['status'=>0,'error'=>$validator->errors()->toArray()]);
         }else{
         //modification
-        $update = auth()->user()->update([
+        $update = auth()->user()->update([ //on rentre les valeurs dans la base de données
             'nom_entreprise' => $requete->nom_entreprise,
             'adresse_entreprise' => $requete->adresse_entreprise,
             'code_postal' => $requete->code_postal,
             'ville_entreprise' => $requete->ville_entreprise
         ]);
         
-        if( !$update ){ //message d'erreur si mise à jour échoué
+        if( !$update ){ //message d'erreur si la mise à jour a échouée
             return redirect()->back()->with('error','Mise à jour échouée');
         }else{
             return response()->json(['status'=>1,'msg'=>'Votre entreprise a été mise à jour']);
@@ -101,7 +101,7 @@ class UserController extends Controller
 
     public function updateMdp(Request $requete) //changer son mdp
     {
-        $validator = Validator::make($requete->all(),[ //Valider le formulaire
+        $validator = Validator::make($requete->all(),[ //Valide les champs du formulaire
             'oldpassword'=>[
                 'required', function($attribute, $value, $fail){
                     if( !Hash::check($value, Auth::user()->password) ){ //si le mdp actuel n'est pas le bon
@@ -117,7 +117,7 @@ class UserController extends Controller
             'password-confirm.same'=>'Le champ de confirmation du mot de passe ne correspond pas.'
          ]);
 
-        if( !$validator->passes() ){ //si le form n'est pas valide on a des messages d'erreur
+        if( !$validator->passes() ){ //si le formulaire n'est pas valide on affiche messages d'erreur
             return response()->json(['status'=>0,'error'=>$validator->errors()->toArray()]);
         }else{
         //changement du mdp

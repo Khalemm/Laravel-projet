@@ -43,7 +43,7 @@ Accueil
             </div>
             <div class="contenu-presentation">
                 <p> Ici vous pourrez estimer le prix des biens près de chez vous </p>
-                <a class="btn btn-primary" href="/recherche"> Faire une nouvelle évaluation</a>
+                <a class="btn btn-primary" href="{{ route('requeteGeocoder') }}"> Faire une nouvelle évaluation</a>
                 </div>
         </div>
     </div>

@@ -29,7 +29,7 @@ class="btn btn-danger">Supprimer les utilisateurs non vérifiés</a></li></ul>
         @if ($user->admin == false)
         <div class="liste-users d-flex ">
             @if ($user->email_verified_at == null)
-            <div class="popup card liste noemail">
+            <div class="popup card liste noemail"> <!-- fond rouge pour les utilisateurs qui ont pas validé leur mail -->
             @else
             <div class="popup card liste">
             @endif
@@ -43,12 +43,14 @@ class="btn btn-danger">Supprimer les utilisateurs non vérifiés</a></li></ul>
                         <p>Telephone : {{$user->tel_mobile}}</p>
                         <p>Abonnement : 
                         @if ($user->abonnement ) 
-                        Oui du {{ date_format(new DateTime($user->date_abonnement), 'd/m/Y') }} au {{ date_format(new DateTime($user->date_fin_abonnement), 'd/m/Y') }}
-                        @else Non
+                            Oui du {{ date_format(new DateTime($user->date_abonnement), 'd/m/Y') }} au {{ date_format(new DateTime($user->date_fin_abonnement), 'd/m/Y') }}
+                        @else 
+                            Non
                         @endif
                         </p>
                         @include('admin_script')
                         @if ($user->active)
+                        <!-- champs pour saisir les dates d'abonnement -->
                         <form method="POST" action="{{ route('user.abonnement', [ 'id' => $user->id]) }}">
                             @csrf
                             <div class="d-flex">
@@ -91,7 +93,6 @@ class="btn btn-danger">Supprimer les utilisateurs non vérifiés</a></li></ul>
                     @if ($user->email_verified_at != null)
                     <a href="{{ route('user.active', [ 'id' => $user->id] ) }}" class="btn btn-success">Activer</a>
                     @endif
-
                 @endif
 
                 @if ($user->active)
@@ -102,9 +103,7 @@ class="btn btn-danger">Supprimer les utilisateurs non vérifiés</a></li></ul>
                 </div>
             </div>
         </div>
-        @else
-        <ul><li>Il n'y a pas d'utilisateurs.</li></ul>
-        @endif        
+        @endif
     @endforeach
 </div>
 
