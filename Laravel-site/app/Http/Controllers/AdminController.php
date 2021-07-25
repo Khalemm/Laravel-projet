@@ -35,7 +35,7 @@ class AdminController extends Controller
         $user->active = 0; //desactive le compte
         $user->save();
 
-        return redirect()->back()->with('info',"Le compte de l'utilisateur est desactivé");
+        return redirect()->back()->with('info',"Le compte de l'utilisateur a été desactivé");
     }
 
     public function supprimerUser($id) //supprime le compte de l'utilisateur

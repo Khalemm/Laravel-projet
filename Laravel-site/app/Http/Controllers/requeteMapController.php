@@ -310,6 +310,6 @@ class requeteMapController extends Controller { // Controller pour la recherche 
         $requete = Requete::find($reqid) ;
         $requete->delete();
 
-        return redirect()->back()->with('info',"Votre requete a été supprimée");
+        return redirect()->back()->with('info',"Votre évaluation a été supprimée");
     }
 }

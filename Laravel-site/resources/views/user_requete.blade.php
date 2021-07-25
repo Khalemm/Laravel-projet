@@ -13,7 +13,7 @@ Evaluations
     </div>
 @endif
 
-<h1><ul> <li>Vos requetes :</li></ul></h1> <!-- affiche les requetes de l'utilisateur -->
+<h1><ul> <li>Vos évaluations :</li></ul></h1> <!-- affiche les requetes de l'utilisateur -->
 <hr>
 <div class="row row-cols-1 row-cols-md-3 g-4"  style="margin-left: 0.5rem; text-align: center;">
 @forelse($user->requetes as $requete)
@@ -32,13 +32,13 @@ Evaluations
       </div>
       <div class="card-footer" style="text-align: center;">
         <a href="{{ route('requete.show', [ 'reqid' => $requete->id]) }}" class="btn btn-primary" style="margin-right:15px;">Voir sur la carte</a>
-        <a href="{{ route('requete.delete', [ 'reqid' => $requete->id]) }}" onclick="return confirm('Confirmer la suppression de la requete')" class="btn btn-danger">Supprimer</a>
+        <a href="{{ route('requete.delete', [ 'reqid' => $requete->id]) }}" onclick="return confirm('Confirmer la suppression de l’évaluation')" class="btn btn-danger">Supprimer</a>
       </div>
     </div>
     <br>
   </div>
 @empty
-    <span>Vous n'avez pas de requetes</span>
+    <span>Vous n'avez pas d'évaluations.</span>
 @endforelse
 </div>
 @endsection

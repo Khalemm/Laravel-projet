@@ -98,7 +98,7 @@ class="btn btn-danger">Supprimer les utilisateurs non vérifiés</a></li></ul>
                 @if ($user->active)
                     <a href="{{ route('user.admin', [ 'id' => $user->id] ) }}" class="btn btn-primary">Rendre Admin</a>
                 @endif
-                    <a href="{{ route('user.delete', [ 'id' => $user->id] ) }}" onclick="return confirm('Confirmer la suppression de l`utilisateur')" class="btn btn-danger">Supprimer</a>
+                    <a href="{{ route('user.delete', [ 'id' => $user->id] ) }}" onclick="return confirm('Confirmer la suppression de l’utilisateur')" class="btn btn-danger">Supprimer</a>
                 
                 </div>
             </div>
