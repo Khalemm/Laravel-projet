@@ -15,6 +15,7 @@ crossorigin=""/>
 
 @section('contenu')
 @php
+  //obtention des données depuis les variables sessions du controlleur
   $listebiens = json_encode(session('res'));
   $requeteinitial = json_encode(session('req'));
 @endphp

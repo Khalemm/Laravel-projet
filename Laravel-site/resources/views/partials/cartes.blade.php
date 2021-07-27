@@ -1,4 +1,5 @@
 @php
+    //données nécessaires (liste des biens et requete de l'url)
     $biens = json_decode($listebiens,TRUE);
     $cptcarte = 0;
     $urls = DB::select("SELECT format_url FROM map_access");
