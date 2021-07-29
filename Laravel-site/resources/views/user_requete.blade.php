@@ -13,10 +13,10 @@ Evaluations
     </div>
 @endif
 
-<h1><ul> <li>Vos évaluations :</li></ul></h1> <!-- affiche les requetes de l'utilisateur -->
+<h1>Vos évaluations</h1> <!-- affiche les requetes de l'utilisateur -->
 <hr>
 <div class="row row-cols-1 row-cols-md-3 g-4"  style="margin-left: 0.5rem; text-align: center;">
-@forelse($user->requetes as $requete)
+@forelse($requetes as $requete)
   <div class="col">
     <div class="card h-75" style="margin-bottom: 50px;" >
       <div class="card-header">{{ $requete->adresse }}</div>

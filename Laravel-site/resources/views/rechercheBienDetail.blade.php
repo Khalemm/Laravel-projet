@@ -18,7 +18,7 @@ Rechercher une adresse
                     <label>Ancien ou Vefa<span class="text-danger">*</span></label>
                     <select name="nature_mutation" id="nature_mutation" class="form-control form_data">
                         <option value="Vente">Ancien</option>
-                        <option value="Vefa">VEFA</option>
+                        <option value="Vefa">Vefa</option>
                     </select>
                     <span id="type_local_error" class="text-danger"></span>
                 </div>

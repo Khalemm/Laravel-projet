@@ -22,8 +22,10 @@ class UserController extends Controller
     public function show()
     {
         $user =  auth()->user(); //cherche l'utilisateur par l'id
+        
+        $requetes = $user->requetes()->orderBy('created_at', 'desc')->get();
 
-        return view('user_requete', [ 'user' => $user]);
+        return view('user_requete', [ 'user' => $user, 'requetes' => $requetes]);
     }
 
     public function form_update() { //affiche le profil de l'utilisateur

@@ -21,12 +21,11 @@ Administration
 @endif
 
 <br>
-<ul><li><a href="{{ route('user.non-confirme' ) }}" onclick="return confirm('Confirmer la suppression des utilisateurs')" 
-class="btn btn-danger">Supprimer les utilisateurs non vérifiés</a></li></ul>
+<a href="{{ route('user.non-confirme' ) }}" onclick="return confirm('Confirmer la suppression des utilisateurs')">
+ Cliquer pour supprimer l'intégralité des utilisateurs non vérifiés</a>
 <hr>
 <div class="row margin-fix">
     @foreach ($users as $user)
-        @if ($user->admin == false)
         <div class="liste-users d-flex ">
             @if ($user->email_verified_at == null)
             <div class="popup card liste noemail"> <!-- fond rouge pour les utilisateurs qui ont pas validé leur mail -->
@@ -96,14 +95,17 @@ class="btn btn-danger">Supprimer les utilisateurs non vérifiés</a></li></ul>
                 @endif
 
                 @if ($user->active)
-                    <a href="{{ route('user.admin', [ 'id' => $user->id] ) }}" class="btn btn-primary">Rendre Admin</a>
+                    @if ($user->admin == false)
+                        <a href="{{ route('user.admin', [ 'id' => $user->id] ) }}" class="btn btn-primary">Rendre Admin</a>
+                    @else
+                        <a href="{{ route('user.not-admin', [ 'id' => $user->id] ) }}" class="btn btn-secondary">Désactiver Admin</a>
+                    @endif
                 @endif
                     <a href="{{ route('user.delete', [ 'id' => $user->id] ) }}" onclick="return confirm('Confirmer la suppression de l’utilisateur')" class="btn btn-danger">Supprimer</a>
                 
                 </div>
             </div>
         </div>
-        @endif
     @endforeach
 </div>
 

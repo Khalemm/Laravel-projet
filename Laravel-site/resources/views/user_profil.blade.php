@@ -133,7 +133,7 @@ Profil
                                     <label for="code_postal" class="col-md-4 col-form-label text-md-right">{{ __('Code Postal') }}</label>
 
                                     <div class="col-md-6">
-                                        <input id="code_postal" type="text" class="form-control" maxlength="5" placeholder="75001"
+                                        <input id="code_postal" type="text" class="form-control" maxlength="5"
                                         name="code_postal" value="{{ $user->code_postal }}" autocomplete="code_postal" >
                                         <span class="text-danger error-text code_postal_error"></span>
                                     </div>

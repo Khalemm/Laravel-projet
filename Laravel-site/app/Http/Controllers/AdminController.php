@@ -55,6 +55,15 @@ class AdminController extends Controller
         return redirect()->back()->withSuccess("L'utilisateur possède maintenant le role d'administrateur");
     }
 
+    public function deleteAdminUser($id) //enlève le role administrateur à un utilisateur
+    {
+        $user = User::find($id);
+        $user->admin = 0;
+        $user->save(); //update dans la base de données
+
+        return redirect()->back()->with('info',"L'utilisateur n'a plus le role d'administrateur");
+    }
+
     public function supprimerUsersNonConfirmes()
     {
         $users = User::where('email_verified_at', null)->delete(); //cherche et supprime les users sans mail verifié

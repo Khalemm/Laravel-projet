@@ -44,7 +44,7 @@ crossorigin=""/>
         <table class="table caption-top">
           <thead>
             <tr>
-              <th scope="col">Annee</th>
+              <th scope="col">Année</th>
               <th scope="col">Catégorie</th>
               <th scope="col">Prix m²</th>
               <th scope="col">Surface m²</th>
