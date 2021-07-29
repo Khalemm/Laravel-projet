@@ -15,10 +15,10 @@ Rechercher une adresse
                 <!-- important, sinon l'info ne passe pas et erreur 417 -->
                 @csrf <!-- {{ csrf_field() }} -->
                 <div class="form-group">
-                    <label>Ancien ou VEFA<span class="text-danger">*</span></label>
+                    <label>Ancien ou Vefa<span class="text-danger">*</span></label>
                     <select name="nature_mutation" id="nature_mutation" class="form-control form_data">
                         <option value="Vente">Ancien</option>
-                        <option value="Vefa">Vente en Etat Futur d'Achèvement</option>
+                        <option value="Vefa">VEFA</option>
                     </select>
                     <span id="type_local_error" class="text-danger"></span>
                 </div>

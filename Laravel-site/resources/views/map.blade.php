@@ -36,7 +36,7 @@ crossorigin=""/>
       <div class="col-droite">
       <h2>Analyse des biens</h2>
       @foreach ($commune as $info_commune)
-        <p>Population dans la commune {{str_replace(" Arrondissement","",$info_commune->nom_commune)}} : {{preg_replace('/(?<=\d)(?=(\d{3})+$)/', ' ', $info_commune->population)}}.</p>
+        <p>Population dans la commune {{str_replace(" Arrondissement","",$info_commune->nom_commune)}} : {{preg_replace('/(?<=\d)(?=(\d{3})+$)/', ' ', $info_commune->population)}}</p>
         <p>Code commune : {{$info_commune->code_commune}} </p>
         <p>Code postal : {{$info_commune->code_postal}} </p>
       @endforeach
