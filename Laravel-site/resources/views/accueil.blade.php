@@ -35,7 +35,7 @@ Accueil
     @endif
 @endif
 
-<div class="accueil-bloc" style="background-image: url('/images/appartement.jpg')">
+<div class="accueil-bloc" style="background-image: url('images/appartement.jpg')">
     <div class="presentation-bloc">
         <div class="interieur-presentation-bloc">
             <div class="titre-presentation">
