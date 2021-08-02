@@ -28,9 +28,9 @@ body {
 	width: 100%;
 	height: 100vh;
 	min-height: 100%;
-	background-image: -moz-linear-gradient(rgba(0, 0, 0, 0.2),rgba(0,0,0,.2)), url("http://cdn.home-designing.com/wp-content/uploads/2021/03/modular-sofa.jpg");
-	background-image: -webkit-linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.2)), url("http://cdn.home-designing.com/wp-content/uploads/2021/03/modular-sofa.jpg");
-	background-image: linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.2)), url("http://cdn.home-designing.com/wp-content/uploads/2021/03/modular-sofa.jpg");
+	background-image: -moz-linear-gradient(rgba(0, 0, 0, 0.2),rgba(0,0,0,.2));
+	background-image: -webkit-linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.2));
+	background-image: linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.2));
 	background-size: cover;
 	background-position: bottom;
 	margin-top: -1.5rem;
