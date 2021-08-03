@@ -64,7 +64,7 @@ crossorigin=""/>
           </tbody>
         </table>
       @else
-        <span>L'analyse de votre évaluation n'est pas encore disponible.</span>
+        <span>L'analyse de votre évaluation n'est pas encore disponible</span>
       @endif
       </div>
       
