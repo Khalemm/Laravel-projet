@@ -32,8 +32,8 @@ var cptcarte = 0;
 		description +=		'<div class="prix">';
 		description +=			'<p class="total">{{ preg_replace('/(?<=\d)(?=(\d{3})+$)/', ' ', $bien['valeur_fonciere']) }} €</p>'; // format du prix changé
 		description +=			'<p>';
-		description +=				'<a class="btn btn-outline-primary rounded-circle" href="{{str_replace("((longitude))",$bien['longitude'],str_replace("((latitude))",$bien['latitude'],$urls[1]->format_url))}}" target="_blank">M</a> ';
-		description +=				'<a class="btn btn-outline-primary rounded-circle" href="{{str_replace("((longitude))",$bien['longitude'],str_replace("((latitude))",$bien['latitude'],$urls[0]->format_url))}}" target="_blank">V</a> ';
+		description +=				'<a class="btn btn-outline-primary rounded-circle" href="{{str_replace("((longitude))",$bien['longitude'],str_replace("((latitude))",$bien['latitude'],$urls[1]->format_url))}}" target="_blank">V</a> ';
+		description +=				'<a class="btn btn-outline-primary rounded-circle" href="{{str_replace("((longitude))",$bien['longitude'],str_replace("((latitude))",$bien['latitude'],$urls[0]->format_url))}}" target="_blank">M</a> ';
 		description +=				'<a class="btn btn-outline-primary rounded-circle" href="{{str_replace("((longitude))",$bien['longitude'],str_replace("((latitude))",$bien['latitude'],$urls[2]->format_url))}}" target="_blank">S</a>';
 		description +=			'</p>';
 		description +=		'</div>';
